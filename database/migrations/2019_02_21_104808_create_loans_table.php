@@ -17,10 +17,11 @@ class CreateLoansTable extends Migration
             $table->increments('id');
             $table->integer('type_id')->unsigned();
             $table->integer('duration');
-            $table->integer('installments');
+            $table->string('interval');
             $table->integer('principle');
             $table->integer('interest');
             $table->integer('penalty');
+            $table->string('penalty_value');
             $table->timestamps();
         });
     }

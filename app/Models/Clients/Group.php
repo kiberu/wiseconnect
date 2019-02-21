@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Group extends Model
 {
   public function clients(){
-    return $this->hasMany('App\Models\Clients\Client');
+    return $this->belongsToMany('App\Models\Clients\Client');
   }
 
   public function loans(){

@@ -23,3 +23,9 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+
+$factory->afterCreating(App\Models\User::class, function ($user, $faker) {
+  $roles = array('admin', 'loan_manager', 'client_manager', 'general_manager');
+  $key = array_rand($roles);
+  $user->assignRole($roles[$key]);
+});

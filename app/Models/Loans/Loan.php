@@ -11,11 +11,6 @@ class Loan extends Model
     return $this->belongsTo('App\Models\Clients\Client');
   }
 
-  //
-  public function client(){
-    return $this->belongsTo('App\Models\Clients\Client');
-  }
-
   public function group(){
     return $this->hasOneThrough('App\Models\Clients\Group', 'App\Models\Clients\Client');
   }

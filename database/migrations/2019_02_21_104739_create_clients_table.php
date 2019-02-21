@@ -20,7 +20,6 @@ class CreateClientsTable extends Migration
             $table->string('sex');
             $table->date('date_of_birth');
             $table->integer('business_id')->unsigned();
-            $table->integer('group_id')->unsigned();
             $table->string('next_of_kin');
             $table->string('phone_number');
             $table->string('residential_address');

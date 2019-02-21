@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateValuesTable extends Migration
+class CreateClientGroupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateValuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('values', function (Blueprint $table) {
+        Schema::create('client_group', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('options_id')->unsigned();
-            $table->string('value');
+            $table->integer('client_id')->unsigned();
+            $table->integer('group_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateValuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('values');
+        Schema::dropIfExists('client_group');
     }
 }

@@ -8,7 +8,7 @@ class Client extends Model
 {
     //
     public function group(){
-      return $this->belongsTo('App\Models\Clients\Group');
+      return $this->belongsToMany('App\Models\Clients\Group');
     }
 
     //
