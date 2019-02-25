@@ -23,3 +23,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::Resource( '/users', 'UserController' );
+Route::Resource( '/groups', 'GroupController' );
+Route::prefix('/groups/{group}')->group(function () {
+  Route::Resource('clients', 'ClientController');
+});

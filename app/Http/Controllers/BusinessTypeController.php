@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Business;
+use App\Models\BusinessType;
 use Illuminate\Http\Request;
 
-class BusinessController extends Controller
+class BusinessTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class BusinessController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Business  $business
+     * @param  \App\Models\BusinessType  $businessType
      * @return \Illuminate\Http\Response
      */
-    public function show(Business $business)
+    public function show(BusinessType $businessType)
     {
         //
     }
@@ -52,10 +52,10 @@ class BusinessController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Business  $business
+     * @param  \App\Models\BusinessType  $businessType
      * @return \Illuminate\Http\Response
      */
-    public function edit(Business $business)
+    public function edit(BusinessType $businessType)
     {
         //
     }
@@ -64,10 +64,10 @@ class BusinessController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Business  $business
+     * @param  \App\Models\BusinessType  $businessType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Business $business)
+    public function update(Request $request, BusinessType $businessType)
     {
         //
     }
@@ -75,10 +75,10 @@ class BusinessController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Business  $business
+     * @param  \App\Models\BusinessType  $businessType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Business $business)
+    public function destroy(BusinessType $businessType)
     {
         //
     }

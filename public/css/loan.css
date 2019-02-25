@@ -1,3 +1,11 @@
 .password_fields{
   display: none;
 }
+
+.ln_align_right {
+  float: right;
+}
+
+.ln_color_white {
+  color: white !important;
+}

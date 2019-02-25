@@ -17,7 +17,14 @@ class CreateClientGroupTable extends Migration
             $table->increments('id');
             $table->integer('client_id')->unsigned();
             $table->integer('group_id')->unsigned();
+
             $table->timestamps();
+        });
+
+        Schema::table('client_group', function (Blueprint $table) {
+          $table->foreign('client_id')->references('id')->on('clients');
+          $table->foreign('group_id')->references('id')->on('groups');
+
         });
     }
 

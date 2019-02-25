@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Group;
+use App\Models\Clients\Group;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -14,7 +14,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+      $groups = Group::all()->sortByDesc('created_at');
+      return view('site/groups/index')->withGroups($groups);
     }
 
     /**
@@ -24,7 +25,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('site.groups.create');
     }
 
     /**
@@ -35,7 +36,18 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate( $request, [
+        'name' => 'required|string|unique:groups|max:255',
+        'landmark' => 'required|string|max:255',
+      ]);
+
+
+      $group = new Group;
+      $group->name = $request->name;
+      $group->landmark = $request->landmark;
+      $group->save();
+
+      return redirect()->route('groups.index');
     }
 
     /**
@@ -46,7 +58,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        //
+        return view('site/groups/show')->withGroup($group);
     }
 
     /**
@@ -57,7 +69,7 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        //
+      return view('site.groups.edit')->with(['group'=>$group]);
     }
 
     /**
@@ -69,7 +81,16 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
-        //
+      $this->validate( $request, [
+        'name' => 'required|string|unique:groups|max:255',
+        'landmark' => 'required|string|max:255',
+      ]);
+
+      $group->name = $request->name;
+      $group->landmark = $request->landmark;
+      $group->save();
+
+      return redirect()->route('groups.edit',$group);
     }
 
     /**

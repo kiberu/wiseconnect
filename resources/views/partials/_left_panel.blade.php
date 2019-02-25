@@ -14,7 +14,8 @@
         <span class="menu-item-label">Clients</span>
       </a><!-- br-menu-link -->
       <ul class="br-menu-sub">
-        <li class="sub-item"><a href="skin-select2.html" class="sub-link">Groups</a></li>
+        <li class="sub-item"><a href="{{ route('groups.create') }}" class="sub-link">Add new group</a></li>
+        <li class="sub-item"><a href="{{ route('groups.index') }}" class="sub-link">All groups</a></li>
       </ul>
     </li><!-- br-menu-item -->
     <li class="br-menu-item">

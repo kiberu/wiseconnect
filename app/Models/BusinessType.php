@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\Clients;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Business extends Model
+class BusinessType extends Model
 {
   //
-  public function group(){
+  public function clients(){
     return $this->hasMany('App\Models\Clients\Client');
   }
 }

@@ -16,8 +16,12 @@ class CreateInstallmentsTable extends Migration
         Schema::create('installments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('loan_id')->unsigned();
-            $table->integer('amount')->unsigned();
+            $table->integer('amount');
             $table->timestamps();
+        });
+
+        Schema::table('installments', function (Blueprint $table) {
+          $table->foreign('loan_id')->references('id')->on('loans');
         });
     }
 
