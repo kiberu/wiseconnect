@@ -9,14 +9,14 @@
 
       <div class="dropdown">
         <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
-          <span class="logged-name hidden-md-down">{{ Auth::user()->name }}</span>
+          <span class="logged-name hidden-md-down">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
           <img src="https://via.placeholder.com/500" class="wd-32 rounded-circle" alt="">
           <span class="square-10 bg-success"></span>
         </a>
         <div class="dropdown-menu dropdown-menu-header wd-250">
           <div class="tx-center">
             <a href=""><img src="https://via.placeholder.com/500" class="wd-80 rounded-circle" alt=""></a>
-            <h6 class="logged-fullname">{{ Auth::user()->name }}</h6>
+            <h6 class="logged-fullname">{{Auth::user()->first_name }} {{ Auth::user()->last_name }}</h6>
             <p>{{ Auth::user()->email }}</p>
           </div>
           <hr>
@@ -36,6 +36,6 @@
         </div><!-- dropdown-menu -->
       </div><!-- dropdown -->
     </nav>
-    
+
   </div><!-- br-header-right -->
 </div><!-- br-header -->

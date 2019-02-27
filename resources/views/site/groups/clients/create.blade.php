@@ -86,40 +86,7 @@
 
                     </div><!-- col-8 -->
                   </div><!-- row -->
-                  <div class="row no-gutters">
-                    <div class="col-5 col-sm-4">
-                      Business Name:
-                    </div><!-- col-4 -->
-                    <div class="col-7 col-sm-8">
-                      <div class="col-7 col-sm-8">
-                        <input  class="form-control {{ $errors->has('business_name') ? ' is-invalid' : '' }}" value="{{ old('business_name') }}" type="text" name="business_name"  placeholder="Enter Business Name">
-                        @if ($errors->has('business_name'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('business_name') }}</strong>
-                            </span>
-                        @endif
-                      </div><!-- col-8 -->
-                    </div><!-- col-8 -->
-                  </div><!-- row -->
-                  <div class="row no-gutters">
-                    <div class="col-5 col-sm-4">
-                      Business Type:
-                    </div><!-- col-4 -->
-                    <div class="col-7 col-sm-8">
-                      <select name="business_type" class="form-control {{ $errors->has('business_type') ? ' is-invalid' : '' }}" value="{{ old('business_type') }}">
-                        <option selected disabled>Choose Option</option>
-                        @foreach ($business_types as $business_type)
-                          <option {{ ( old('business_type') == $business_type->id ) ? 'selected' : '' }} value="{{ $business_type->id }}">{{ $business_type->name }}</option>
-                        @endforeach
-
-                      </select>
-                      @if ($errors->has('business_type'))
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $errors->first('business_type') }}</strong>
-                          </span>
-                      @endif
-                    </div><!-- col-8 -->
-                  </div><!-- row -->
+              
                   <div class="row no-gutters">
                     <div class="col-5 col-sm-4">
                       Next of Kin(*):

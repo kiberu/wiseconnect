@@ -39,8 +39,6 @@
             <th>Full Name</th>
             <th>Sex</th>
             <th>Date of Birth</th>
-            <th>Business Name</th>
-            <th>Business Type</th>
             <th>Next of kin</th>
             <th>Phone Number</th>
             <th>Residence</th>
@@ -53,8 +51,6 @@
               <td><a href="{{ route('clients.show', [$group, $client]) }}">{{ $client->first_name }} {{ $client->last_name }}</a></td>
               <td>{{ $client->sex }}</td>
               <td>{{ $client->date_of_birth }}</td>
-              <td>{{ $client->business_name }}</td>
-              <td>{{ $client->business_type->name }}</td>
               <td>{{ $client->next_of_kin }}</td>
               <td>{{ $client->phone_number }}</td>
               <td>{{ $client->residential_address }}</td>

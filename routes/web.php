@@ -27,3 +27,7 @@ Route::Resource( '/groups', 'GroupController' );
 Route::prefix('/groups/{group}')->group(function () {
   Route::Resource('clients', 'ClientController');
 });
+Route::Resource( '/loans', 'LoanController' );
+Route::prefix('/loans/{loan}')->group(function () {
+  Route::Resource('installments', 'InstallmentController');
+});

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Installment;
+use App\Models\Loans\Installment;
+use App\Models\Loans\Loan;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class InstallmentController extends Controller
 {
@@ -22,9 +24,9 @@ class InstallmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create( Loan $loan )
     {
-        //
+      return view('site/loans/installments/create')->withLoan($loan);
     }
 
     /**
@@ -33,9 +35,25 @@ class InstallmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Loan $loan)
     {
-        //
+      $this->validate( $request, [
+        'amount_paid' => 'required|min:3|max:255',
+      ]);
+
+
+      $installment = new Installment;
+      $installment->amount_paid = $request->amount_paid;
+      $installment->loan_id = $loan->id;
+      if( $loan->installments->last() ){
+        $last_payment = new Carbon($loan->installments->last()->next_due_date);
+      } else {
+        $last_payment = Carbon::now();
+      }
+      $installment->next_due_date = $last_payment->addMonths(1);
+      $installment->save();
+
+      return redirect()->route('loans.show', $loan);
     }
 
     /**

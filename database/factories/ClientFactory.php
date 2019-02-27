@@ -9,8 +9,6 @@ $factory->define(App\Models\Clients\Client::class, function (Faker $faker) {
     return [
       'first_name' => $faker->firstName,
       'last_name' => $faker->lastName,
-      'business_type_id' => rand(1,4),
-      'business_name' => $faker->company,
       'sex' => $gender[$key],
       'date_of_birth' =>  $faker->dateTimeThisCentury->format('Y-m-d'),
       'next_of_kin' => $faker->name,

@@ -12,11 +12,6 @@ class Client extends Model
     }
 
     //
-    public function business_type(){
-      return $this->belongsTo('App\Models\BusinessType');
-    }
-
-    //
     public function loans(){
       return $this->hasMany('App\Models\Loans\Loan');
     }

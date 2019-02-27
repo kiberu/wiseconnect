@@ -31,8 +31,6 @@
           <h2>Bio</h2>
           <strong>Sex:</strong> {{ $client->sex }} <br>
           <strong>Date of Birth:</strong> {{ $client->date_of_birth }} <br>
-          <strong>Business</strong> {{ $client->business_name }} <br>
-          <strong>Business Type</strong> {{ $client->business_type->name }} <br>
           <strong>Next of Kin</strong> {{ $client->next_of_kin }} <br>
           <strong>Phone Number</strong> {{ $client->phone_number }} <br>
           <strong>Residence</strong> {{ $client->residential_address }} <br>
@@ -53,7 +51,6 @@
             <th>Interest</th>
             <th>Interest Rate</th>
             <th>Duration</th>
-            <th>Interval</th>
             <th>Penalty</th>
             <th>Status</th>
             <th>Created at</th>
@@ -68,7 +65,6 @@
               <td>{{ number_format(($loan->principle * $loan->interest_rate / 100) * $loan->duration )}}  </td>
               <td>{{ $loan->interest_rate }}% per {{ $loan->interval }}</td>
               <td>{{ $loan->duration }}</td>
-              <td>{{ $loan->interval }}</td>
               <td>{{ $loan->penalty }} in {{ $loan->penalty_value }} </td>
               <td>{{ $loan->status }}</td>
               <td>{{ $loan->created_at }}</td>

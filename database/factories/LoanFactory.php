@@ -17,9 +17,14 @@ $factory->define(App\Models\Loans\Loan::class, function (Faker $faker) {
       'client_id' => rand(1,16),
       'principle' => $faker->randomNumber(6),
       'interest_rate' => rand(5,10),
-      'interval' => $interval[$interval_key],
       'penalty' => $faker->randomNumber(2),
+      'grace_period' => rand(1,5),
       'status' => $status[$statuskey],
-      'penalty_value' => $value[$value_key],
+      'business_type_id' => rand(1,4),
+      'business_name' => $faker->company,
     ];
+});
+
+$factory->afterCreating(App\Models\Loans\Loan::class, function ($loan, $faker) {
+    $loan->installments()->save(factory(App\Models\Loans\Installment::class)->make());
 });

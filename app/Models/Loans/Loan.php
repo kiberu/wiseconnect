@@ -15,7 +15,10 @@ class Loan extends Model
     return $this->hasOneThrough('App\Models\Clients\Group', 'App\Models\Clients\Client');
   }
 
-
+  //
+  public function business_type(){
+    return $this->belongsTo('App\Models\BusinessType');
+  }
 
   //
   public function installments(){

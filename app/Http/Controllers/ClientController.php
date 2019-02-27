@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Clients\Client;
 use App\Models\Clients\Group;
-use App\Models\BusinessType;
 
 use Illuminate\Http\Request;
 
@@ -27,8 +26,8 @@ class ClientController extends Controller
      */
     public function create( Group $group )
     {
-      $business_types = BusinessType::all();
-      return view('site.groups.clients.create')->with(['group' => $group, 'business_types' => $business_types]);
+
+      return view('site.groups.clients.create')->with(['group' => $group]);
     }
 
     /**
@@ -44,8 +43,7 @@ class ClientController extends Controller
         'last_name' => 'required|string|max:255',
         'gender' => 'required|string|max:255',
         'date_of_birth' => 'date|required|string|max:255',
-        'business_name' => 'string|max:255',
-        'business_type' => 'integer|max:255',
+
         'next_of_kin' => 'required|string|max:255',
         'phone_number' => 'required|min:10',
         'residential_address' => 'required|string|max:255',
@@ -57,8 +55,7 @@ class ClientController extends Controller
       $client->last_name = $request->last_name;
       $client->sex = $request->gender;
       $client->date_of_birth = date('Y-m-d', strtotime($request->date_of_birth));
-      $client->business_name = $request->business_name;
-      $client->business_type_id = $request->business_type;
+
       $client->next_of_kin = $request->next_of_kin;
       $client->phone_number = $request->phone_number;
       $client->residential_address = $request->residential_address;
@@ -88,8 +85,8 @@ class ClientController extends Controller
      */
     public function edit(Group $group, Client $client)
     {
-      $business_types = BusinessType::all();
-      return view('site.groups.clients.edit')->with(['client' => $client, 'group' => $group, 'business_types' => $business_types]);
+
+      return view('site.groups.clients.edit')->with(['client' => $client, 'group' => $group]);
     }
 
     /**
@@ -106,20 +103,16 @@ class ClientController extends Controller
         'last_name' => 'required|string|max:255',
         'gender' => 'required|string|max:255',
         'date_of_birth' => 'date|required|string|max:255',
-        'business_name' => 'string|max:255',
-        'business_type' => 'integer|max:255',
+
         'next_of_kin' => 'required|string|max:255',
         'phone_number' => 'required|min:10',
         'residential_address' => 'required|string|max:255',
       ]);
 
-
       $client->first_name = $request->first_name;
       $client->last_name = $request->last_name;
       $client->sex = $request->gender;
       $client->date_of_birth = date('Y-m-d', strtotime($request->date_of_birth));
-      $client->business_name = $request->business_name;
-      $client->business_type_id = $request->business_type;
       $client->next_of_kin = $request->next_of_kin;
       $client->phone_number = $request->phone_number;
       $client->residential_address = $request->residential_address;
