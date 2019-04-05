@@ -16,8 +16,10 @@ class CreateInstallmentsTable extends Migration
         Schema::create('installments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('loan_id')->unsigned();
-            $table->integer('amount_paid');
-            $table->date('next_due_date');
+            $table->string('expected_amount');
+            $table->date('due_date');
+            $table->string('status')->default('pending');
+            $table->integer('balance');
             $table->timestamps();
         });
 

@@ -11,6 +11,6 @@ class InstallmentsTableSeeder extends Seeder
      */
     public function run()
     {
-      factory(App\Models\Loans\Installment::class, 120)->create();
+      // factory(App\Models\Loans\Installment::class, 120)->create();
     }
 }

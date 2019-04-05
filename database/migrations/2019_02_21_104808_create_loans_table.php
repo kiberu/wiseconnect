@@ -24,7 +24,12 @@ class CreateLoansTable extends Migration
             $table->integer('penalty');
             $table->string('status');
             $table->integer('business_type_id')->unsigned();
-            $table->string('business_name');
+            $table->string('business_location');
+            $table->string('payment_day');
+            $table->integer('partial_amount');
+            $table->integer('application_fee');
+            $table->integer('insurance_fee');
+            $table->date('initial_start');
             $table->timestamps();
         });
 

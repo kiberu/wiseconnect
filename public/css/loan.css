@@ -9,3 +9,15 @@
 .ln_color_white {
   color: white !important;
 }
+
+.hide-link {
+  display: none;
+}
+
+h5 strong {
+  margin-right: 40px;
+}
+
+.info-section {
+  margin: 20px;
+}

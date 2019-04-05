@@ -19,57 +19,85 @@
   </div><!-- d-flex -->
 
   <div class="br-pagebody">
-    <div class="br-section-wrapper">
+    <div class="br-section-wrapper info-section">
       <div class="row mg-t-20">
         <div class="col-xl-3"></div>
         <div class="col-xl-9">
-          <h2>Client</h2>
-          <strong>Client:</strong> {{ $loan->client->first_name }} {{ $loan->client->last_name }} <br>
-          <strong>Client's group:</strong> {{ $loan->client->groups->last()->name }} <br>
+          <h2>Client Information</h2>
           <hr>
-          <h2>Loan</h2>
-          <strong>Duration:</strong> {{ $loan->duration }}<br>
-          <strong>Period:</strong> {{ $loan->interval }}(s)<br>
-          <strong>Grace Period:</strong> {{ $loan->grace_period }}<br>
-          <strong>Interest Rate:</strong> {{ $loan->interest_rate }}<br>
-          <strong>No of installments:</strong> {{ $loan->duration }}<br>
-          <strong>Principle:</strong> {{ number_format($loan->principle) }} UGX<br>
-          <strong>Interest:</strong> {{ number_format(($loan->principle * $loan->interest_rate / 100) * $loan->duration ) }} UGX<br>
+          <h6>Client:</strong> {{ $loan->client->first_name }} {{ $loan->client->last_name }} <br></h6>
+          <hr>
+          <h6>Client's group:</strong> {{ $loan->client->groups->last()->name }} <br></h6>
+        </div>
+      </div>
+    </div>
+    <div class="br-section-wrapper info-section">
+      <div class="row mg-t-20">
+        <div class="col-xl-3"></div>
+        <div class="col-xl-9">
+          <h2>Loan Information</h2>
+          <hr>
+          <h6>Status:</strong> {{ $loan->status }}<br></h6>
+          <hr>
+          <h6>Interest Rate:</strong> {{ $loan->interest_rate }}% per Week<br></h6>
+          <hr>
+          <h6>Loan Duration:</strong> {{ $loan->duration + $loan->grace_period }} Weeks<br></h6>
+          <hr>
+          <h6>Principle:</strong> {{ number_format($loan->principle) }} UGX<br></h6>
+          <hr>
+          <h6>Interest:</strong> {{ number_format(($loan->principle * $loan->interest_rate / 100) * $loan->duration ) }} UGX<br></h6>
+          <hr>
+          <h6>Insurance Fee:</strong> {{ number_format($loan->insurance_fee) }} UGX<br></h6>
+          <hr>
+          <h6>Loan Application Fee:</strong> {{ number_format($loan->application_fee) }} UGX<br></h6>
+        </div>
+      </div>
+    </div>
+
+    <div class="br-section-wrapper info-section">
+      <div class="row mg-t-20">
+        <div class="col-xl-3"></div>
+        <div class="col-xl-9">
+          <h2>Payments Information</h2>
+          <hr>
           @php
             $pricinple = $loan->principle;
             $interest = ($loan->principle * $loan->interest_rate / 100) * $loan->duration;
             $total = $pricinple + $interest;
           @endphp
-          <strong>Total Due:</strong> {{ number_format($total) }} UGX<br>
-          <strong>Balance: {{ number_format($total - ($loan->installments->sum('amount_paid'))) }}
+          <h6>Total Due:</strong> {{ number_format($total) }} UGX<br></h6>
           <hr>
-          <h2>Timelines</h2>
-          <strong>Each Installment:</strong> {{ number_format(($loan->principle / $loan->duration) + ($loan->principle * $loan->interest_rate / 100) ) }} (With Interest)<br>
-          <strong>Next Due date:</strong> {{ $loan->installments->last() ? $loan->installments->last()->next_due_date: 'Pleaase make initial deposit' }}<br>
-
+          <h6>Balance:</strong> {{ number_format( $total - $loan->payments->sum( 'amount' ) )}} UGX
+          <hr>
+          <h6>Each Installment:</strong> {{ number_format(($loan->principle / $loan->duration) + ($loan->principle * $loan->interest_rate / 100) ) }} UGX (With Interest)<br></h6>
+          <hr>
+          <h6>Payment Date:</strong> {{ $loan->payment_day }}<br></h6>
         </div>
+      </div>
     </div>
-    <hr>
-    <a href="{{ route('installments.create', $loan) }}" class="btn btn-success btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Make Installment</a>
-    <div class="br-section-wrapper">
+
+    <div class="br-section-wrapper info-section">
       <table id="datatable1" class="table display responsive nowrap">
         <thead>
           <tr>
             <th>#</th>
             <th>Amount Expected</th>
-            <th>Amount paid</th>
-            <th>Paid on</th>
             <th>Next Due Date</th>
+            <th>Payments</th>
+            <th>Installment Balance</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           @foreach ($loan->installments as $installment)
             <tr>
               <td>{{ $installment->id }}</td>
-              <td>{{ number_format(($loan->principle / $loan->duration) + ($loan->principle * $loan->interest_rate / 100) ) }}</td>
-              <td>{{ number_format($installment->amount_paid) }}</td>
-              <td>{{ $installment->created_at }}</td>
-              <td>{{ $installment->next_due_date }}</td>
+              <td>{{ number_format($installment->expected_amount) }} UGX</td>
+              <td>{{ $installment->due_date }}</td>
+              <td><a href="{{ route( 'installments.show', [ $loan, $installment ] ) }}">{{ count( $installment->payments ) }}</a></td>
+              <td>{{ number_format($installment->balance) }} UGX</td>
+              <td>{{ $installment->status }}</td>
+              <td><a href="{{ route( 'installments.show', [$loan, $installment] ) }}" class="btn btn-success ln_color_white">Payments</a></td>
             </tr>
 
           @endforeach

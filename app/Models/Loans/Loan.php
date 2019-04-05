@@ -29,4 +29,8 @@ class Loan extends Model
   public function loan_type(){
     return $this->belongsTo('App\Models\LoanType');
   }
+
+  public function payments(){
+    return $this->hasManyThrough('App\Models\Loans\Payment', 'App\Models\Loans\Installment');
+  }
 }

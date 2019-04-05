@@ -30,4 +30,9 @@ Route::prefix('/groups/{group}')->group(function () {
 Route::Resource( '/loans', 'LoanController' );
 Route::prefix('/loans/{loan}')->group(function () {
   Route::Resource('installments', 'InstallmentController');
+  Route::prefix('/installments/{installment}')->group(function () {
+    Route::Resource('payments', 'PaymentController');
+  });
 });
+
+Route::get('/loans-today', 'LoanController@today')->name('loans.today');

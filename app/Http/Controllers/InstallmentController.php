@@ -26,7 +26,17 @@ class InstallmentController extends Controller
      */
     public function create( Loan $loan )
     {
-      return view('site/loans/installments/create')->withLoan($loan);
+      $last_installment = $loan->installments->last();
+
+      $installment = new Installment;
+      $installment->loan_id = $loan->id;
+      $installment->expected_amount = $loan->partial_amount;
+      $installment->due_date = Carbon::parse( $last_installment->due_date )->addWeek(1);
+      $installment->status = 'Pending';
+      $installment->balance = $loan->partial_amount;
+      $installment->save();
+
+      return redirect()->route('loans.show', $loan);
     }
 
     /**
@@ -37,23 +47,7 @@ class InstallmentController extends Controller
      */
     public function store(Request $request, Loan $loan)
     {
-      $this->validate( $request, [
-        'amount_paid' => 'required|min:3|max:255',
-      ]);
 
-
-      $installment = new Installment;
-      $installment->amount_paid = $request->amount_paid;
-      $installment->loan_id = $loan->id;
-      if( $loan->installments->last() ){
-        $last_payment = new Carbon($loan->installments->last()->next_due_date);
-      } else {
-        $last_payment = Carbon::now();
-      }
-      $installment->next_due_date = $last_payment->addMonths(1);
-      $installment->save();
-
-      return redirect()->route('loans.show', $loan);
     }
 
     /**
@@ -62,9 +56,9 @@ class InstallmentController extends Controller
      * @param  \App\Models\Installment  $installment
      * @return \Illuminate\Http\Response
      */
-    public function show(Installment $installment)
+    public function show(Loan $loan, Installment $installment)
     {
-        //
+      return view('site/loans/installments/show')->with( ['loan' => $loan, 'installment' => $installment] );
     }
 
     /**

@@ -6,15 +6,16 @@
   <div class="br-pageheader">
     <nav class="breadcrumb pd-0 mg-0 tx-12">
       <a class="breadcrumb-item" href="{{route('home')}}">Home</a>
-      <a class="breadcrumb-item" href="{{route('loans.show', $loan)}}">Loan</a>
-      <span class="breadcrumb-item active">Add Installment</span>
+      <a class="breadcrumb-item" href="{{route('loans.show', $loan )}}">Loan</a>
+      <a class="breadcrumb-item" href="{{route('installments.show', [$loan, $installment] )}}">{{ $installment->due_date }}</a>
+      <span class="breadcrumb-item active">Payment</span>
     </nav>
   </div><!-- br-pageheader -->
   <div class="br-pagetitle">
     <i class="icon icon ion-ios-color-filter-outline tx-22"></i>
     <div>
-      <h4>Add Installment</h4>
-      <p class="mg-b-0">Add installment to loan id #{{ $loan->id }}</p>
+      <h4>Make payment</h4>
+      <p class="mg-b-0">Add payment to installment {{ $installment->due_date  }}</p>
     </div>
   </div><!-- d-flex -->
 
@@ -23,7 +24,9 @@
       <div class="row mg-t-20">
         <div class="col-xl-3"></div>
           <div class="form-layout form-layout-5">
-            <form method="POST" action="{{ route('installments.store', $loan ) }}">
+            <p>Value paid must be more than {{ number_format( round( $installment->balance, -3 ) ) }} UGX</p>
+
+            <form method="POST" action="{{ route('payments.store', [$loan, $installment] ) }}">
                 @csrf
 
                 <div class="form-layout form-layout-2">

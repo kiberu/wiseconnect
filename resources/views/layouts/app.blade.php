@@ -14,7 +14,7 @@
     <!-- ########## START: RIGHT PANEL ########## -->
     @include('partials._right_panel')
     <!-- ########## END: RIGHT PANEL ########## --->
-
+    
     @yield('content')
 
     @yield('scripts')

@@ -88,7 +88,7 @@
                       Interest Rate(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control {{ $errors->has('interest_rate') ? ' is-invalid' : '' }}" value="{{ old('interest_rate') }}" type="integer" name="interest_rate" > % per Month
+                      <input  class="form-control {{ $errors->has('interest_rate') ? ' is-invalid' : '' }}" value="{{ old('interest_rate') }}" type="integer" name="interest_rate" > % per Week
                       @if ($errors->has('interest_rate'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('interest_rate') }}</strong>
@@ -102,7 +102,7 @@
                       Duration(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control {{ $errors->has('duration') ? ' is-invalid' : '' }}" value="{{ old('duration') }}" type="integer" name="duration" > Months
+                      <input  class="form-control {{ $errors->has('duration') ? ' is-invalid' : '' }}" value="{{ old('duration') }}" type="integer" name="duration" > Weeks
                       @if ($errors->has('duration'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('duration') }}</strong>
@@ -116,7 +116,7 @@
                       Penalty(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control {{ $errors->has('penalty') ? ' is-invalid' : '' }}" value="{{ old('penalty') }}" type="integer" name="penalty" > % per defaulted Month
+                      <input  class="form-control {{ $errors->has('penalty') ? ' is-invalid' : '' }}" value="{{ old('penalty') }}" type="integer" name="penalty" > % per defaulted Week
                       @if ($errors->has('penalty'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('penalty') }}</strong>
@@ -130,7 +130,7 @@
                       Grace Period(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control {{ $errors->has('grace_period') ? ' is-invalid' : '' }}" value="{{ old('grace_period') }}" type="integer" name="grace_period" > Months
+                      <input  class="form-control {{ $errors->has('grace_period') ? ' is-invalid' : '' }}" value="{{ old('grace_period') }}" type="integer" name="grace_period" > Days
                       @if ($errors->has('grace_period'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('grace_period') }}</strong>
@@ -141,14 +141,14 @@
 
                   <div class="row no-gutters">
                     <div class="col-5 col-sm-4">
-                      Business Name:
+                      Business Location:
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
                       <div class="col-7 col-sm-8">
-                        <input  class="form-control {{ $errors->has('business_name') ? ' is-invalid' : '' }}" value="{{ old('business_name') }}" type="text" name="business_name"  placeholder="Enter Business Name">
-                        @if ($errors->has('business_name'))
+                        <input  class="form-control {{ $errors->has('business_location') ? ' is-invalid' : '' }}" value="{{ old('business_location') }}" type="text" name="business_location"  placeholder="Enter Business Location">
+                        @if ($errors->has('business_location'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('business_name') }}</strong>
+                                <strong>{{ $errors->first('business_location') }}</strong>
                             </span>
                         @endif
                       </div><!-- col-8 -->
@@ -169,6 +169,26 @@
                       @if ($errors->has('business_type'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('business_type') }}</strong>
+                          </span>
+                      @endif
+                    </div><!-- col-8 -->
+                  </div><!-- row -->
+
+                  <div class="row no-gutters">
+                    <div class="col-5 col-sm-4">
+                      Day of Payment:
+                    </div><!-- col-4 -->
+                    <div class="col-7 col-sm-8">
+                      <select name="payment_day" class="form-control {{ $errors->has('payment_day') ? ' is-invalid' : '' }}" value="{{ old('payment_day') }}">
+                        <option selected disabled>Choose Option</option>
+                        @foreach ($payment_days as $key => $payment_day)
+                          <option {{ ( old('payment_day') == $key ) ? 'selected' : '' }} value="{{ $key }}">{{ $payment_day }}</option>
+                        @endforeach
+
+                      </select>
+                      @if ($errors->has('payment_day'))
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $errors->first('payment_day') }}</strong>
                           </span>
                       @endif
                     </div><!-- col-8 -->

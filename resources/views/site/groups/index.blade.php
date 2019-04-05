@@ -19,11 +19,6 @@
 
   <div class="br-pagebody">
     <div class="br-section-wrapper">
-      @if (Session::has('success'))
-        <div class="alert alert-success" role="alert">
-          shakes
-        </div>
-      @endif
       <div class="table-wrapper">
         <table id="datatable1" class="table display responsive nowrap">
           <thead>

@@ -11,6 +11,7 @@ use Carbon\CarbonInterval;
 
 class LoanController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +32,15 @@ class LoanController extends Controller
     {
       $business_types = BusinessType::all();
       $loan_types = LoanType::all();
-      return view('site/loans/create')->with(['business_types' => $business_types, 'loan_types' => $loan_types]);
+      $payment_days = array(
+        'Monday' => 'Monday',
+        'Tuesday' => 'Tuesday',
+        'Wednesday' => 'Wednesday',
+        'Thursday' => 'Thursday',
+        'Friday' => 'Friday',
+        'Saturday' => 'Saturday',
+      );
+      return view('site/loans/create')->with(['business_types' => $business_types, 'loan_types' => $loan_types, 'payment_days' => $payment_days]);
     }
 
     /**
@@ -45,13 +54,17 @@ class LoanController extends Controller
       $this->validate( $request, [
         'client_id' => 'required|max:255',
         'loan_type' => 'required|max:255',
-        'principle_amount' => 'required|max:255',
+        'principle_amount' => 'required|numeric|max:255',
         'interest_rate' => 'required|max:255',
         'penalty' => 'required|max:255',
         'grace_period' => 'required|max:255',
         'duration' => 'required|max:255',
-        'business_name' => 'required',
+        'business_location' => 'required',
+        'business_location' => 'required',
         'business_type' => 'required',
+        'payment_day' => 'required',
+        'application_fee' => 'required|numeric',
+        'insurance_fee' => 'required|numeric'
       ]);
 
 
@@ -64,8 +77,13 @@ class LoanController extends Controller
       $loan->duration = $request->duration;
       $loan->penalty = $request->penalty;
       $loan->business_type_id = $request->business_type;
-      $loan->business_name= $request->business_name;
-      $loan->status= 'Grace';
+      $loan->payment_day = $request->payment_day;
+      $loan->business_location= $request->business_location;
+      $loan->status= 'Active';
+      $loan->application_fee = $request->application_fee;
+      $loan->insurance_fee = $request->insurance_fee;
+      $loan->partial_amount = ( $request->principle_amount / $request->duration ) + ( $principle_amount * $request->interest_rate / 100);
+      $loan->initial_start = Carbon::parse('next ' . $payment_day )->addWeek( $grace );
       $loan->save();
 
       return redirect()->route('loans.show', $loan);
@@ -124,6 +142,13 @@ class LoanController extends Controller
     public function update(Request $request, Loan $loan)
     {
         //
+    }
+
+    public function today( Request $request ){
+      $today = Carbon::now();
+      $loans = Loan::where('payment_day', '=', $today->englishDayOfWeek )->get();
+      return view('site/loans/index')->withLoans($loans);
+
     }
 
     /**

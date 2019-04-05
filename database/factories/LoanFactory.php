@@ -7,24 +7,41 @@ $factory->define(App\Models\Loans\Loan::class, function (Faker $faker) {
   $interval = array('Day','Week', 'Month', 'Quarter', 'Year');
   $interval_key = array_rand($interval);
 
-  $status = array('Active', 'Complete', 'Defaulting', 'Grace');
-  $statuskey = array_rand( $status );
+  $payment_days = array( 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+  $payment_key = array_rand( $payment_days );
+
+  $principle = $faker->randomNumber(7);
+  $duration = rand(1,12);
+  $interest_rate = rand(5,10);
+  $grace = rand(1,2);
 
   $value_key = array_rand($value);
+  $payment_day = $payment_days[$payment_key];
     return [
       'loan_type_id' => rand(1,3),
-      'duration' => rand(1,12),
+      'duration' => $duration ,
       'client_id' => rand(1,16),
-      'principle' => $faker->randomNumber(6),
-      'interest_rate' => rand(5,10),
+      'principle' => $principle,
+      'interest_rate' => $interest_rate,
       'penalty' => $faker->randomNumber(2),
-      'grace_period' => rand(1,5),
-      'status' => $status[$statuskey],
+      'grace_period' => $grace,
+      'status' => 'Active',
       'business_type_id' => rand(1,4),
-      'business_name' => $faker->company,
+      'payment_day' => $payment_day,
+      'business_location' => $faker->address,
+      'partial_amount' => ( $principle / $duration ) + ( $principle * $interest_rate / 100),
+      'initial_start' => Carbon::parse('next ' . $payment_day )->addWeek( $grace ),
+      'application_fee' => $faker->randomNumber(4),
+      'insurance_fee' => $faker->randomNumber(4)
     ];
 });
 
 $factory->afterCreating(App\Models\Loans\Loan::class, function ($loan, $faker) {
-    $loan->installments()->save(factory(App\Models\Loans\Installment::class)->make());
+  $installment = new App\Models\Loans\Installment;
+  $installment->loan_id = $loan->id;
+  $installment->expected_amount = $loan->partial_amount;
+  $installment->due_date = $loan->initial_start;
+  $installment->status = 'Pending';
+  $installment->balance = $loan->partial_amount;
+  $installment->save();
 });
