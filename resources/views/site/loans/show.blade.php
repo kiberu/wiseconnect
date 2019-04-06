@@ -65,11 +65,13 @@
             $interest = ($loan->principle * $loan->interest_rate / 100) * $loan->duration;
             $total = $pricinple + $interest;
           @endphp
+          <h6>Grace Period:</strong> {{ $loan->grace_period }} Weeks<br></h6>
+          <hr>
           <h6>Total Due:</strong> {{ number_format($total) }} UGX<br></h6>
           <hr>
           <h6>Balance:</strong> {{ number_format( $total - $loan->payments->sum( 'amount' ) )}} UGX
           <hr>
-          <h6>Each Installment:</strong> {{ number_format(($loan->principle / $loan->duration) + ($loan->principle * $loan->interest_rate / 100) ) }} UGX (With Interest)<br></h6>
+          <h6>Each Installment:</strong> {{ number_format( $loan->partial_amount ) }} UGX (With Interest)<br></h6>
           <hr>
           <h6>Payment Date:</strong> {{ $loan->payment_day }}<br></h6>
         </div>

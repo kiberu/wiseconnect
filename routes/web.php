@@ -36,3 +36,5 @@ Route::prefix('/loans/{loan}')->group(function () {
 });
 
 Route::get('/loans-today', 'LoanController@today')->name('loans.today');
+Route::get('/loans-defaulters', 'LoanController@defaulters')->name('loans.defaulters');
+Route::get('/finance', 'FinanceController@index')->name('finance.index');

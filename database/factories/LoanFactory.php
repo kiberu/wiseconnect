@@ -10,10 +10,10 @@ $factory->define(App\Models\Loans\Loan::class, function (Faker $faker) {
   $payment_days = array( 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
   $payment_key = array_rand( $payment_days );
 
-  $principle = $faker->randomNumber(7);
+  $principle = round( $faker->randomNumber(7), -3 );
   $duration = rand(1,12);
   $interest_rate = rand(5,10);
-  $grace = rand(1,2);
+  $grace = 1;
 
   $value_key = array_rand($value);
   $payment_day = $payment_days[$payment_key];
@@ -29,10 +29,10 @@ $factory->define(App\Models\Loans\Loan::class, function (Faker $faker) {
       'business_type_id' => rand(1,4),
       'payment_day' => $payment_day,
       'business_location' => $faker->address,
-      'partial_amount' => ( $principle / $duration ) + ( $principle * $interest_rate / 100),
+      'partial_amount' => round( ( $principle / $duration ) + ( $principle * $interest_rate / 100), -3 ),
       'initial_start' => Carbon::parse('next ' . $payment_day )->addWeek( $grace ),
-      'application_fee' => $faker->randomNumber(4),
-      'insurance_fee' => $faker->randomNumber(4)
+      'application_fee' => round( $faker->randomNumber(4), -3 ),
+      'insurance_fee' => round( $faker->randomNumber(4), -3 )
     ];
 });
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Loans\Loan;
+use App\Models\Loans\Installment;
 use App\Models\BusinessType;
 use App\Models\LoanType;
 use Illuminate\Http\Request;
@@ -19,8 +20,9 @@ class LoanController extends Controller
      */
     public function index( $status = '' )
     {
-      $loans = Loan::all();
-      return view('site/loans/index')->withLoans($loans);
+      $loans = Loan::where( 'status', 'Active' )->get()->sortBy('latest_installment.due_date');
+      $heading = "Active Loans";
+      return view('site/loans/index')->with( [ 'loans' => $loans, 'heading' => $heading ] );
     }
 
     /**
@@ -54,7 +56,7 @@ class LoanController extends Controller
       $this->validate( $request, [
         'client_id' => 'required|max:255',
         'loan_type' => 'required|max:255',
-        'principle_amount' => 'required|numeric|max:255',
+        'principle_amount' => 'required|numeric',
         'interest_rate' => 'required|max:255',
         'penalty' => 'required|max:255',
         'grace_period' => 'required|max:255',
@@ -82,9 +84,18 @@ class LoanController extends Controller
       $loan->status= 'Active';
       $loan->application_fee = $request->application_fee;
       $loan->insurance_fee = $request->insurance_fee;
-      $loan->partial_amount = ( $request->principle_amount / $request->duration ) + ( $principle_amount * $request->interest_rate / 100);
-      $loan->initial_start = Carbon::parse('next ' . $payment_day )->addWeek( $grace );
+      $loan->partial_amount = ( $request->principle_amount / $request->duration ) + ( $request->principle_amount * $request->interest_rate / 100);
+      $loan->initial_start = Carbon::parse('next ' . $request->payment_day )->addWeek( $request->grace_period );
       $loan->save();
+
+      //create installment
+      $installment = new Installment;
+      $installment->loan_id = $loan->id;
+      $installment->expected_amount = $loan->partial_amount;
+      $installment->due_date = $loan->initial_start;
+      $installment->status = 'Pending';
+      $installment->balance = $loan->partial_amount;
+      $installment->save();
 
       return redirect()->route('loans.show', $loan);
     }
@@ -97,27 +108,6 @@ class LoanController extends Controller
      */
     public function show(Loan $loan)
     {
-      $due = new Carbon($loan->created_at);
-      switch ($loan->interval) {
-        case 'Day':
-          $carbon_nterval = CarbonInterval::days($loan->grace_period);
-          break;
-        case 'Week':
-          $carbon_nterval = CarbonInterval::weeks($loan->grace_period);
-          break;
-        case 'Month':
-          $carbon_nterval = CarbonInterval::months($loan->grace_period);
-          break;
-          case 'Quarter':
-            $carbon_nterval = CarbonInterval::quarters($loan->grace_period);
-            break;
-        case 'Year':
-          $carbon_nterval = CarbonInterval::years($loan->grace_period);
-          break;
-        default:
-          $carbon_nterval = CarbonInterval::days($loan->grace_period);
-          break;
-      }
       return view('site/loans/show')->with(['loan' => $loan]);
     }
 
@@ -146,9 +136,24 @@ class LoanController extends Controller
 
     public function today( Request $request ){
       $today = Carbon::now();
-      $loans = Loan::where('payment_day', '=', $today->englishDayOfWeek )->get();
-      return view('site/loans/index')->withLoans($loans);
+      $heading = "Today's Loans List";
+      $loans = Loan::where( 'status', 'Active' )->get()->where( 'latest_installment.due_date', $today->toDateString() );
+      return view('site/loans/index')->with( [ 'loans' => $loans, 'heading' => $heading ] );
 
+    }
+
+    public function defaulters( Request $request ){
+      $loans = Loan::where('status', '=', 'Defaulting' )->get();
+      $heading = "Defaulters";
+      return view('site/loans/index')->with( [ 'loans' => $loans, 'heading' => $heading ] );
+
+    }
+
+    public function completed( Request $request )
+    {
+      $loans = Loan::where( 'status', 'Complete' )->get()->sortBy('latest_installment.due_date');
+      $heading = "Completed Loans";
+      return view('site/loans/index')->with( [ 'loans' => $loans, 'heading' => $heading ] );
     }
 
     /**

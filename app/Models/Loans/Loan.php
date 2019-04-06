@@ -33,4 +33,8 @@ class Loan extends Model
   public function payments(){
     return $this->hasManyThrough('App\Models\Loans\Payment', 'App\Models\Loans\Installment');
   }
+
+  public function latest_installment(){
+    return $this->hasOne( Installment::class )->latest();
+  }
 }

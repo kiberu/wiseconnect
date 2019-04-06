@@ -25,7 +25,7 @@
           <div class="form-layout form-layout-6">
             @if (count($errors) > 0)
               <div class="alert alert-danger" role="alert">
-                @foreach ($errors as $error)
+                @foreach ($errors->all() as $error)
                   <ul>
                     <li>{{ $error }}</li>
                   </ul>
@@ -191,6 +191,38 @@
                               <strong>{{ $errors->first('payment_day') }}</strong>
                           </span>
                       @endif
+                    </div><!-- col-8 -->
+                  </div><!-- row -->
+
+                  <div class="row no-gutters">
+                    <div class="col-5 col-sm-4">
+                      Application Fee:
+                    </div><!-- col-4 -->
+                    <div class="col-7 col-sm-8">
+                      <div class="col-7 col-sm-8">
+                        <input  class="form-control {{ $errors->has('application_fee') ? ' is-invalid' : '' }}" value="{{ old('application_fee') }}" type="text" name="application_fee"  placeholder="Application fee">
+                        @if ($errors->has('application_fee'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('application_fee') }}</strong>
+                            </span>
+                        @endif
+                      </div><!-- col-8 -->
+                    </div><!-- col-8 -->
+                  </div><!-- row -->
+
+                  <div class="row no-gutters">
+                    <div class="col-5 col-sm-4">
+                      Insurance Fee:
+                    </div><!-- col-4 -->
+                    <div class="col-7 col-sm-8">
+                      <div class="col-7 col-sm-8">
+                        <input  class="form-control {{ $errors->has('insurance_fee') ? ' is-invalid' : '' }}" value="{{ old('insurance_fee') }}" type="text" name="insurance_fee"  placeholder="Insurance fee">
+                        @if ($errors->has('insurance_fee'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('insurance_fee') }}</strong>
+                            </span>
+                        @endif
+                      </div><!-- col-8 -->
                     </div><!-- col-8 -->
                   </div><!-- row -->
 

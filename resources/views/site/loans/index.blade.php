@@ -12,7 +12,7 @@
   <div class="br-pagetitle">
     <i class="icon icon ion-ios-color-filter-outline tx-22"></i>
     <div>
-      <h4>All Loans</h4>
+      <h4>{{ $heading }}</h4>
       <p class="mg-b-0">All loans per client</p>
     </div>
   </div><!-- d-flex -->
@@ -21,12 +21,11 @@
     <a href="{{ route('loans.create') }}" class="btn btn-info btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Add new loan</a>
 
     <div class="br-section-wrapper">
-      <table id="datatable1" class="table display responsive nowrap">
+      <table class="table display responsive nowrap">
         <thead>
           <tr>
             <th>#</th>
             <th>Client</th>
-            <th>Group</th>
             <th>Loan Type</th>
             <th>Interest Rate</th>
             <th>Status</th>
@@ -36,11 +35,15 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($loans as $loan)
-            <tr>
+          @foreach ( $loans as $loan )
+            @php
+              $today = Carbon::today();
+              $due = Carbon::parse( $loan->latest_installment->due_date );
+
+            @endphp
+            <tr class="{{ ( Carbon::today()->equalTo( Carbon::parse( $loan->latest_installment->due_date ) ) )  ? 'today-bg' : '' }}">
               <td>{{ $loan->id }}</td>
               <td><a href="{{ route('clients.show', [ $loan->client->groups->last(), $loan->client ]) }}">{{ $loan->client->first_name }} {{ $loan->client->last_name }}</a></td>
-              <td><a href="{{ route('groups.show', $loan->client->groups->last()) }}">{{ $loan->client->groups->last()->name }}</a></td>
               <td>{{ $loan->loan_type->name }}</td>
               <td>{{ $loan->interest_rate }}%</td>
               <td>{{ $loan->status }}</td>

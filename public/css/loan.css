@@ -21,3 +21,7 @@ h5 strong {
 .info-section {
   margin: 20px;
 }
+
+.today-bg{
+  background: #f0ffed !important;
+}

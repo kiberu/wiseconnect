@@ -26,7 +26,7 @@ class InstallmentController extends Controller
      */
     public function create( Loan $loan )
     {
-      $last_installment = $loan->installments->last();
+      $last_installment = $loan->latest_installment;
 
       $installment = new Installment;
       $installment->loan_id = $loan->id;

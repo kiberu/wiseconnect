@@ -41,7 +41,7 @@ class HomeController extends Controller
         $last_installment = $loan->installments->last();
         // check if today is after due date
         $due_date = Carbon::parse( $last_installment->due_date );
-        if ( $due_date->isPast() ) {
+        if ( $due_date->isPast() && ! $due_date->isCurrentDay() ) {
           // then create new installment if true
           $installment = new Installment;
           $installment->loan_id = $loan->id;

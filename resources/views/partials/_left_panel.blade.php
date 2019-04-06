@@ -24,8 +24,10 @@
         <span class="menu-item-label">Loans</span>
       </a><!-- br-menu-link -->
       <ul class="br-menu-sub">
+        <li class="sub-item"><a href="{{ route('loans.create' ) }}" class="sub-link">Add Loan</a></li>
         <li class="sub-item"><a href="{{ route('loans.today' ) }}" class="sub-link">Today's Loans</a></li>
-        <li class="sub-item"><a href="{{ route('loans.index') }}" class="sub-link">All Loans</a></li>
+        <li class="sub-item"><a href="{{ route('loans.index') }}" class="sub-link">Active Loans</a></li>
+        <li class="sub-item"><a href="{{ route('loans.defaulters') }}" class="sub-link">Defaulters</a></li>
       </ul>
     </li><!-- br-menu-item -->
     <li class="br-menu-item">
@@ -39,7 +41,7 @@
       </ul>
     </li><!-- br-menu-item -->
     <li class="br-menu-item">
-      <a href="pages.html" class="br-menu-link">
+      <a href="{{ route('finance.index') }}" class="br-menu-link">
         <i class="menu-item-icon icon ion-ios-paper-outline tx-22"></i>
         <span class="menu-item-label">Finance</span>
       </a><!-- br-menu-link -->
