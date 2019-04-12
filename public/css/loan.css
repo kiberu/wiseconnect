@@ -25,3 +25,13 @@ h5 strong {
 .today-bg{
   background: #f0ffed !important;
 }
+
+.finance-icon-section i {
+  font-size: 7em;
+}
+
+.finance-icon {
+  margin: 50px;
+  float: left;
+  display: block;width: 250px
+}

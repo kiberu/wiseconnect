@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="br-mainpanel">
   <div class="br-pageheader">
@@ -18,37 +16,37 @@
   <div class="br-pagebody">
       <div class="br-section-wrapper">
         <div class="row finance-icon-section">
-          <a href="{{ route( 'banks.index' ) }}">
+          <a href="<?php echo e(route( 'banks.index' )); ?>">
             <div class="finance-icon" >
               <i class="fa fa-piggy-bank"></i>
               <span>Bank Balance</span>
             </div>
           </a>
-          <a href="{{ route('finance.payments') }}">
+          <a href="<?php echo e(route('finance.payments')); ?>">
             <div class="finance-icon" >
               <i class="fa fa-address-book"></i>
               <span>Payments</span>
             </div>
           </a>
-          <a href="{{ route( 'finance.badloans' ) }}">
+          <a href="<?php echo e(route( 'finance.badloans' )); ?>">
             <div class="finance-icon" >
               <i class="fa fa-notes-medical"></i>
               <span>Bad loans</span>
             </div>
           </a>
-          <a href="{{ route( 'finance.insurance' ) }}">
+          <a href="<?php echo e(route( 'finance.insurance' )); ?>">
             <div class="finance-icon" >
               <i class="fa fa-house-damage"></i>
               <span>Insurance Fees</span>
             </div>
           </a>
-          <a href="{{ route( 'finance.application' ) }}">
+          <a href="<?php echo e(route( 'finance.application' )); ?>">
             <div class="finance-icon" >
               <i class="fa fa-handshake"></i>
               <span>Application Fees</span>
             </div>
           </a>
-          <a href="{{ route( 'expenditures.index' ) }}">
+          <a href="<?php echo e(route( 'expenditures.index' )); ?>">
             <div class="finance-icon" >
               <i class="fa fa-comments-dollar"></i>
               <span>Expenditures</span>
@@ -57,26 +55,26 @@
         </div>
       </div>
   </div><!-- br-pagebody -->
-  @include('partials._footer')
+  <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </div><!-- br-mainpanel -->
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
-  <script src="{{asset('lib/jquery/jquery.min.js' ) }}"></script>
-  <script src="{{asset('lib/jquery-ui/ui/widgets/datepicker.js' ) }}"></script>
-  <script src="{{asset('lib/bootstrap/js/bootstrap.bundle.min.js' ) }}"></script>
-  <script src="{{asset('lib/perfect-scrollbar/perfect-scrollbar.min.js' ) }}"></script>
-  <script src="{{asset('lib/moment/min/moment.min.js' ) }}"></script>
-  <script src="{{asset('lib/peity/jquery.peity.min.js' ) }}"></script>
-  <script src="{{asset('lib/highlightjs/highlight.pack.min.js' ) }}"></script>
-  <script src="{{asset('lib/datatables.net/js/jquery.dataTables.min.js' ) }}"></script>
-  <script src="{{asset('lib/datatables.net-dt/js/dataTables.dataTables.min.js' ) }}"></script>
-  <script src="{{asset('lib/datatables.net-responsive/js/dataTables.responsive.min.js' ) }}"></script>
-  <script src="{{asset('lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js' ) }}"></script>
-  <script src="{{asset('lib/select2/js/select2.min.js' ) }}"></script>
+<?php $__env->startSection('scripts'); ?>
+  <script src="<?php echo e(asset('lib/jquery/jquery.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/jquery-ui/ui/widgets/datepicker.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/bootstrap/js/bootstrap.bundle.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/perfect-scrollbar/perfect-scrollbar.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/moment/min/moment.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/peity/jquery.peity.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/highlightjs/highlight.pack.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net/js/jquery.dataTables.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net-dt/js/dataTables.dataTables.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net-responsive/js/dataTables.responsive.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/select2/js/select2.min.js' )); ?>"></script>
 
-  <script src="{{asset('js/bracket.js' ) }}"></script>
+  <script src="<?php echo e(asset('js/bracket.js' )); ?>"></script>
   <script>
     $(function(){
       'use strict';
@@ -101,4 +99,6 @@
 
     });
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

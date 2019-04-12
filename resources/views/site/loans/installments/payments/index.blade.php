@@ -5,57 +5,48 @@
 <div class="br-mainpanel">
   <div class="br-pageheader">
     <nav class="breadcrumb pd-0 mg-0 tx-12">
-      <span class="breadcrumb-item active">Finance</span>
+      <span class="breadcrumb-item active">Home</span>
     </nav>
   </div><!-- br-pageheader -->
   <div class="br-pagetitle">
     <i class="icon icon ion-ios-bookmarks-outline"></i>
     <div>
-      <h4>Finance Home</h4>
+      <h4>Payments</h4>
+      <p class="mg-b-0">{{ Auth::user()->getRoleNames()}}</p>
     </div>
   </div><!-- d-flex -->
 
   <div class="br-pagebody">
-      <div class="br-section-wrapper">
-        <div class="row finance-icon-section">
-          <a href="{{ route( 'banks.index' ) }}">
-            <div class="finance-icon" >
-              <i class="fa fa-piggy-bank"></i>
-              <span>Bank Balance</span>
-            </div>
-          </a>
-          <a href="{{ route('finance.payments') }}">
-            <div class="finance-icon" >
-              <i class="fa fa-address-book"></i>
-              <span>Payments</span>
-            </div>
-          </a>
-          <a href="{{ route( 'finance.badloans' ) }}">
-            <div class="finance-icon" >
-              <i class="fa fa-notes-medical"></i>
-              <span>Bad loans</span>
-            </div>
-          </a>
-          <a href="{{ route( 'finance.insurance' ) }}">
-            <div class="finance-icon" >
-              <i class="fa fa-house-damage"></i>
-              <span>Insurance Fees</span>
-            </div>
-          </a>
-          <a href="{{ route( 'finance.application' ) }}">
-            <div class="finance-icon" >
-              <i class="fa fa-handshake"></i>
-              <span>Application Fees</span>
-            </div>
-          </a>
-          <a href="{{ route( 'expenditures.index' ) }}">
-            <div class="finance-icon" >
-              <i class="fa fa-comments-dollar"></i>
-              <span>Expenditures</span>
-            </div>
-          </a>
-        </div>
-      </div>
+
+    <div class="br-section-wrapper info-section">
+      <table id="datatable1" class="table display responsive nowrap">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Item Name</th>
+            <th>Unit Cost</th>
+            <th>Amount</th>
+            <th>User</th>
+            <th>Notes</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($payments as $payment)
+            <tr>
+              <td>{{ $payment->id }}</td>
+              <td>{{ $payment->item_name }}</td>
+              <td>{{ $payment->unit_cost }}</td>
+              <td>{{ $payment->amount }}</td>
+              <td>{{ $payment->notes }}</td>
+              <td>{{ $payment->created_at }}</td>
+            </tr>
+
+          @endforeach
+
+        </tbody>
+      </table>
+    </div>
   </div><!-- br-pagebody -->
   @include('partials._footer')
 </div><!-- br-mainpanel -->

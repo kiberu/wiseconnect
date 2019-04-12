@@ -23,6 +23,8 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::Resource( '/users', 'UserController' );
+Route::Resource( '/banks', 'BankController' );
+Route::Resource( '/expenditures', 'ExpenditureController' );
 Route::Resource( '/groups', 'GroupController' );
 Route::prefix('/groups/{group}')->group(function () {
   Route::Resource('clients', 'ClientController');
@@ -38,3 +40,8 @@ Route::prefix('/loans/{loan}')->group(function () {
 Route::get('/loans-today', 'LoanController@today')->name('loans.today');
 Route::get('/loans-defaulters', 'LoanController@defaulters')->name('loans.defaulters');
 Route::get('/finance', 'FinanceController@index')->name('finance.index');
+Route::get('/cash-at-hand', 'FinanceController@cash')->name('finance.cash');
+Route::get('/payments-list', 'FinanceController@payments')->name('finance.payments');
+Route::get('/bad-loans', 'FinanceController@index')->name('finance.badloans');
+Route::get('/insurance-fees', 'FinanceController@insurance')->name('finance.insurance');
+Route::get('/application-fees', 'FinanceController@application')->name('finance.application');
