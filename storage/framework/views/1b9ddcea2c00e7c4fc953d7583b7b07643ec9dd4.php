@@ -28,7 +28,7 @@
     <meta name="description" content="Premium Quality and Responsive UI for Dashboard.">
     <meta name="author" content="ThemePixels">
 
-    <title>Bracket Plus Responsive Bootstrap 4 Admin Template</title>
+    <title>Wise Connect Loan System Dashboard</title>
 
     <!-- vendor css -->
     <link href="<?php echo e(asset('../lib/@fortawesome/fontawesome-free/css/all.min.css')); ?>" rel="stylesheet">
