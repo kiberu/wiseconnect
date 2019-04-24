@@ -29,10 +29,22 @@
       @endif
       <form method="POST" action="{{ route('banks.store') }}">
           @csrf
+        <label>Transaction ID</lable><input class="" name="trans_id"/>
+          @if ($errors->has('trans_id'))
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $errors->first('trans_id') }}</strong>
+              </span>
+          @endif
         <label>Amount</lable><input class="" name="amount"/>
           @if ($errors->has('amount'))
               <span class="invalid-feedback" role="alert">
                   <strong>{{ $errors->first('amount') }}</strong>
+              </span>
+          @endif
+        <label>Banked By</lable><input class="" name="banked_by"/>
+          @if ($errors->has('banked_by'))
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $errors->first('banked_by') }}</strong>
               </span>
           @endif
         <lable>Type</lable>
@@ -40,6 +52,10 @@
             <option selected disabled>Choose Option</option>
             <option {{ ( old('type') == 'Deposit' ) ? 'selected' : '' }} value="Deposit">Deposit</option>
             <option {{ ( old('type') == 'Withdraw' ) ? 'selected' : '' }} value="Withdraw">Withdraw</option>
+            <option {{ ( old('type') == 'Transfer' ) ? 'selected' : '' }} value="Transfer">Transfer</option>
+            <option {{ ( old('type') == 'Interest' ) ? 'selected' : '' }} value="Interest">Interest</option>
+            <option {{ ( old('type') == 'Commission' ) ? 'selected' : '' }} value="Commission">Commission</option>
+            <option {{ ( old('type') == 'Bank_charges' ) ? 'selected' : '' }} value="Bank_charges">Bank_charges</option>
 
           </select>
           @if ($errors->has('loan_type'))
@@ -54,10 +70,12 @@
       <table id="datatable1" class="table display responsive nowrap">
         <thead>
           <tr>
-            <th>#TransactioId</th>
+            <th>#</th>
+            <th>Transaction Id</th>
             <th>Amount</th>
             <th>Type</th>
-            <th>User</th>
+            <th>Banked By</th>
+            <th>Entry By</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -65,8 +83,10 @@
           @foreach ($banks as $bank)
             <tr>
               <td>{{ $bank->id }}</td>
+              <td>{{ $bank->transaction_id }}</td>
               <td>{{ $bank->amount }}</td>
               <td>{{ $bank->type }}</td>
+              <td>{{ $bank->banked_by }}</td>
               <td>{{ $bank->user->fullName }}</td>
               <td>{{ $bank->created_at }}</td>
             </tr>

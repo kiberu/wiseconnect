@@ -6,9 +6,14 @@ use App\Models\Clients\Client;
 use App\Models\Clients\Group;
 
 use Illuminate\Http\Request;
+use Session;
 
 class ClientController extends Controller
 {
+    public function __construct() {
+      $this->middleware('permission:manage-clients');
+      $this->middleware('permission:edit-groups', ['only' => [ 'edit', 'update', 'destroy' ] ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -63,6 +68,7 @@ class ClientController extends Controller
 
       $client->groups()->attach([$group->id]);
 
+      Session::flash('success', $client->first_name . ' ' . $client->last_name . ' has been added to ' . $group->name . ' group.' );
       return redirect()->route('groups.show', $group);
     }
 
@@ -120,7 +126,8 @@ class ClientController extends Controller
 
       $client->groups()->sync([$group->id]);
 
-      return redirect()->route('clients.show', [$group, $client]);
+      Session::flash('success', $client->first_name . ' ' . $client->last_name . ' has been edited');
+      return redirect()->route('groups.show', $group);
     }
 
     /**
@@ -129,8 +136,12 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy( Group $group, Client $client )
     {
-        //
+      // // Detach all roles from the user...
+      // $client->groups()->detach();
+      // // $client->delete();
+      // Session::flash('success', $client->first_name . ' ' . $client->last_name . ' has been deleted from ' . $group->name . ' group.' );
+      // return redirect()->route('groups.show', $group );
     }
 }

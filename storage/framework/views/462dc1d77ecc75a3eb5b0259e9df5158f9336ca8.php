@@ -19,7 +19,7 @@
           <a href="<?php echo e(route( 'banks.index' )); ?>">
             <div class="finance-icon" >
               <i class="fa fa-piggy-bank"></i>
-              <span>Bank Balance</span>
+              <span>Bank Transactions</span>
             </div>
           </a>
           <a href="<?php echo e(route('finance.payments')); ?>">
@@ -43,13 +43,25 @@
           <a href="<?php echo e(route( 'finance.application' )); ?>">
             <div class="finance-icon" >
               <i class="fa fa-handshake"></i>
-              <span>Application Fees</span>
+              <span>Other Fees</span>
             </div>
           </a>
           <a href="<?php echo e(route( 'expenditures.index' )); ?>">
             <div class="finance-icon" >
               <i class="fa fa-comments-dollar"></i>
               <span>Expenditures</span>
+            </div>
+          </a>
+          <a href="<?php echo e(route( 'payables.index' )); ?>">
+            <div class="finance-icon" >
+              <i class="fa fa-hands-helping"></i>
+              <span>Payables</span>
+            </div>
+          </a>
+          <a href="<?php echo e(route( 'receivables.index' )); ?>">
+            <div class="finance-icon" >
+              <i class="fa fa-hand-holding-heart"></i>
+              <span>Receivables</span>
             </div>
           </a>
         </div>

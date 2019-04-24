@@ -20,6 +20,11 @@
   <div class="br-pagebody">
     <div class="br-section-wrapper">
       <div class="table-wrapper">
+        @if ( Session::has('success'))
+          <div class="alert alert-success" role="alert">
+            {{ Session::get('success')}}
+          </div>
+        @endif
         <table id="datatable1" class="table display responsive nowrap">
           <thead>
             <tr>
@@ -27,8 +32,9 @@
               <th class="wd-15p">Group Name</th>
               <th class="wd-15p">Landmark</th>
               <th class="wd-20p">Number of Clients</th>
-              <th class="wd-10p">Edit</th>
-              <th class="wd-10p">Delete Group</th>
+              @if ( Auth::user()->can('edit-groups') )
+                <th class="wd-10p">Edit</th>
+              @endif
             </tr>
           </thead>
           <tbody>
@@ -38,14 +44,9 @@
                 <td><a href="{{ route('groups.show', $group) }}">{{ $group->name }}</a></td>
                 <td>{{ $group->landmark }}</td>
                 <td>{{ $group->clients()->count() }}</td>
-                <td><a href="{{ route('groups.edit', $group) }}" type="button" class="btn btn-primary">Edit</a></td>
-                <td>
-                  <form method="POST" action="{{ route('groups.destroy', $group) }}">
-                    @csrf
-                    {{ method_field('delete')}}
-                    <input type="submit" value="Delete" class="btn btn-danger">
-                  </form>
-                </td>
+                @if ( Auth::user()->can('edit-groups') )
+                  <td><a href="{{ route('groups.edit', $group) }}" type="button" class="btn btn-primary">Edit</a></td>
+                @endif
               </tr>
             @endforeach
 

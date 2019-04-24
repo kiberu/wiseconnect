@@ -58,16 +58,11 @@
         <div class="col-xl-9">
           <h2>Payments Information</h2>
           <hr>
-          <?php
-            $pricinple = $loan->principle;
-            $interest = ($loan->principle * $loan->interest_rate / 100) * $loan->duration;
-            $total = $pricinple + $interest;
-          ?>
           <h6>Grace Period:</strong> <?php echo e($loan->grace_period); ?> Weeks<br></h6>
           <hr>
-          <h6>Total Due:</strong> <?php echo e(number_format($total)); ?> UGX<br></h6>
+          <h6>Total Due:</strong> <?php echo e(number_format( $loan->total_due() )); ?> UGX<br></h6>
           <hr>
-          <h6>Balance:</strong> <?php echo e(number_format( $total - $loan->payments->sum( 'amount' ) )); ?> UGX
+          <h6>Balance:</strong> <?php echo e(number_format( $loan->balance() )); ?> UGX
           <hr>
           <h6>Each Installment:</strong> <?php echo e(number_format( $loan->partial_amount )); ?> UGX (With Interest)<br></h6>
           <hr>

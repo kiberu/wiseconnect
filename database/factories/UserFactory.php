@@ -26,7 +26,7 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
 });
 
 $factory->afterCreating(App\Models\User::class, function ($user, $faker) {
-  $roles = array('admin', 'loan_manager', 'client_manager', 'general_manager');
+  $roles = array('general_manager','branch_manager','loan_officer');
   $key = array_rand($roles);
   $user->assignRole($roles[$key]);
 });

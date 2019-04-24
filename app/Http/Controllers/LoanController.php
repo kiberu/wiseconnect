@@ -13,6 +13,11 @@ use Carbon\CarbonInterval;
 class LoanController extends Controller
 {
 
+    public function __construct() {
+      $this->middleware('permission:manage-loans');
+      $this->middleware('permission:create-loans', ['only' => ['create','edit','store','update','delete']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

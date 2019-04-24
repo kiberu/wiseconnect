@@ -25,6 +25,15 @@
         <div class="col-xl-3"></div>
         <div class="col-xl-6 mg-t-20 mg-xl-t-0">
           <div class="form-layout form-layout-5">
+            @if (count($errors) > 0)
+              <div class="alert alert-danger" role="alert">
+                @foreach ($errors->all() as $error)
+                  <ul>
+                    <li>{{ $error }}</li>
+                  </ul>
+                @endforeach
+              </div>
+            @endif
             <form method="POST" action="{{ route('clients.store', $group) }}">
                 @csrf
                 <div class="form-layout form-layout-6">
@@ -86,7 +95,7 @@
 
                     </div><!-- col-8 -->
                   </div><!-- row -->
-              
+
                   <div class="row no-gutters">
                     <div class="col-5 col-sm-4">
                       Next of Kin(*):

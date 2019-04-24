@@ -14,7 +14,7 @@
     <!-- ########## START: RIGHT PANEL ########## -->
     <?php echo $__env->make('partials._right_panel', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <!-- ########## END: RIGHT PANEL ########## --->
-    
+
     <?php echo $__env->yieldContent('content'); ?>
 
     <?php echo $__env->yieldContent('scripts'); ?>

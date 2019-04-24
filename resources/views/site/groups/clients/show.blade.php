@@ -7,7 +7,7 @@
     <nav class="breadcrumb pd-0 mg-0 tx-12">
       <a class="breadcrumb-item" href="{{route('home')}}">Home</a>
       <a class="breadcrumb-item" href="{{route('groups.index')}}">Groups</a>
-      <a class="breadcrumb-item" href="{{route('groups.index')}}">{{ $group->name  }}</a>
+      <a class="breadcrumb-item" href="{{route('groups.show', $group)}}">{{ $group->name  }}</a>
       <span class="breadcrumb-item active"> Client #{{ $client->id }}</span>
     </nav>
   </div><!-- br-pageheader -->
@@ -21,7 +21,9 @@
 
   <div class="br-pagebody">
     <div class="br-section-wrapper">
-      <a href="{{ route('clients.edit',[$group, $client] ) }}" class="btn btn-info btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Edit Client</a>
+      @if ( Auth::user()->can('edit-groups') )
+        <a href="{{ route('clients.edit',[$group, $client] ) }}" class="btn btn-info btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Edit Client</a>
+      @endif
       <div class="row mg-t-20">
         <div class="col-xl-3"></div>
         <div class="col-xl-9">

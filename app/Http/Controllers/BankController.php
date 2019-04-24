@@ -40,13 +40,16 @@ class BankController extends Controller
     {
       $this->validate( $request, [
         'amount' => 'required|numeric',
-        'type' => 'required|string|max:255',
+        'type' => 'required|string',
+        'trans_id' => 'required|string',
       ]);
 
 
       $transaction = new Bank;
       $transaction->amount = $request->amount;
       $transaction->type = $request->type;
+      $transaction->transaction_id = $request->trans_id;
+      $transaction->banked_by = $request->banked_by;
       $transaction->user_id = Auth::user()->id;
 
       $transaction->save();

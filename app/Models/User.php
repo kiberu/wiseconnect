@@ -50,6 +50,14 @@ class User extends Authenticatable
       return $this->hasMany('App\Models\Expenditure');
     }
 
+    public function payables(){
+      return $this->hasMany('App\Models\Payable');
+    }
+
+    public function receivables(){
+      return $this->hasMany('App\Models\Receivable');
+    }
+
     public function getFullNameAttribute(){
       return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
     }

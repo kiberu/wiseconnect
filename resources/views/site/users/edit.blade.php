@@ -6,7 +6,7 @@
   <div class="br-pageheader">
     <nav class="breadcrumb pd-0 mg-0 tx-12">
       <a class="breadcrumb-item" href="{{route('home')}}">Home</a>
-      <a class="breadcrumb-item" href="{{route('users.index')}}">System Users</a>
+      <a class="breadcrumb-item" href="{{route('user.index')}}">System Users</a>
       <span class="breadcrumb-item active">Edit User</span>
     </nav>
   </div><!-- br-pageheader -->

@@ -27,10 +27,22 @@
       <?php endif; ?>
       <form method="POST" action="<?php echo e(route('banks.store')); ?>">
           <?php echo csrf_field(); ?>
+        <label>Transaction ID</lable><input class="" name="trans_id"/>
+          <?php if($errors->has('trans_id')): ?>
+              <span class="invalid-feedback" role="alert">
+                  <strong><?php echo e($errors->first('trans_id')); ?></strong>
+              </span>
+          <?php endif; ?>
         <label>Amount</lable><input class="" name="amount"/>
           <?php if($errors->has('amount')): ?>
               <span class="invalid-feedback" role="alert">
                   <strong><?php echo e($errors->first('amount')); ?></strong>
+              </span>
+          <?php endif; ?>
+        <label>Banked By</lable><input class="" name="banked_by"/>
+          <?php if($errors->has('banked_by')): ?>
+              <span class="invalid-feedback" role="alert">
+                  <strong><?php echo e($errors->first('banked_by')); ?></strong>
               </span>
           <?php endif; ?>
         <lable>Type</lable>
@@ -38,6 +50,10 @@
             <option selected disabled>Choose Option</option>
             <option <?php echo e(( old('type') == 'Deposit' ) ? 'selected' : ''); ?> value="Deposit">Deposit</option>
             <option <?php echo e(( old('type') == 'Withdraw' ) ? 'selected' : ''); ?> value="Withdraw">Withdraw</option>
+            <option <?php echo e(( old('type') == 'Transfer' ) ? 'selected' : ''); ?> value="Transfer">Transfer</option>
+            <option <?php echo e(( old('type') == 'Interest' ) ? 'selected' : ''); ?> value="Interest">Interest</option>
+            <option <?php echo e(( old('type') == 'Commission' ) ? 'selected' : ''); ?> value="Commission">Commission</option>
+            <option <?php echo e(( old('type') == 'Bank_charges' ) ? 'selected' : ''); ?> value="Bank_charges">Bank_charges</option>
 
           </select>
           <?php if($errors->has('loan_type')): ?>
@@ -52,10 +68,12 @@
       <table id="datatable1" class="table display responsive nowrap">
         <thead>
           <tr>
-            <th>#TransactioId</th>
+            <th>#</th>
+            <th>Transaction Id</th>
             <th>Amount</th>
             <th>Type</th>
-            <th>User</th>
+            <th>Banked By</th>
+            <th>Entry By</th>
             <th>Date</th>
           </tr>
         </thead>
@@ -63,8 +81,10 @@
           <?php $__currentLoopData = $banks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $bank): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
               <td><?php echo e($bank->id); ?></td>
+              <td><?php echo e($bank->transaction_id); ?></td>
               <td><?php echo e($bank->amount); ?></td>
               <td><?php echo e($bank->type); ?></td>
+              <td><?php echo e($bank->banked_by); ?></td>
               <td><?php echo e($bank->user->fullName); ?></td>
               <td><?php echo e($bank->created_at); ?></td>
             </tr>

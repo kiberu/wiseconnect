@@ -7,18 +7,29 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 use Session;
 
 class UserController extends Controller
 {
+    public function __construct() {
+      $this->middleware('permission:manage-users');
+      $this->middleware('permission:read-users', ['only' => ['index']]);
+      $this->middleware('permission:delete-users', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( $type = '' )
     {
       $users = User::all()->sortByDesc('created_at');
+
+      if ( $type == 'loan_officer' ) {
+        $users = $users = User::role( 'loan_officer' )->get()->sortByDesc('created_at');
+      }
       return view('site/users/index')->withUsers($users);
     }
 
@@ -30,6 +41,13 @@ class UserController extends Controller
     public function create()
     {
       $roles = Role::all();
+      if ( Auth::user()->hasRole('branch_manager') ) {
+        foreach ($roles as $key => $role) {
+          if ( $role->name != 'loan_officer' ) {
+            unset($roles[$key]);
+          }
+        }
+      }
       return view('site.users.create')->with(['roles'=>$roles]);
     }
 

@@ -18,8 +18,9 @@
   </div><!-- d-flex -->
 
   <div class="br-pagebody">
-    <a href="{{ route('loans.create') }}" class="btn btn-info btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Add new loan</a>
-
+    @if ( Auth::user()->can('create-loans') )
+      <a href="{{ route('loans.create') }}" class="btn btn-info btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Add new loan</a>
+    @endif
     <div class="br-section-wrapper">
       <table class="table display responsive nowrap">
         <thead>

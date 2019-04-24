@@ -9,6 +9,9 @@ use Carbon\Carbon;
 
 class InstallmentController extends Controller
 {
+    public function __construct() {
+      $this->middleware('permission:manage-loans');
+    }
     /**
      * Display a listing of the resource.
      *

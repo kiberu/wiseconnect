@@ -42,12 +42,13 @@
 
   <body>
 
-    <div class="d-flex align-items-center justify-content-center bg-gray-200 ht-100v">
-
-      <div class="login-wrapper wd-300 wd-xs-400 pd-25 pd-xs-40 bg-white rounded shadow-base">
-        <div class="signin-logo tx-center tx-28 tx-bold tx-inverse"><span class="tx-normal">[</span>loan<span class="tx-info">system</span> <span class="tx-normal">]</span></div>
-        <div class="tx-center mg-b-40">Login</div>
-        <form method="POST" action="{{ route('login') }}">
+    <div class="d-flex align-items-center justify-content-center ht-100v">
+      <img src="{{ asset('img/money.jpg') }}" class="wd-100p ht-100p object-fit-cover" alt="">
+      <div class="overlay-body bg-black-6 d-flex align-items-center justify-content-center">
+        <div class="login-wrapper wd-300 wd-xs-350 pd-25 pd-xs-40 rounded bd bd-white-2 bg-black-7">
+          <div class="signin-logo tx-center tx-28 tx-bold tx-white"><span class="tx-normal">[</span> wise <span class="tx-info">connect</span> <span class="tx-normal">]</span></div>
+          <div class="tx-white-5 tx-center mg-b-60">LOAN SYSTEM DASHBOARD</div>
+            <form method="POST" action="{{ route('login') }}">
             @csrf
 
             <div class="form-group row">
@@ -94,8 +95,10 @@
             </div>
         </form>
 
-      </div><!-- login-wrapper -->
+        </div><!-- login-wrapper -->
+      </div><!-- overlay-body -->
     </div><!-- d-flex -->
+
 
     <script src="{{asset('../lib/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('../lib/jquery-ui/ui/widgets/datepicker.js')}}"></script>

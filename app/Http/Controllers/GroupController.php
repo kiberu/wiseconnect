@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clients\Group;
+use App\Models\Clients\Client;
 use Illuminate\Http\Request;
+use Session;
+
 
 class GroupController extends Controller
 {
+    public function __construct() {
+      $this->middleware('permission:manage-groups');
+      $this->middleware('permission:manage-clients', ['only' => ['show','index']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -47,6 +55,7 @@ class GroupController extends Controller
       $group->landmark = $request->landmark;
       $group->save();
 
+      Session::flash('success', $group->name . ' has been added' );
       return redirect()->route('groups.index');
     }
 
@@ -58,7 +67,9 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        return view('site/groups/show')->withGroup($group);
+        $groups = Group::all();
+        $clients = $group->clients()->get();
+        return view('site/groups/show')->with(['clients' => $clients, 'group' => $group, 'groups' => $groups]);
     }
 
     /**
@@ -90,7 +101,8 @@ class GroupController extends Controller
       $group->landmark = $request->landmark;
       $group->save();
 
-      return redirect()->route('groups.edit',$group);
+      Session::flash('success', 'Group has been edited');
+      return redirect()->route('groups.show',$group);
     }
 
     /**
@@ -102,5 +114,20 @@ class GroupController extends Controller
     public function destroy(Group $group)
     {
         //
+    }
+
+    public function transfer(Request $request, Group $group )
+    {
+      $this->validate( $request, [
+        'client_id' => 'required|numeric',
+        'group_id' => 'required|numeric',
+      ]);
+
+      $client = Client::find( $request->client_id );
+      $client->groups()->sync([$request->group_id]);
+      $new_group = Group::find( $request->group_id );
+
+      Session::flash('success', $client->first_name . ' ' . $client->last_name . ' has been transfered to ' . $new_group->name );
+      return redirect()->route('groups.show', $group);
     }
 }

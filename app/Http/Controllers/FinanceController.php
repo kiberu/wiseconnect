@@ -9,6 +9,10 @@ use App\Models\Loans\Payment;
 
 class FinanceController extends Controller
 {
+  public function __construct() {
+    $this->middleware('permission:manage-finance');
+  }
+
   public function index()
   {
     return view('site/finance/index');

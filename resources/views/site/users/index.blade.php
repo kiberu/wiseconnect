@@ -21,7 +21,7 @@
     <div class="br-section-wrapper">
       @if (Session::has('success'))
         <div class="alert alert-success" role="alert">
-          shakes
+          {{ Session::get('success') }}
         </div>
       @endif
       <div class="table-wrapper">

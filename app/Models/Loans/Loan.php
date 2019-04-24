@@ -37,4 +37,28 @@ class Loan extends Model
   public function latest_installment(){
     return $this->hasOne( Installment::class )->latest();
   }
+
+  public function number_of_installments(){
+    return $this->installments->count();
+  }
+
+  public function installments_balance(){
+    return $this->installments->sum( 'balance' );
+  }
+
+  public function total_paid(){
+    return $this->payments->sum( 'amount' );
+  }
+
+  public function balance(){
+    return $this->total_due() - $this->payments->sum( 'amount' );
+  }
+
+  public function total_due(){
+    return ( $this->interest_amount() + $this->attributes[ 'principle' ] );
+  }
+
+  public function interest_amount(){
+    return $this->attributes[ 'principle' ] * ( ( $this->attributes[ 'interest_rate' ] / 100) * $this->attributes[ 'duration' ] );
+  }
 }

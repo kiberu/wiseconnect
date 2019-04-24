@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Loans\Loan;
+use App\Models\Clients\Group;
+use App\Models\Clients\Client;
+use App\Models\Bank;
 use Carbon\Carbon;
 use App\Models\Loans\Installment;
 
@@ -27,8 +30,54 @@ class HomeController extends Controller
      */
     public function index()
     {
-      $this->update_loans();
-      return view('home');
+      // $this->update_loans();
+      $groups = Group::all();
+      $clients = Client::all();
+      $loans = Loan::where( 'status', 'Active' )->get();
+      $balance = 0;
+      if ( ! empty( $loans ) ) {
+        foreach ($loans as $loan) {
+          $balance += $loan->balance();
+        }
+      }
+
+      $defaulters = Loan::where('status', '=', 'Defaulting' )->get();
+      $def_balance = 0;
+
+      if ( ! empty( $defaulters ) ) {
+        foreach ($defaulters as $defaulter) {
+          $def_balance += $loan->balance();
+        }
+      }
+
+      $today = Carbon::now();
+      $today_loans = Loan::where( 'status', 'Active' )->get()->where( 'latest_installment.due_date', $today->toDateString() );
+      $today_balance = 0;
+      $paid_total = 0;
+      if ( ! empty( $today_loans ) ) {
+        foreach ( $today_loans as $today_loan ) {
+          $today_balance += $today_loan->installments_balance();
+          $paid_total += $today_loan->total_paid();
+        }
+      }
+
+      $all_loans = Loan::all();
+      $banks = Bank::all();
+
+      return view('home')->with( [
+        'groups' => $groups,
+        'clients' => $clients,
+        'loans'  => $loans,
+        'balance' => $balance,
+        'defaulters' => $defaulters,
+        'def_balance' => $def_balance,
+        'today_loans' => $today_loans,
+        'today_balance' => $today_balance,
+        'paid_total' => $paid_total,
+        'today' => $today,
+        'all_loans' => $all_loans,
+        'banks' => $banks,
+        ] );
     }
 
     private function update_loans(){

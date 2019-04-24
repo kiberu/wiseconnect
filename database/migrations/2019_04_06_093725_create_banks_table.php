@@ -17,6 +17,8 @@ class CreateBanksTable extends Migration
             $table->increments('id');
             $table->integer('amount');
             $table->string('type');
+            $table->string('banked_by');
+            $table->string('transaction_id');
             $table->integer('user_id')->unsigned();
 
             $table->timestamps();

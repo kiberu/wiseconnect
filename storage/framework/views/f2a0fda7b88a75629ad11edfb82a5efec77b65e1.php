@@ -5,7 +5,7 @@
     <nav class="breadcrumb pd-0 mg-0 tx-12">
       <a class="breadcrumb-item" href="<?php echo e(route('home')); ?>">Home</a>
       <a class="breadcrumb-item" href="<?php echo e(route('groups.index')); ?>">Groups</a>
-      <a class="breadcrumb-item" href="<?php echo e(route('groups.index')); ?>"><?php echo e($group->name); ?></a>
+      <a class="breadcrumb-item" href="<?php echo e(route('groups.show', $group)); ?>"><?php echo e($group->name); ?></a>
       <span class="breadcrumb-item active"> Client #<?php echo e($client->id); ?></span>
     </nav>
   </div><!-- br-pageheader -->
@@ -19,7 +19,9 @@
 
   <div class="br-pagebody">
     <div class="br-section-wrapper">
-      <a href="<?php echo e(route('clients.edit',[$group, $client] )); ?>" class="btn btn-info btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Edit Client</a>
+      <?php if( Auth::user()->can('edit-groups') ): ?>
+        <a href="<?php echo e(route('clients.edit',[$group, $client] )); ?>" class="btn btn-info btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Edit Client</a>
+      <?php endif; ?>
       <div class="row mg-t-20">
         <div class="col-xl-3"></div>
         <div class="col-xl-9">
