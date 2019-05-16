@@ -13,19 +13,23 @@ class CreateInstallmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('installments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('loan_id')->unsigned();
-            $table->string('expected_amount');
-            $table->date('due_date');
-            $table->string('status')->default('pending');
-            $table->integer('balance');
-            $table->timestamps();
-        });
+        Schema::create(
+            'installments', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('loan_id')->unsigned();
+                $table->string('expected_amount');
+                $table->date('due_date');
+                $table->string('status')->default('pending');
+                $table->integer('balance');
+                $table->timestamps();
+            }
+        );
 
-        Schema::table('installments', function (Blueprint $table) {
-          $table->foreign('loan_id')->references('id')->on('loans');
-        });
+        Schema::table(
+            'installments', function (Blueprint $table) {
+                $table->foreign('loan_id')->references('id')->on('loans');
+            }
+        );
     }
 
     /**

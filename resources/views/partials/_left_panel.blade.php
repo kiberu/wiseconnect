@@ -12,7 +12,17 @@
       <li class="br-menu-item">
         <a href="#" class="br-menu-link with-sub">
           <i class="menu-item-icon icon ion-ios-color-filter-outline tx-24"></i>
-          <span class="menu-item-label">Clients</span>
+          <span class="menu-item-label">Applications</span>
+        </a><!-- br-menu-link -->
+        <ul class="br-menu-sub">
+          <li class="sub-item"><a href="{{ route('clients.create') }}" class="sub-link">New Application</a></li>
+          <li class="sub-item"><a href="{{ route('groups.index') }}" class="sub-link">All Applicants</a></li>
+        </ul>
+      </li><!-- br-menu-item -->
+      <li class="br-menu-item">
+        <a href="#" class="br-menu-link with-sub">
+          <i class="menu-item-icon icon ion-ios-color-filter-outline tx-24"></i>
+          <span class="menu-item-label">Groups</span>
         </a><!-- br-menu-link -->
         <ul class="br-menu-sub">
           <li class="sub-item"><a href="{{ route('groups.create') }}" class="sub-link">Add new group</a></li>

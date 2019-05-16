@@ -27,10 +27,9 @@ Route::group(['middleware' => [ 'web', 'auth'] ], function () {
   Route::Resource( '/receivables', 'ReceivableController' );
   Route::Resource( '/groups', 'GroupController' );
   Route::post('/groups/transfer/{group}', 'GroupController@transfer' )->name('groups.transfer');
-  Route::prefix('/groups/{group}')->group(function () {
-    Route::Resource('clients', 'ClientController');
-  });
+  Route::Resource('clients', 'ClientController');
   Route::Resource( '/loans', 'LoanController');
+  Route::post( '/new-application', 'ClientController@store');
   Route::prefix('/loans/{loan}')->group(function () {
     Route::Resource('installments', 'InstallmentController');
     Route::prefix('/installments/{installment}')->group(function () {

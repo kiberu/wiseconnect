@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Clients\Client;
 use App\Models\Clients\Group;
+use App\Models\BusinessType;
+use App\Models\LoanType;
+use App\Models\Loans\Loan;
+
 
 use Illuminate\Http\Request;
 use Session;
 
 class ClientController extends Controller
 {
-    public function __construct() {
-      $this->middleware('permission:manage-clients');
-      $this->middleware('permission:edit-groups', ['only' => [ 'edit', 'update', 'destroy' ] ]);
+    public function __construct()
+    {
+        $this->middleware('permission:manage-clients');
+        $this->middleware('permission:edit-groups', ['only' => [ 'edit', 'update', 'destroy' ] ]);
     }
     /**
      * Display a listing of the resource.
@@ -29,119 +34,172 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create( Group $group )
+    public function create()
     {
+        $business_types = BusinessType::all();
+        $loan_types = LoanType::all();
+        $payment_days = $this->get_payment_days();
+        return view('site.clients.create')->with(['business_types' => $business_types, 'loan_types' => $loan_types, 'payment_days' => $payment_days]);;
+    }
 
-      return view('site.groups.clients.create')->with(['group' => $group]);
+    public function get_payment_days()
+    {
+        return array(
+        'Monday' => 'Monday',
+        'Tuesday' => 'Tuesday',
+        'Wednesday' => 'Wednesday',
+        'Thursday' => 'Thursday',
+        'Friday' => 'Friday',
+        'Saturday' => 'Saturday',
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Group $group)
+    public function store( Request $request )
     {
-      $this->validate( $request, [
-        'first_name' => 'required|string|max:255',
-        'last_name' => 'required|string|max:255',
-        'gender' => 'required|string|max:255',
-        'date_of_birth' => 'date|required|string|max:255',
+        $data = array(
+          'first_name' => $request->first_name,
+          'last_name' => $request->last_name,
+          'gender' => $request->gender,
+          'date_of_birth' => $request->date_of_birth,
+          'next_of_kin' => $request->next_of_kin,
+          'nin_number' => $request->nin_number,
+          'phone_number' => $request->phone_number,
+          'residential_address' => $request->residential_address,
+          'loan_type' => $request->loan_type,
+          'principle_amount' => $request->principle_amount,
+          'business_location' => $request->business_location,
+          'business_type' => $request->business_type,
+          'business_type' => $request->business_type,
+          'collateral' => $request->collateral,
+        );
 
-        'next_of_kin' => 'required|string|max:255',
-        'phone_number' => 'required|min:10',
-        'residential_address' => 'required|string|max:255',
-      ]);
+        $message = $this->validate_application_form( $data );
 
+        if ( $message === true ) {
+          $client = new Client;
+          $client->first_name = $data['first_name'];
+          $client->last_name = $data['last_name'];
+          $client->sex = $data['gender'];
+          $client->date_of_birth = $data['date_of_birth'];
+          $client->next_of_kin = $data['next_of_kin'];
+          $client->phone_number = $data['nin_number'];
+          $client->NIN = $data['phone_number'];
+          $client->residential_address = $data['residential_address'];
+          $client->save();
 
-      $client = new Client;
-      $client->first_name = $request->first_name;
-      $client->last_name = $request->last_name;
-      $client->sex = $request->gender;
-      $client->date_of_birth = date('Y-m-d', strtotime($request->date_of_birth));
+          $loan = new Loan;
+          $loan->client_id = 1;
+          $loan->loan_type_id = $data['loan_type'];
+          $loan->principle = $data['principle_amount'];
+          $loan->business_type_id = $data['business_type'];
+          $loan->business_location = $data['business_location'];
+          $loan->status= 'Pending';
+          $loan->save();
 
-      $client->next_of_kin = $request->next_of_kin;
-      $client->phone_number = $request->phone_number;
-      $client->residential_address = $request->residential_address;
-      $client->save();
+          return response()->json( ['success' => $data] );
+        }
 
-      $client->groups()->attach([$group->id]);
+        return response()->json( ['error' => $message] );
 
-      Session::flash('success', $client->first_name . ' ' . $client->last_name . ' has been added to ' . $group->name . ' group.' );
-      return redirect()->route('groups.show', $group);
+    }
+
+    public function validate_application_form( $data )
+    {
+        foreach ($data as $key => $value) {
+          if ( empty( $value ) ) {
+            return $response = $key . ' is required';
+          }
+
+          if ( $key === 'phone_number' && strlen( $value ) < 10  ) {
+            return $response = $key . ' should be a minimum of 10 characters';
+          }
+
+          if ( $key === 'nin_number' && strlen( $value ) < 12  ) {
+            return $response = $key . ' should be a minimum of 12 characters';
+          }
+        }
+
+        return true;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\Client $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Group $group, Client $client)
+    public function show(Client $client)
     {
-        return view('site/groups/clients/show')->with(['group' => $group, 'client' => $client]);
+        return view('site/clients/show')->with(['client' => $client]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\Client $client
      * @return \Illuminate\Http\Response
      */
-    public function edit(Group $group, Client $client)
+    public function edit( Client $client)
     {
 
-      return view('site.groups.clients.edit')->with(['client' => $client, 'group' => $group]);
+        return view('site.clients.edit')->with(['client' => $client]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Client  $client
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Client       $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Group $group, Client $client)
+    public function update(Request $request, Client $client)
     {
-      $this->validate( $request, [
-        'first_name' => 'required|string|max:255',
-        'last_name' => 'required|string|max:255',
-        'gender' => 'required|string|max:255',
-        'date_of_birth' => 'date|required|string|max:255',
+        $this->validate(
+            $request, [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'gender' => 'required|string|max:255',
+            'date_of_birth' => 'date|required|string|max:255',
 
-        'next_of_kin' => 'required|string|max:255',
-        'phone_number' => 'required|min:10',
-        'residential_address' => 'required|string|max:255',
-      ]);
+            'next_of_kin' => 'required|string|max:255',
+            'phone_number' => 'required|min:10',
+            'residential_address' => 'required|string|max:255',
+            ]
+        );
 
-      $client->first_name = $request->first_name;
-      $client->last_name = $request->last_name;
-      $client->sex = $request->gender;
-      $client->date_of_birth = date('Y-m-d', strtotime($request->date_of_birth));
-      $client->next_of_kin = $request->next_of_kin;
-      $client->phone_number = $request->phone_number;
-      $client->residential_address = $request->residential_address;
-      $client->update();
+        $client->first_name = $request->first_name;
+        $client->last_name = $request->last_name;
+        $client->sex = $request->gender;
+        $client->date_of_birth = date('Y-m-d', strtotime($request->date_of_birth));
+        $client->next_of_kin = $request->next_of_kin;
+        $client->phone_number = $request->phone_number;
+        $client->residential_address = $request->residential_address;
+        $client->update();
 
-      $client->groups()->sync([$group->id]);
+        // $client->groups()->sync([$group->id]);
 
-      Session::flash('success', $client->first_name . ' ' . $client->last_name . ' has been edited');
-      return redirect()->route('groups.show', $group);
+        Session::flash('success', $client->first_name . ' ' . $client->last_name . ' has been edited');
+        return redirect()->route('clients.show', $client);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Client  $client
+     * @param  \App\Models\Client $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy( Group $group, Client $client )
+    public function destroy( Client $client )
     {
-      // // Detach all roles from the user...
-      // $client->groups()->detach();
-      // // $client->delete();
-      // Session::flash('success', $client->first_name . ' ' . $client->last_name . ' has been deleted from ' . $group->name . ' group.' );
-      // return redirect()->route('groups.show', $group );
+        // // Detach all roles from the user...
+        // $client->groups()->detach();
+        // // $client->delete();
+        // Session::flash('success', $client->first_name . ' ' . $client->last_name . ' has been deleted from ' . $group->name . ' group.' );
+        // return redirect()->route('clients.show', $group );
     }
 }

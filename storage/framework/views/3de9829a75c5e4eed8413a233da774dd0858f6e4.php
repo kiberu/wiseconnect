@@ -43,7 +43,7 @@
           <hr>
           <h6>Principle:</strong> <?php echo e(number_format($loan->principle)); ?> UGX<br></h6>
           <hr>
-          <h6>Interest:</strong> <?php echo e(number_format(($loan->principle * $loan->interest_rate / 100) * $loan->duration )); ?> UGX<br></h6>
+          <h6>Interest:</strong> <?php echo e(number_format(($loan->principle * $loan->interest_rate / 100) * $loan->duration)); ?> UGX<br></h6>
           <hr>
           <h6>Insurance Fee:</strong> <?php echo e(number_format($loan->insurance_fee)); ?> UGX<br></h6>
           <hr>
@@ -60,11 +60,11 @@
           <hr>
           <h6>Grace Period:</strong> <?php echo e($loan->grace_period); ?> Weeks<br></h6>
           <hr>
-          <h6>Total Due:</strong> <?php echo e(number_format( $loan->total_due() )); ?> UGX<br></h6>
+          <h6>Total Due:</strong> <?php echo e(number_format($loan->total_due())); ?> UGX<br></h6>
           <hr>
-          <h6>Balance:</strong> <?php echo e(number_format( $loan->balance() )); ?> UGX
+          <h6>Balance:</strong> <?php echo e(number_format($loan->balance())); ?> UGX
           <hr>
-          <h6>Each Installment:</strong> <?php echo e(number_format( $loan->partial_amount )); ?> UGX (With Interest)<br></h6>
+          <h6>Each Installment:</strong> <?php echo e(number_format($loan->partial_amount)); ?> UGX (With Interest)<br></h6>
           <hr>
           <h6>Payment Date:</strong> <?php echo e($loan->payment_day); ?><br></h6>
         </div>
@@ -84,39 +84,39 @@
           </tr>
         </thead>
         <tbody>
-          <?php $__currentLoopData = $loan->installments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $installment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php $__currentLoopData = $loan->installments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $installment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
               <td><?php echo e($installment->id); ?></td>
               <td><?php echo e(number_format($installment->expected_amount)); ?> UGX</td>
               <td><?php echo e($installment->due_date); ?></td>
-              <td><a href="<?php echo e(route( 'installments.show', [ $loan, $installment ] )); ?>"><?php echo e(count( $installment->payments )); ?></a></td>
+              <td><a href="<?php echo e(route('installments.show', [ $loan, $installment ])); ?>"><?php echo e(count($installment->payments)); ?></a></td>
               <td><?php echo e(number_format($installment->balance)); ?> UGX</td>
               <td><?php echo e($installment->status); ?></td>
-              <td><a href="<?php echo e(route( 'installments.show', [$loan, $installment] )); ?>" class="btn btn-success ln_color_white">Payments</a></td>
+              <td><a href="<?php echo e(route('installments.show', [$loan, $installment])); ?>" class="btn btn-success ln_color_white">Payments</a></td>
             </tr>
 
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
         </tbody>
       </table>
     </div>
   </div><!-- br-pagebody -->
-  <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </div><!-- br-mainpanel -->
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-  <script src="<?php echo e(asset('lib/jquery/jquery.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/jquery-ui/ui/widgets/datepicker.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/bootstrap/js/bootstrap.bundle.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/perfect-scrollbar/perfect-scrollbar.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/moment/min/moment.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/peity/jquery.peity.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/highlightjs/highlight.pack.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/select2/js/select2.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/jquery/jquery.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/jquery-ui/ui/widgets/datepicker.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/bootstrap/js/bootstrap.bundle.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/perfect-scrollbar/perfect-scrollbar.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/moment/min/moment.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/peity/jquery.peity.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/highlightjs/highlight.pack.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/select2/js/select2.min.js')); ?>"></script>
 
-  <script src="<?php echo e(asset('js/bracket.js' )); ?>"></script>
+  <script src="<?php echo e(asset('js/bracket.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

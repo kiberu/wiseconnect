@@ -31,7 +31,7 @@
                     <div class="col-md-6">
                         <input id="first_name" type="text" class="form-control<?php echo e($errors->has('first_name') ? ' is-invalid' : ''); ?>" name="first_name" value="<?php echo e(old('first_name')); ?>" required autofocus>
 
-                        <?php if($errors->has('first_name')): ?>
+                        <?php if($errors->has('first_name')) : ?>
                             <span class="invalid-feedback" role="alert">
                                 <strong><?php echo e($errors->first('first_name')); ?></strong>
                             </span>
@@ -45,7 +45,7 @@
                     <div class="col-md-6">
                         <input id="last_name" type="text" class="form-control<?php echo e($errors->has('last_name') ? ' is-invalid' : ''); ?>" name="last_name" value="<?php echo e(old('last_name')); ?>" required>
 
-                        <?php if($errors->has('last_name')): ?>
+                        <?php if($errors->has('last_name')) : ?>
                             <span class="invalid-feedback" role="alert">
                                 <strong><?php echo e($errors->first('first_name')); ?></strong>
                             </span>
@@ -59,7 +59,7 @@
                     <div class="col-md-6">
                         <input id="email" type="email" class="form-control<?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>" name="email" value="<?php echo e(old('email')); ?>" required>
 
-                        <?php if($errors->has('email')): ?>
+                        <?php if($errors->has('email')) : ?>
                             <span class="invalid-feedback" role="alert">
                                 <strong><?php echo e($errors->first('email')); ?></strong>
                             </span>
@@ -73,7 +73,7 @@
                     <div class="col-md-6">
                         <input id="password" type="password" class="form-control<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="password" required>
 
-                        <?php if($errors->has('password')): ?>
+                        <?php if($errors->has('password')) : ?>
                             <span class="invalid-feedback" role="alert">
                                 <strong><?php echo e($errors->first('password')); ?></strong>
                             </span>
@@ -101,7 +101,7 @@
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
 
-                        <?php if($errors->has('role')): ?>
+                        <?php if($errors->has('role')) : ?>
                             <span class="invalid-feedback" role="alert">
                                 <strong><?php echo e($errors->first('role')); ?></strong>
                             </span>
@@ -125,22 +125,22 @@
       </div><!-- row -->
     </div>
   </div><!-- br-pagebody -->
-  <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </div><!-- br-mainpanel -->
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-  <script src="<?php echo e(asset('lib/jquery/jquery.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/jquery-ui/ui/widgets/datepicker.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/bootstrap/js/bootstrap.bundle.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/perfect-scrollbar/perfect-scrollbar.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/moment/min/moment.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/peity/jquery.peity.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/highlightjs/highlight.pack.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/select2/js/select2.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/jquery/jquery.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/jquery-ui/ui/widgets/datepicker.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/bootstrap/js/bootstrap.bundle.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/perfect-scrollbar/perfect-scrollbar.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/moment/min/moment.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/peity/jquery.peity.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/highlightjs/highlight.pack.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/select2/js/select2.min.js')); ?>"></script>
 
-  <script src="<?php echo e(asset('js/bracket.js' )); ?>"></script>
+  <script src="<?php echo e(asset('js/bracket.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

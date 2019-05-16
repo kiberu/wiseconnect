@@ -9,8 +9,9 @@ use Carbon\Carbon;
 
 class InstallmentController extends Controller
 {
-    public function __construct() {
-      $this->middleware('permission:manage-loans');
+    public function __construct()
+    {
+        $this->middleware('permission:manage-loans');
     }
     /**
      * Display a listing of the resource.
@@ -29,23 +30,23 @@ class InstallmentController extends Controller
      */
     public function create( Loan $loan )
     {
-      $last_installment = $loan->latest_installment;
+        $last_installment = $loan->latest_installment;
 
-      $installment = new Installment;
-      $installment->loan_id = $loan->id;
-      $installment->expected_amount = $loan->partial_amount;
-      $installment->due_date = Carbon::parse( $last_installment->due_date )->addWeek(1);
-      $installment->status = 'Pending';
-      $installment->balance = $loan->partial_amount;
-      $installment->save();
+        $installment = new Installment;
+        $installment->loan_id = $loan->id;
+        $installment->expected_amount = $loan->partial_amount;
+        $installment->due_date = Carbon::parse($last_installment->due_date)->addWeek(1);
+        $installment->status = 'Pending';
+        $installment->balance = $loan->partial_amount;
+        $installment->save();
 
-      return redirect()->route('loans.show', $loan);
+        return redirect()->route('loans.show', $loan);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Loan $loan)
@@ -56,18 +57,18 @@ class InstallmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Installment  $installment
+     * @param  \App\Models\Installment $installment
      * @return \Illuminate\Http\Response
      */
     public function show(Loan $loan, Installment $installment)
     {
-      return view('site/loans/installments/show')->with( ['loan' => $loan, 'installment' => $installment] );
+        return view('site/loans/installments/show')->with(['loan' => $loan, 'installment' => $installment]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Installment  $installment
+     * @param  \App\Models\Installment $installment
      * @return \Illuminate\Http\Response
      */
     public function edit(Installment $installment)
@@ -78,7 +79,7 @@ class InstallmentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @param  \App\Models\Installment  $installment
      * @return \Illuminate\Http\Response
      */
@@ -90,7 +91,7 @@ class InstallmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Installment  $installment
+     * @param  \App\Models\Installment $installment
      * @return \Illuminate\Http\Response
      */
     public function destroy(Installment $installment)

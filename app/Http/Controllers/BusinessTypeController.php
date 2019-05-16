@@ -30,7 +30,7 @@ class BusinessTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +41,7 @@ class BusinessTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\BusinessType  $businessType
+     * @param  \App\Models\BusinessType $businessType
      * @return \Illuminate\Http\Response
      */
     public function show(BusinessType $businessType)
@@ -52,7 +52,7 @@ class BusinessTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\BusinessType  $businessType
+     * @param  \App\Models\BusinessType $businessType
      * @return \Illuminate\Http\Response
      */
     public function edit(BusinessType $businessType)
@@ -63,8 +63,8 @@ class BusinessTypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\BusinessType  $businessType
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\BusinessType $businessType
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, BusinessType $businessType)
@@ -75,7 +75,7 @@ class BusinessTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\BusinessType  $businessType
+     * @param  \App\Models\BusinessType $businessType
      * @return \Illuminate\Http\Response
      */
     public function destroy(BusinessType $businessType)

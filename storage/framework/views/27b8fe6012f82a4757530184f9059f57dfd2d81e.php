@@ -30,7 +30,7 @@
           </tr>
         </thead>
         <tbody>
-          <?php $__currentLoopData = $payments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $payment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php $__currentLoopData = $payments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $payment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
               <td><?php echo e($payment->id); ?></td>
               <td><?php echo e($payment->item_name); ?></td>
@@ -40,32 +40,32 @@
               <td><?php echo e($payment->created_at); ?></td>
             </tr>
 
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
         </tbody>
       </table>
     </div>
   </div><!-- br-pagebody -->
-  <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </div><!-- br-mainpanel -->
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-  <script src="<?php echo e(asset('lib/jquery/jquery.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/jquery-ui/ui/widgets/datepicker.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/bootstrap/js/bootstrap.bundle.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/perfect-scrollbar/perfect-scrollbar.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/moment/min/moment.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/peity/jquery.peity.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/highlightjs/highlight.pack.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/datatables.net/js/jquery.dataTables.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/datatables.net-dt/js/dataTables.dataTables.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/datatables.net-responsive/js/dataTables.responsive.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/select2/js/select2.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/jquery/jquery.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/jquery-ui/ui/widgets/datepicker.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/bootstrap/js/bootstrap.bundle.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/perfect-scrollbar/perfect-scrollbar.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/moment/min/moment.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/peity/jquery.peity.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/highlightjs/highlight.pack.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net/js/jquery.dataTables.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net-dt/js/dataTables.dataTables.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net-responsive/js/dataTables.responsive.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/select2/js/select2.min.js')); ?>"></script>
 
-  <script src="<?php echo e(asset('js/bracket.js' )); ?>"></script>
+  <script src="<?php echo e(asset('js/bracket.js')); ?>"></script>
   <script>
     $(function(){
       'use strict';

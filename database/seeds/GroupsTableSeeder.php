@@ -11,14 +11,16 @@ class GroupsTableSeeder extends Seeder
      */
     public function run()
     {
-      $groups = factory(App\Models\Clients\Group::class, 5)
-                 ->create()
-                 ->each(function ($group) {
-                   $group->clients()->save(factory(App\Models\Clients\Client::class)->make());
-                   $group->clients()->save(factory(App\Models\Clients\Client::class)->make());
-                   $group->clients()->save(factory(App\Models\Clients\Client::class)->make());
-                   $group->clients()->save(factory(App\Models\Clients\Client::class)->make());
-                   $group->clients()->save(factory(App\Models\Clients\Client::class)->make());
-                  });
+        $groups = factory(App\Models\Clients\Group::class, 5)
+            ->create()
+            ->each(
+                function ($group) {
+                            $group->clients()->save(factory(App\Models\Clients\Client::class)->make());
+                            $group->clients()->save(factory(App\Models\Clients\Client::class)->make());
+                            $group->clients()->save(factory(App\Models\Clients\Client::class)->make());
+                            $group->clients()->save(factory(App\Models\Clients\Client::class)->make());
+                            $group->clients()->save(factory(App\Models\Clients\Client::class)->make());
+                }
+            );
     }
 }

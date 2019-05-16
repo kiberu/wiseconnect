@@ -57,7 +57,7 @@
                 <div class="col-md-6">
                     <input id="email" type="email" class="form-control<?php echo e($errors->has('email') ? ' is-invalid' : ''); ?>" name="email" value="<?php echo e(old('email')); ?>" required autofocus>
 
-                    <?php if($errors->has('email')): ?>
+                    <?php if($errors->has('email')) : ?>
                         <span class="invalid-feedback" role="alert">
                             <strong><?php echo e($errors->first('email')); ?></strong>
                         </span>
@@ -71,7 +71,7 @@
                 <div class="col-md-6">
                     <input id="password" type="password" class="form-control<?php echo e($errors->has('password') ? ' is-invalid' : ''); ?>" name="password" required>
 
-                    <?php if($errors->has('password')): ?>
+                    <?php if($errors->has('password')) : ?>
                         <span class="invalid-feedback" role="alert">
                             <strong><?php echo e($errors->first('password')); ?></strong>
                         </span>
@@ -87,7 +87,7 @@
 
                     </button>
 
-                    <?php if(Route::has('password.request')): ?>
+                    <?php if(Route::has('password.request')) : ?>
                         <a class="btn btn-link" href="<?php echo e(route('password.request')); ?>">
                             <?php echo e(__('Forgot Your Password?')); ?>
 

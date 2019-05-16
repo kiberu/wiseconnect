@@ -17,12 +17,12 @@
 
   <div class="br-pagebody">
     <div class="br-section-wrapper">
-      <?php if(Session::has('success')): ?>
+        <?php if(Session::has('success')) : ?>
         <div class="alert alert-success" role="alert">
-          <?php echo e(Session::get('success')); ?>
+            <?php echo e(Session::get('success')); ?>
 
         </div>
-      <?php endif; ?>
+        <?php endif; ?>
       <div class="table-wrapper">
         <table id="datatable1" class="table display responsive nowrap">
           <thead>
@@ -58,25 +58,25 @@
       </div><!-- table-wrapper -->
     </div><!-- br-section-wrapper -->
   </div><!-- br-pagebody -->
-  <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </div><!-- br-mainpanel -->
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-  <script src="<?php echo e(asset('lib/jquery-ui/ui/widgets/datepicker.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/bootstrap/js/bootstrap.bundle.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/perfect-scrollbar/perfect-scrollbar.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/moment/min/moment.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/peity/jquery.peity.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/highlightjs/highlight.pack.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/datatables.net/js/jquery.dataTables.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/datatables.net-dt/js/dataTables.dataTables.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/datatables.net-responsive/js/dataTables.responsive.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/select2/js/select2.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/jquery-ui/ui/widgets/datepicker.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/bootstrap/js/bootstrap.bundle.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/perfect-scrollbar/perfect-scrollbar.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/moment/min/moment.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/peity/jquery.peity.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/highlightjs/highlight.pack.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net/js/jquery.dataTables.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net-dt/js/dataTables.dataTables.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net-responsive/js/dataTables.responsive.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/select2/js/select2.min.js')); ?>"></script>
 
-  <script src="<?php echo e(asset('js/bracket.js' )); ?>"></script>
+  <script src="<?php echo e(asset('js/bracket.js')); ?>"></script>
   <script>
     $(function(){
       'use strict';

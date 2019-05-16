@@ -16,8 +16,8 @@ class ReceivableController extends Controller
      */
     public function index()
     {
-      $receivables = Receivable::all();
-      return view('site/finance/receivables/index')->withReceivables($receivables);
+        $receivables = Receivable::all();
+        return view('site/finance/receivables/index')->withReceivables($receivables);
     }
 
     /**
@@ -33,33 +33,35 @@ class ReceivableController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-      $this->validate( $request, [
-        'fullname' => 'required|string|max:255',
-        'amount' => 'required|numeric',
-        'notes' => 'string',
-      ]);
+        $this->validate(
+            $request, [
+            'fullname' => 'required|string|max:255',
+            'amount' => 'required|numeric',
+            'notes' => 'string',
+            ]
+        );
 
 
-      $receivables = new Receivable;
-      $receivables->fullname = $request->fullname;
-      $receivables->amount = $request->amount;
-      $receivables->notes = $request->notes;
-      $receivables->status = 'Pending';
-      $receivables->user_id = Auth::user()->id;
+        $receivables = new Receivable;
+        $receivables->fullname = $request->fullname;
+        $receivables->amount = $request->amount;
+        $receivables->notes = $request->notes;
+        $receivables->status = 'Pending';
+        $receivables->user_id = Auth::user()->id;
 
-      $receivables->save();
-      return redirect()->route('receivables.index');
+        $receivables->save();
+        return redirect()->route('receivables.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Receivable  $receivable
+     * @param  \App\Models\Receivable $receivable
      * @return \Illuminate\Http\Response
      */
     public function show(Receivable $receivable)
@@ -70,7 +72,7 @@ class ReceivableController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Receivable  $receivable
+     * @param  \App\Models\Receivable $receivable
      * @return \Illuminate\Http\Response
      */
     public function edit(Receivable $receivable)
@@ -81,8 +83,8 @@ class ReceivableController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Receivable  $receivable
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Receivable   $receivable
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Receivable $receivable)
@@ -93,7 +95,7 @@ class ReceivableController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Receivable  $receivable
+     * @param  \App\Models\Receivable $receivable
      * @return \Illuminate\Http\Response
      */
     public function destroy(Receivable $receivable)

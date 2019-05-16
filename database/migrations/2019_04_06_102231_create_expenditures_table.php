@@ -13,19 +13,23 @@ class CreateExpendituresTable extends Migration
      */
     public function up()
     {
-        Schema::create('expenditures', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->string('item_name');
-            $table->integer('unit_cost');
-            $table->integer('amount');
-            $table->text('notes')->nullable();
-            $table->timestamps();
-        });
+        Schema::create(
+            'expenditures', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id')->unsigned();
+                $table->string('item_name');
+                $table->integer('unit_cost');
+                $table->integer('amount');
+                $table->text('notes')->nullable();
+                $table->timestamps();
+            }
+        );
 
-        Schema::table('expenditures', function (Blueprint $table) {
-          $table->foreign('user_id')->references('id')->on('users');
-        });
+        Schema::table(
+            'expenditures', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users');
+            }
+        );
     }
 
     /**

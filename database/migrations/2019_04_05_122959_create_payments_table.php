@@ -13,21 +13,25 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('installment_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->integer('amount')->unsigned();
-            $table->integer('current_balance');
-            $table->timestamps();
+        Schema::create(
+            'payments', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('installment_id')->unsigned();
+                $table->integer('user_id')->unsigned();
+                $table->integer('amount')->unsigned();
+                $table->integer('current_balance');
+                $table->timestamps();
 
-        });
+            }
+        );
 
-        Schema::table('payments', function (Blueprint $table) {
-          $table->foreign('installment_id')->references('id')->on('installments');
-          $table->foreign('user_id')->references('id')->on('users');
+        Schema::table(
+            'payments', function (Blueprint $table) {
+                $table->foreign('installment_id')->references('id')->on('installments');
+                $table->foreign('user_id')->references('id')->on('users');
 
-        });
+            }
+        );
     }
 
     /**

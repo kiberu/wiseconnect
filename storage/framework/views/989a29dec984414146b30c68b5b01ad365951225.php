@@ -4,10 +4,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Meta -->
-  <meta name="description" content="Premium Quality and Responsive UI for Dashboard.">
+  <meta name="description" content="Loan System Dashboard By TIEMS Solutions">
   <meta name="author" content="ThemePixels">
 
-  <title>Loan System</title>
+  <title>Wise Connect</title>
+
 
   <!-- vendor css -->
   <link href="<?php echo e(asset('/lib/@fortawesome/fontawesome-free/css/all.min.css ')); ?>" rel="stylesheet">
@@ -20,7 +21,7 @@
   <!-- Bracket CSS -->
   <link rel="stylesheet" href="<?php echo e(asset('css/bracket.css')); ?>">
   <link rel="stylesheet" href="<?php echo e(asset('css/loan.css')); ?>">
-  <script src="<?php echo e(asset('lib/jquery/jquery.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('js/loan.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/jquery/jquery.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('js/loan.js')); ?>"></script>
   <link rel="stylesheet" href="<?php echo e(asset('css/bracket.simple-white.css')); ?>">
 </head>

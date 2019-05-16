@@ -10,9 +10,10 @@ use Session;
 
 class GroupController extends Controller
 {
-    public function __construct() {
-      $this->middleware('permission:manage-groups');
-      $this->middleware('permission:manage-clients', ['only' => ['show','index']]);
+    public function __construct()
+    {
+        $this->middleware('permission:manage-groups');
+        $this->middleware('permission:manage-clients', ['only' => ['show','index']]);
     }
 
     /**
@@ -22,8 +23,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-      $groups = Group::all()->sortByDesc('created_at');
-      return view('site/groups/index')->withGroups($groups);
+        $groups = Group::all()->sortByDesc('created_at');
+        return view('site/groups/index')->withGroups($groups);
     }
 
     /**
@@ -39,30 +40,32 @@ class GroupController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-      $this->validate( $request, [
-        'name' => 'required|string|unique:groups|max:255',
-        'landmark' => 'required|string|max:255',
-      ]);
+        $this->validate(
+            $request, [
+            'name' => 'required|string|unique:groups|max:255',
+            'landmark' => 'required|string|max:255',
+            ]
+        );
 
 
-      $group = new Group;
-      $group->name = $request->name;
-      $group->landmark = $request->landmark;
-      $group->save();
+        $group = new Group;
+        $group->name = $request->name;
+        $group->landmark = $request->landmark;
+        $group->save();
 
-      Session::flash('success', $group->name . ' has been added' );
-      return redirect()->route('groups.index');
+        Session::flash('success', $group->name . ' has been added');
+        return redirect()->route('groups.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\Group $group
      * @return \Illuminate\Http\Response
      */
     public function show(Group $group)
@@ -75,40 +78,42 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\Group $group
      * @return \Illuminate\Http\Response
      */
     public function edit(Group $group)
     {
-      return view('site.groups.edit')->with(['group'=>$group]);
+        return view('site.groups.edit')->with(['group'=>$group]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Group  $group
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Group        $group
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Group $group)
     {
-      $this->validate( $request, [
-        'name' => 'required|string|unique:groups|max:255',
-        'landmark' => 'required|string|max:255',
-      ]);
+        $this->validate(
+            $request, [
+            'name' => 'required|string|unique:groups|max:255',
+            'landmark' => 'required|string|max:255',
+            ]
+        );
 
-      $group->name = $request->name;
-      $group->landmark = $request->landmark;
-      $group->save();
+        $group->name = $request->name;
+        $group->landmark = $request->landmark;
+        $group->save();
 
-      Session::flash('success', 'Group has been edited');
-      return redirect()->route('groups.show',$group);
+        Session::flash('success', 'Group has been edited');
+        return redirect()->route('groups.show', $group);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Group  $group
+     * @param  \App\Models\Group $group
      * @return \Illuminate\Http\Response
      */
     public function destroy(Group $group)
@@ -118,16 +123,18 @@ class GroupController extends Controller
 
     public function transfer(Request $request, Group $group )
     {
-      $this->validate( $request, [
-        'client_id' => 'required|numeric',
-        'group_id' => 'required|numeric',
-      ]);
+        $this->validate(
+            $request, [
+            'client_id' => 'required|numeric',
+            'group_id' => 'required|numeric',
+            ]
+        );
 
-      $client = Client::find( $request->client_id );
-      $client->groups()->sync([$request->group_id]);
-      $new_group = Group::find( $request->group_id );
+        $client = Client::find($request->client_id);
+        $client->groups()->sync([$request->group_id]);
+        $new_group = Group::find($request->group_id);
 
-      Session::flash('success', $client->first_name . ' ' . $client->last_name . ' has been transfered to ' . $new_group->name );
-      return redirect()->route('groups.show', $group);
+        Session::flash('success', $client->first_name . ' ' . $client->last_name . ' has been transfered to ' . $new_group->name);
+        return redirect()->route('groups.show', $group);
     }
 }

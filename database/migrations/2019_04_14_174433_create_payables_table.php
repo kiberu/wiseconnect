@@ -13,20 +13,24 @@ class CreatePayablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('payables', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('fullname');
-            $table->string('amount');
-            $table->string('status');
-            $table->string('notes')->nullable();
-            $table->integer('user_id')->unsigned();
+        Schema::create(
+            'payables', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('fullname');
+                $table->string('amount');
+                $table->string('status');
+                $table->string('notes')->nullable();
+                $table->integer('user_id')->unsigned();
 
-            $table->timestamps();
-        });
+                $table->timestamps();
+            }
+        );
 
-        Schema::table('payables', function (Blueprint $table) {
-          $table->foreign('user_id')->references('id')->on('users');
-        });
+        Schema::table(
+            'payables', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users');
+            }
+        );
     }
 
     /**

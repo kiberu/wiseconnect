@@ -38,27 +38,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function payments(){
-      return $this->hasMany('App\Models\Loans\Payment');
+    public function payments()
+    {
+        return $this->hasMany('App\Models\Loans\Payment');
     }
 
-    public function banks(){
-      return $this->hasMany('App\Models\Bank');
+    public function banks()
+    {
+        return $this->hasMany('App\Models\Bank');
     }
 
-    public function expenditures(){
-      return $this->hasMany('App\Models\Expenditure');
+    public function expenditures()
+    {
+        return $this->hasMany('App\Models\Expenditure');
     }
 
-    public function payables(){
-      return $this->hasMany('App\Models\Payable');
+    public function payables()
+    {
+        return $this->hasMany('App\Models\Payable');
     }
 
-    public function receivables(){
-      return $this->hasMany('App\Models\Receivable');
+    public function receivables()
+    {
+        return $this->hasMany('App\Models\Receivable');
     }
 
-    public function getFullNameAttribute(){
-      return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
     }
 }

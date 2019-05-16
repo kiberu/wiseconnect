@@ -11,12 +11,14 @@ class OptionsTableSeeder extends Seeder
      */
     public function run()
     {
-      $names = array( 'Application Fees', 'Loan Processing Fees', 'Insurance Fees', 'Appraisal Fees', 'Miscellaneous Fees');
-      for ( $i=0; $i < count($names); $i++ ) {
-        DB::table('options')->insert([
-          'name' => $names[$i],
-          'value' => rand(30000, 1000000),
-        ]);
-      }
+        $names = array( 'Application Fees', 'Loan Processing Fees', 'Insurance Fees', 'Appraisal Fees', 'Miscellaneous Fees');
+        for ( $i=0; $i < count($names); $i++ ) {
+            DB::table('options')->insert(
+                [
+                'name' => $names[$i],
+                'value' => rand(30000, 1000000),
+                ]
+            );
+        }
     }
 }

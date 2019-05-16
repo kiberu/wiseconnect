@@ -16,8 +16,8 @@ class ExpenditureController extends Controller
      */
     public function index()
     {
-      $expenditures = Expenditure::all();
-      return view('site/finance/expenditures/index')->withExpenditures($expenditures);
+        $expenditures = Expenditure::all();
+        return view('site/finance/expenditures/index')->withExpenditures($expenditures);
     }
 
     /**
@@ -33,34 +33,36 @@ class ExpenditureController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-      $this->validate( $request, [
-        'item_name' => 'required|string|max:255',
-        'amount' => 'required|numeric',
-        'unit_cost' => 'required|numeric',
-        'notes' => 'required',
-      ]);
+        $this->validate(
+            $request, [
+            'item_name' => 'required|string|max:255',
+            'amount' => 'required|numeric',
+            'unit_cost' => 'required|numeric',
+            'notes' => 'required',
+            ]
+        );
 
 
-      $exp = new Expenditure;
-      $exp->item_name = $request->item_name;
-      $exp->amount = $request->amount;
-      $exp->unit_cost = $request->unit_cost;
-      $exp->notes = $request->notes;
-      $exp->user_id = Auth::user()->id;
+        $exp = new Expenditure;
+        $exp->item_name = $request->item_name;
+        $exp->amount = $request->amount;
+        $exp->unit_cost = $request->unit_cost;
+        $exp->notes = $request->notes;
+        $exp->user_id = Auth::user()->id;
 
-      $exp->save();
-      return redirect()->route('expenditures.index');
+        $exp->save();
+        return redirect()->route('expenditures.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Expenditure  $expenditure
+     * @param  \App\Expenditure $expenditure
      * @return \Illuminate\Http\Response
      */
     public function show(Expenditure $expenditure)
@@ -71,7 +73,7 @@ class ExpenditureController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Expenditure  $expenditure
+     * @param  \App\Expenditure $expenditure
      * @return \Illuminate\Http\Response
      */
     public function edit(Expenditure $expenditure)
@@ -82,8 +84,8 @@ class ExpenditureController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Expenditure  $expenditure
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Expenditure         $expenditure
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Expenditure $expenditure)
@@ -94,7 +96,7 @@ class ExpenditureController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Expenditure  $expenditure
+     * @param  \App\Expenditure $expenditure
      * @return \Illuminate\Http\Response
      */
     public function destroy(Expenditure $expenditure)

@@ -30,7 +30,7 @@ class LoanTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +41,7 @@ class LoanTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\LoanType  $loanType
+     * @param  \App\Models\LoanType $loanType
      * @return \Illuminate\Http\Response
      */
     public function show(LoanType $loanType)
@@ -52,7 +52,7 @@ class LoanTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\LoanType  $loanType
+     * @param  \App\Models\LoanType $loanType
      * @return \Illuminate\Http\Response
      */
     public function edit(LoanType $loanType)
@@ -63,8 +63,8 @@ class LoanTypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LoanType  $loanType
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\LoanType     $loanType
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, LoanType $loanType)
@@ -75,7 +75,7 @@ class LoanTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\LoanType  $loanType
+     * @param  \App\Models\LoanType $loanType
      * @return \Illuminate\Http\Response
      */
     public function destroy(LoanType $loanType)

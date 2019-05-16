@@ -13,21 +13,25 @@ class CreateBanksTable extends Migration
      */
     public function up()
     {
-        Schema::create('banks', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('amount');
-            $table->string('type');
-            $table->string('banked_by');
-            $table->string('transaction_id');
-            $table->integer('user_id')->unsigned();
+        Schema::create(
+            'banks', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('amount');
+                $table->string('type');
+                $table->string('banked_by');
+                $table->string('transaction_id');
+                $table->integer('user_id')->unsigned();
 
-            $table->timestamps();
-        });
+                $table->timestamps();
+            }
+        );
 
-        Schema::table('banks', function (Blueprint $table) {
-          $table->foreign('user_id')->references('id')->on('users');
+        Schema::table(
+            'banks', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users');
 
-        });
+            }
+        );
     }
 
     /**

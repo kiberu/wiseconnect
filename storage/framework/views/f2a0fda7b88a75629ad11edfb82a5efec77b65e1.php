@@ -19,9 +19,9 @@
 
   <div class="br-pagebody">
     <div class="br-section-wrapper">
-      <?php if( Auth::user()->can('edit-groups') ): ?>
-        <a href="<?php echo e(route('clients.edit',[$group, $client] )); ?>" class="btn btn-info btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Edit Client</a>
-      <?php endif; ?>
+        <?php if(Auth::user()->can('edit-groups') ) : ?>
+        <a href="<?php echo e(route('clients.edit', [$group, $client])); ?>" class="btn btn-info btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Edit Client</a>
+        <?php endif; ?>
       <div class="row mg-t-20">
         <div class="col-xl-3"></div>
         <div class="col-xl-9">
@@ -58,12 +58,12 @@
           </tr>
         </thead>
         <tbody>
-          <?php $__currentLoopData = $client->loans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $loan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php $__currentLoopData = $client->loans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $loan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>
               <td><?php echo e($loan->id); ?></td>
               <td><?php echo e($loan->loan_type->name); ?></td>
               <td><?php echo e(number_format($loan->principle)); ?></td>
-              <td><?php echo e(number_format(($loan->principle * $loan->interest_rate / 100) * $loan->duration )); ?>  </td>
+              <td><?php echo e(number_format(($loan->principle * $loan->interest_rate / 100) * $loan->duration)); ?>  </td>
               <td><?php echo e($loan->interest_rate); ?>% per <?php echo e($loan->interval); ?></td>
               <td><?php echo e($loan->duration); ?></td>
               <td><?php echo e($loan->penalty); ?> in <?php echo e($loan->penalty_value); ?> </td>
@@ -71,27 +71,27 @@
               <td><?php echo e($loan->created_at); ?></td>
 
             </tr>
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tbody>
       </table>
     </div>
   </div><!-- br-pagebody -->
-  <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </div><!-- br-mainpanel -->
 
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-  <script src="<?php echo e(asset('lib/jquery/jquery.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/jquery-ui/ui/widgets/datepicker.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/bootstrap/js/bootstrap.bundle.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/perfect-scrollbar/perfect-scrollbar.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/moment/min/moment.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/peity/jquery.peity.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/highlightjs/highlight.pack.min.js' )); ?>"></script>
-  <script src="<?php echo e(asset('lib/select2/js/select2.min.js' )); ?>"></script>
+  <script src="<?php echo e(asset('lib/jquery/jquery.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/jquery-ui/ui/widgets/datepicker.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/bootstrap/js/bootstrap.bundle.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/perfect-scrollbar/perfect-scrollbar.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/moment/min/moment.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/peity/jquery.peity.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/highlightjs/highlight.pack.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('lib/select2/js/select2.min.js')); ?>"></script>
 
-  <script src="<?php echo e(asset('js/bracket.js' )); ?>"></script>
+  <script src="<?php echo e(asset('js/bracket.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
