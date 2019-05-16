@@ -22,6 +22,10 @@
       <div class="row mg-t-20">
         <div class="col-xl-3"></div>
         <div class="col-xl-6 mg-t-20 mg-xl-t-0">
+          <div class="alert alert-danger js-ajax-response-error" role="alert" style="display: none;">
+          </div>
+          <div class="alert alert-success js-ajax-response-success" role="alert" style="display: none;">
+          </div>
           <form method="POST" id="apllication-form">
               @csrf
               <div id="wizard2">
@@ -288,10 +292,18 @@
           data: $('#apllication-form').serialize(),
           success: function(result){
             if ( result.error ) {
+              $('.js-ajax-response-error').html(result.error);
+              $('.js-ajax-response-error').show();
               console.log( result.error );
             }
 
             if ( result.success ) {
+              $('.js-ajax-response-success').html(result.success);
+              $('.js-ajax-response-error').hide();
+              $('.js-ajax-response-success').show();
+
+              $('#apllication-form').hide();
+
               console.log( result.success );
             }
           }

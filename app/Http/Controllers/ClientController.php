@@ -86,15 +86,15 @@ class ClientController extends Controller
           $client->first_name = $data['first_name'];
           $client->last_name = $data['last_name'];
           $client->sex = $data['gender'];
-          $client->date_of_birth = $data['date_of_birth'];
-          $client->next_of_kin = $data['next_of_kin'];
-          $client->phone_number = $data['nin_number'];
+          $client->date_of_birth = date('Y-m-d', strtotime($data['date_of_birth']));
           $client->NIN = $data['phone_number'];
+          $client->next_of_kin = $data['next_of_kin'];
+          $client->phone_number = $data['phone_number'];
           $client->residential_address = $data['residential_address'];
           $client->save();
 
           $loan = new Loan;
-          $loan->client_id = 1;
+          $loan->client_id = $client->id;
           $loan->loan_type_id = $data['loan_type'];
           $loan->principle = $data['principle_amount'];
           $loan->business_type_id = $data['business_type'];
@@ -102,7 +102,7 @@ class ClientController extends Controller
           $loan->status= 'Pending';
           $loan->save();
 
-          return response()->json( ['success' => $data] );
+          return response()->json( ['success' => 'Loan Account has been set for client '] );
         }
 
         return response()->json( ['error' => $message] );

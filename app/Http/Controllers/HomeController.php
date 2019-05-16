@@ -33,7 +33,7 @@ class HomeController extends Controller
         // $this->update_loans();
         $groups = Group::all();
         $clients = Client::all();
-        $loans = Loan::where('status', 'Active')->get();
+        $loans = Loan::all();
         $balance = 0;
         if (! empty($loans) ) {
             foreach ($loans as $loan) {
@@ -78,7 +78,7 @@ class HomeController extends Controller
             'today' => $today,
             'all_loans' => $all_loans,
             'banks' => $banks,
-            ] 
+            ]
         );
     }
 

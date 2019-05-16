@@ -27,21 +27,21 @@
             <div id="ch1" class="ht-50 tr-y-1"></div>
           </div>
         </div><!-- col-3 -->
-        <?php if( Auth::user()->hasRole( 'branch_manager' ) ): ?>
           <div class="col-sm-6 col-xl-3 mg-t-20 mg-sm-t-0">
             <div class="bg-purple rounded overflow-hidden">
               <div class="pd-x-20 pd-t-20 d-flex align-items-center">
                 <i class="ion ion-bag tx-60 lh-0 tx-white op-7"></i>
+                <a href="#">
                 <div class="mg-l-20">
-                  <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Active Loans</p>
-                  <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?php echo e($loans->count()); ?></p>
+                  <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Pending Orders</p>
+                  <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?php echo e($loans->where('status', 'Pending')->count()); ?></p>
                   <span class="tx-11 tx-roboto tx-white-8">worthy <?php echo e(number_format( $balance )); ?> UGX</span>
                 </div>
+                </a>
               </div>
               <div id="ch3" class="ht-50 tr-y-1"></div>
             </div>
           </div><!-- col-3 -->
-        <?php endif; ?>
         <div class="col-sm-6 col-xl-3 mg-t-20 mg-xl-t-0">
           <div class="bg-orange rounded overflow-hidden">
             <div class="pd-x-20 pd-t-20 d-flex align-items-center">

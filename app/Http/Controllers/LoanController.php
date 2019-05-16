@@ -26,7 +26,7 @@ class LoanController extends Controller
      */
     public function index( $status = '' )
     {
-        $loans = Loan::where('status', 'Active')->get()->sortBy('latest_installment.due_date');
+        $loans = Loan::all()->sortBy('latest_installment.due_date');
         $heading = "Active Loans";
         return view('site/loans/index')->with([ 'loans' => $loans, 'heading' => $heading ]);
     }
