@@ -171,6 +171,15 @@ class LoanController extends Controller
         return view('site/loans/index')->with([ 'loans' => $loans, 'heading' => $heading ]);
     }
 
+    public function approve( Request $request )
+    {
+      $loan = Loan::find( $request->loan_id );
+      $loan->status = "Approved";
+      $loan->save();
+      return response()->json( ['success' => $request->loan_id] );
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *

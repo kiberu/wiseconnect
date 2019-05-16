@@ -28,27 +28,18 @@
             <th>#</th>
             <th>Client</th>
             <th>Loan Type</th>
-            <th>Interest Rate</th>
             <th>Status</th>
-            <th>Payment Day</th>
             <th>Created at</th>
             <th>Manage</th>
           </tr>
         </thead>
         <tbody>
           @foreach ( $loans as $loan )
-            @php
-              $today = Carbon::today();
-              $due = Carbon::parse( $loan->latest_installment->due_date );
-
-            @endphp
-            <tr class="{{ ( Carbon::today()->equalTo( Carbon::parse( $loan->latest_installment->due_date ) ) )  ? 'today-bg' : '' }}">
+            <tr class="">
               <td>{{ $loan->id }}</td>
               <td><a href="{{ route('clients.show', [ $loan->client->groups->last(), $loan->client ]) }}">{{ $loan->client->first_name }} {{ $loan->client->last_name }}</a></td>
               <td>{{ $loan->loan_type->name }}</td>
-              <td>{{ $loan->interest_rate }}%</td>
               <td>{{ $loan->status }}</td>
-              <th>{{ $loan->payment_day }}</th>
               <td>{{ $loan->created_at }}</td>
               <td><a href="{{ route('loans.show', $loan) }}" class="btn btn-success">Manage</a></td>
             </tr>

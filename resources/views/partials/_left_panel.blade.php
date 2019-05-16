@@ -40,9 +40,7 @@
           @if ( Auth::user()->can('create-loans') )
             <li class="sub-item"><a href="{{ route('loans.create' ) }}" class="sub-link">Add Loan</a></li>
           @endif
-          <li class="sub-item"><a href="{{ route('loans.today' ) }}" class="sub-link">Today's Loans</a></li>
-          <li class="sub-item"><a href="{{ route('loans.index') }}" class="sub-link">Active Loans</a></li>
-          <li class="sub-item"><a href="{{ route('loans.defaulters') }}" class="sub-link">Defaulters</a></li>
+          <li class="sub-item"><a href="{{ route('loans.index' ) }}" class="sub-link">All Loans</a></li>
         </ul>
       </li><!-- br-menu-item -->
     @endif

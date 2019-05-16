@@ -31,7 +31,7 @@
             <div class="bg-purple rounded overflow-hidden">
               <div class="pd-x-20 pd-t-20 d-flex align-items-center">
                 <i class="ion ion-bag tx-60 lh-0 tx-white op-7"></i>
-                <a href="#">
+                <a href="<?php echo e(route('loans.index')); ?>">
                 <div class="mg-l-20">
                   <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Pending Orders</p>
                   <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?php echo e($loans->where('status', 'Pending')->count()); ?></p>

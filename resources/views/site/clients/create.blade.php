@@ -294,7 +294,6 @@
             if ( result.error ) {
               $('.js-ajax-response-error').html(result.error);
               $('.js-ajax-response-error').show();
-              console.log( result.error );
             }
 
             if ( result.success ) {
@@ -304,7 +303,6 @@
 
               $('#apllication-form').hide();
 
-              console.log( result.success );
             }
           }
         });
