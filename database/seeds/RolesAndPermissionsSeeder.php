@@ -38,6 +38,10 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'manage-reports']);
 
         // create roles and assign created permissions
+        // create roles and assign created permissions
+        $role = Role::create(['name' => 'admin'])
+              ->givePermissionTo(Permission::all());
+              
         $role = Role::create(['name' => 'general_manager'])
             ->givePermissionTo('manage-reports', 'manage-users', 'delete-users', 'read-users', 'read-loans');
 
@@ -46,5 +50,6 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $role = Role::create(['name' => 'loan_officer'])
             ->givePermissionTo(['manage-loans', 'manage-clients', 'manage-groups','create-loans']);
+
     }
 }
