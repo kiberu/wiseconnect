@@ -31,6 +31,8 @@ Route::group(['middleware' => [ 'web', 'auth'] ], function () {
   Route::Resource( '/loans', 'LoanController');
   Route::post( '/new-application', 'ClientController@store');
   Route::get( '/approve-loan', 'LoanController@approve');
+  Route::get( '/activate-loan/{loan}', 'LoanController@activate')->name('loans.activate');
+  Route::post( '/save-activation/{loan}', 'LoanController@save_activation')->name('loans.save_activation');
   Route::prefix('/loans/{loan}')->group(function () {
     Route::Resource('installments', 'InstallmentController');
     Route::prefix('/installments/{installment}')->group(function () {

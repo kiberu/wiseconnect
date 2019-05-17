@@ -48,6 +48,10 @@
               <p id="js-loan-id" style="display:none;">{{ $loan->id }}</p>
             @endif
           @endif
+
+          @if ( $loan->status === 'Approved' )
+              <a href="{{ route('loans.activate', $loan ) }}">Activate Loan</a>
+          @endif
           <hr>
           @if ( $loan->status === 'Active' )
           <h6>Interest Rate:</strong> {{ $loan->interest_rate }}% per Week<br></h6>

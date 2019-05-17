@@ -20,7 +20,7 @@ class TypesTableSeeder extends Seeder
             );
         }
 
-        $business_types = array('Agriculture', 'IT', 'Trade', 'Retail');
+        $business_types = array('Agriculture', 'IT', 'Retail Trade', 'Wholesale Trade', 'Repair Services', 'Retail');
         for ( $i=0; $i < 4; $i++ ) {
             DB::table('business_types')->insert(
                 [

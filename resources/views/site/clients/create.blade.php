@@ -136,7 +136,7 @@
                 @endif
               </div><!-- form-group -->
               <div class="form-group wd-xs-300">
-                <label>Principle Amount:  <span class="tx-danger">*</span></label>
+                <label>Application Amount:  <span class="tx-danger">*</span></label>
                 <input  id="principle_amount" class="form-control {{ $errors->has('principle_amount') ? ' is-invalid' : '' }}" value="{{ old('principle_amount') }}" type="integer" name="principle_amount" >
                 @if ($errors->has('principle_amount'))
                     <span class="invalid-feedback" role="alert">

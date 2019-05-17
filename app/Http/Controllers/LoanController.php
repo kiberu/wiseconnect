@@ -70,7 +70,6 @@ class LoanController extends Controller
             'loan_type' => 'required|max:255',
             'principle_amount' => 'required|numeric',
             'interest_rate' => 'required|max:255',
-            'penalty' => 'required|max:255',
             'grace_period' => 'required|max:255',
             'duration' => 'required|max:255',
             'business_location' => 'required',
@@ -90,25 +89,15 @@ class LoanController extends Controller
         $loan->interest_rate = $request->interest_rate;
         $loan->grace_period = $request->grace_period;
         $loan->duration = $request->duration;
-        $loan->penalty = $request->penalty;
         $loan->business_type_id = $request->business_type;
         $loan->payment_day = $request->payment_day;
         $loan->business_location= $request->business_location;
-        $loan->status= 'Active';
+        $loan->status= 'Pending';
         $loan->application_fee = $request->application_fee;
         $loan->insurance_fee = $request->insurance_fee;
         $loan->partial_amount = ( $request->principle_amount / $request->duration ) + ( $request->principle_amount * $request->interest_rate / 100);
         $loan->initial_start = Carbon::parse('next ' . $request->payment_day)->addWeek($request->grace_period);
         $loan->save();
-
-        //create installment
-        $installment = new Installment;
-        $installment->loan_id = $loan->id;
-        $installment->expected_amount = $loan->partial_amount;
-        $installment->due_date = $loan->initial_start;
-        $installment->status = 'Pending';
-        $installment->balance = $loan->partial_amount;
-        $installment->save();
 
         return redirect()->route('loans.show', $loan);
     }
@@ -178,6 +167,54 @@ class LoanController extends Controller
       $loan->save();
       return response()->json( ['success' => $request->loan_id] );
 
+    }
+
+    public function activate( Request $request, Loan $loan )
+    {
+      $payment_days = $this->get_payment_days();
+      return view('site/loans/activate')->with([
+        'loan' => $loan,
+        'payment_days' => $payment_days
+      ]);
+
+    }
+
+    public function save_activation( Request $request, Loan $loan ){
+
+      $this->validate(
+          $request, [
+          'principle_amount' => 'required|numeric',
+          'interest_rate' => 'required|max:255',
+          'grace_period' => 'required|max:255',
+          'duration' => 'required|max:255',
+          'payment_day' => 'required',
+          'application_fee' => 'required|numeric',
+          'insurance_fee' => 'required|numeric',
+          'collateral' => 'required'
+          ]
+      );
+
+      $loan->principle = $request->principle_amount;
+      $loan->interest_rate = $request->interest_rate;
+      $loan->grace_period = $request->grace_period;
+      $loan->duration = $request->duration;
+      $loan->payment_day = $request->payment_day;
+      $loan->status= 'Active';
+      $loan->application_fee = $request->application_fee;
+      $loan->insurance_fee = $request->insurance_fee;
+      $loan->collateral = $request->collateral;
+      $loan->save();
+
+      $partial = ( $request->principle_amount / $request->duration ) + ( $request->principle_amount * $request->interest_rate / 100);
+
+      //create installment
+      $installment = new Installment;
+      $installment->loan_id = $loan->id;
+      $installment->expected_amount = $partial;
+      $installment->due_date = Carbon::parse('next ' . $request->payment_day)->addWeek($request->grace_period);
+      $installment->status = 'Pending';
+      $installment->balance = $partial;
+      $installment->save();
     }
 
     /**

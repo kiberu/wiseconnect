@@ -46,6 +46,10 @@
               <p id="js-loan-id" style="display:none;"><?php echo e($loan->id); ?></p>
             <?php endif; ?>
           <?php endif; ?>
+
+          <?php if( $loan->status === 'Approved' ): ?>
+              <a href="<?php echo e(route('loans.activate', $loan )); ?>">Activate Loan</a>
+          <?php endif; ?>
           <hr>
           <?php if( $loan->status === 'Active' ): ?>
           <h6>Interest Rate:</strong> <?php echo e($loan->interest_rate); ?>% per Week<br></h6>

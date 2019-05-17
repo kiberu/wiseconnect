@@ -8,17 +8,20 @@
         <span class="menu-item-label">Dashboard</span>
       </a><!-- br-menu-link -->
     </li><!-- br-menu-item -->
-    <?php if( Auth::user()->can('manage-clients') ): ?>
+    <?php if( Auth::user()->can('manage-loans') ): ?>
       <li class="br-menu-item">
         <a href="#" class="br-menu-link with-sub">
           <i class="menu-item-icon icon ion-ios-color-filter-outline tx-24"></i>
           <span class="menu-item-label">Applications</span>
         </a><!-- br-menu-link -->
         <ul class="br-menu-sub">
-          <li class="sub-item"><a href="<?php echo e(route('clients.create')); ?>" class="sub-link">New Application</a></li>
+          <?php if( Auth::user()->can('create-loans') ): ?>
+            <li class="sub-item"><a href="<?php echo e(route('clients.create')); ?>" class="sub-link">New Application</a></li>
+          <?php endif; ?>
           <li class="sub-item"><a href="<?php echo e(route('groups.index')); ?>" class="sub-link">All Applicants</a></li>
         </ul>
       </li><!-- br-menu-item -->
+      <?php if( Auth::user()->can('manage-clients') ): ?>
       <li class="br-menu-item">
         <a href="#" class="br-menu-link with-sub">
           <i class="menu-item-icon icon ion-ios-color-filter-outline tx-24"></i>
@@ -30,7 +33,8 @@
         </ul>
       </li><!-- br-menu-item -->
     <?php endif; ?>
-    <?php if( Auth::user()->can('manage-loans') ): ?>
+    <?php endif; ?>
+    <?php if( Auth::user()->can('manage-loans', 'read-loans') ): ?>
       <li class="br-menu-item">
         <a href="#" class="br-menu-link with-sub">
           <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>

@@ -18,11 +18,15 @@
           <div class="bg-info rounded overflow-hidden">
             <div class="pd-x-20 pd-t-20 d-flex align-items-center">
               <i class="ion ion-earth tx-60 lh-0 tx-white op-7"></i>
-              <div class="mg-l-20">
-                <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Groups</p>
-                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?php echo e($groups->count()); ?> Groups</p>
-                <span class="tx-11 tx-roboto tx-white-8">With <?php echo e($clients->count()); ?> clients</span>
-              </div>
+              <a href="<?php echo e(route('loans.index')); ?>">
+
+                <div class="mg-l-20">
+                  <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Approved Loans</p>
+                  <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?php echo e($loans->where('status', 'Approved')->count()); ?></p>
+                  <span class="tx-11 tx-roboto tx-white-8"><?php echo e($loans->where('status', 'Approved')->count() .'/'.$loans->where('status', 'Pending')->count()); ?></span>
+
+                </div>
+              </a>
             </div>
             <div id="ch1" class="ht-50 tr-y-1"></div>
           </div>

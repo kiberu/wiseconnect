@@ -50,6 +50,12 @@ class Loan extends Model
         return $this->installments->count();
     }
 
+    public function unpaid_installments()
+    {
+      return $this->installments->where( 'status', '==', 'Cleared' );
+      
+    }
+
     public function installments_balance()
     {
         return $this->installments->sum('balance');

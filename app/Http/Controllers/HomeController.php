@@ -30,7 +30,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $this->update_loans();
+        $this->update_loans();
         $groups = Group::all();
         $clients = Client::all();
         $loans = Loan::all();
@@ -84,31 +84,17 @@ class HomeController extends Controller
 
     private function update_loans()
     {
-        // update loan data
         // get all active loans
         $loans = Loan::where('status', 'Active')->orWhere('status', 'Defaulting')->get();
 
         // get due date of last installment
         foreach ( $loans  as $loan ) {
-            $last_installment = $loan->installments->last();
-            // check if today is after due date
-            $due_date = Carbon::parse($last_installment->due_date);
-            if ($due_date->isPast() && ! $due_date->isCurrentDay() ) {
-                // then create new installment if true
-                $installment = new Installment;
-                $installment->loan_id = $loan->id;
-                $installment->expected_amount = $loan->partial_amount;
-                $installment->due_date = Carbon::parse('next ' . $loan->payment_day);
-                $installment->status = 'Pending';
-                $installment->balance = $loan->partial_amount;
-                $installment->save();
-
-                // if the installment is not zero, add defaulter flag to the loan
-                if ($loan->installments->where('status', 'Pending') ) {
-                    $loan->status = "Defaulting";
-                    $loan->update();
-                }
+          foreach ( $loan->unpaid_installments() as $unpaid_installment ) {
+            $due_date = Carbon::parse($unpaid_installment->due_date);
+            if ( $due_date->endOfDay()->lt( Carbon::now() ) ) {
+              $loan->status = "Defaulting";
             }
+          }
         }
     }
 }
