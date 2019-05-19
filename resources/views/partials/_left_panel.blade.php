@@ -41,9 +41,6 @@
           <span class="menu-item-label">Loans</span>
         </a><!-- br-menu-link -->
         <ul class="br-menu-sub">
-          @if ( Auth::user()->can('create-loans') )
-            <li class="sub-item"><a href="{{ route('loans.create' ) }}" class="sub-link">Add Loan</a></li>
-          @endif
           <li class="sub-item"><a href="{{ route('loans.index' ) }}" class="sub-link">All Loans</a></li>
         </ul>
       </li><!-- br-menu-item -->

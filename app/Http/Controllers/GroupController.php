@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Clients\Group;
 use App\Models\Clients\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use Session;
 
 
@@ -23,7 +25,11 @@ class GroupController extends Controller
      */
     public function index()
     {
+
         $groups = Group::all()->sortByDesc('created_at');
+        if ( Auth::user()->hasRole( 'loan_officer' ) ) {
+          $groups = Auth::user()->groups;
+        }
         return view('site/groups/index')->withGroups($groups);
     }
 
@@ -56,6 +62,7 @@ class GroupController extends Controller
         $group = new Group;
         $group->name = $request->name;
         $group->landmark = $request->landmark;
+        $group->user_id = Auth::user()->id;
         $group->save();
 
         Session::flash('success', $group->name . ' has been added');

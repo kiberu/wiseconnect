@@ -45,7 +45,8 @@ class ClientController extends Controller
         $business_types = BusinessType::all();
         $loan_types = LoanType::all();
         $payment_days = $this->get_payment_days();
-        return view('site.clients.create')->with(['business_types' => $business_types, 'loan_types' => $loan_types, 'payment_days' => $payment_days]);;
+        $groups = Group::all();
+        return view('site.clients.create')->with(['groups' => $groups, 'business_types' => $business_types, 'loan_types' => $loan_types, 'payment_days' => $payment_days]);;
     }
 
     public function get_payment_days()
@@ -76,6 +77,7 @@ class ClientController extends Controller
           'next_of_kin' => $request->next_of_kin,
           'nin_number' => $request->nin_number,
           'phone_number' => $request->phone_number,
+          'group' => $request->group,
           'residential_address' => $request->residential_address,
           'loan_type' => $request->loan_type,
           'principle_amount' => $request->principle_amount,
@@ -100,6 +102,10 @@ class ClientController extends Controller
           $client->user_id = Auth::user()->id;
           $client->residential_address = $data['residential_address'];
           $client->save();
+
+          if ( ! empty( $request->group )){
+            $client->groups()->attach([$request->group]);
+          }
 
           $loan = new Loan;
           $loan->client_id = $client->id;

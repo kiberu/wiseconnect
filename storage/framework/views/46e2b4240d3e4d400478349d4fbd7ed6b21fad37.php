@@ -4,8 +4,6 @@
   <div class="br-pageheader">
     <nav class="breadcrumb pd-0 mg-0 tx-12">
       <a class="breadcrumb-item" href="<?php echo e(route('home')); ?>">Home</a>
-      <a class="breadcrumb-item" href="<?php echo e(route('groups.index')); ?>">Groups</a>
-      <a class="breadcrumb-item" href="<?php echo e(route('groups.show', $group)); ?>"><?php echo e($group->name); ?></a>
       <span class="breadcrumb-item active"> Client #<?php echo e($client->id); ?></span>
     </nav>
   </div><!-- br-pageheader -->
@@ -19,14 +17,12 @@
 
   <div class="br-pagebody">
     <div class="br-section-wrapper">
-      <?php if( Auth::user()->can('edit-groups') ): ?>
-        <a href="<?php echo e(route('clients.edit',[$group, $client] )); ?>" class="btn btn-info btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Edit Client</a>
-      <?php endif; ?>
+
       <div class="row mg-t-20">
         <div class="col-xl-3"></div>
         <div class="col-xl-9">
           <strong>Client:</strong> <?php echo e($client->first_name); ?> <?php echo e($client->last_name); ?>  <br>
-          <strong>Group Name:</strong> <?php echo e($group->name); ?> <br>
+          <strong>Group Name:</strong> <?php echo e($client->group ? $client->group->name : 'None'); ?> <br>
           <hr>
           <h2>Bio</h2>
           <strong>Sex:</strong> <?php echo e($client->sex); ?> <br>

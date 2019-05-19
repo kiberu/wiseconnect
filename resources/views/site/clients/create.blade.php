@@ -50,6 +50,21 @@
                 @endif
               </div><!-- form-group -->
               <div class="form-group wd-xs-300">
+                <label>Group:</label>
+                <select id="group" name="group" class="form-control {{ $errors->has('group') ? ' is-invalid' : '' }}" value="{{ old('group') }}">
+                  <option selected value="">None</option>
+                  @foreach ($groups as $group)
+                    <option {{ ( old('group') == $group->id ) ? 'selected' : '' }} value="{{ $group->id }}">{{ $group->name }}</option>
+                  @endforeach
+
+                </select>
+                @if ($errors->has('group'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('group') }}</strong>
+                    </span>
+                @endif
+              </div><!-- form-group -->
+              <div class="form-group wd-xs-300">
                 <label class="form-control-label">Gender: <span class="tx-danger">*</span></label>
                 <select id="gender" name="gender" class="form-control {{ $errors->has('gender') ? ' is-invalid' : '' }}" value="{{ old('gender') }}">
                   <option selected disabled>Choose Option</option>

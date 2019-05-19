@@ -15,4 +15,10 @@ class Group extends Model
     {
         return $this->hasManyThrough('App\Models\Loans\Loan', 'App\Models\Clients\Client');
     }
+
+    //
+    public function user()
+    {
+        return $this-belongsTo('App\Models\User');
+    }
 }
