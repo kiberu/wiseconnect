@@ -42,13 +42,14 @@
           <h6><span id="js-status" style="color: green">Status:</strong> <?php echo e($loan->status); ?><br></span></h6>
           <?php if( $loan->status === 'Pending' ): ?>
             <?php if( Auth::user()->hasRole( 'branch_manager' ) ): ?>
-              <button id="js-approve-loan">APPROVE</button>
-              <p id="js-loan-id" style="display:none;"><?php echo e($loan->id); ?></p>
+              <a href="<?php echo e(route('loans.approve', $loan )); ?>">Approve Loan</a>
             <?php endif; ?>
           <?php endif; ?>
 
           <?php if( $loan->status === 'Approved' ): ?>
-              <a href="<?php echo e(route('loans.activate', $loan )); ?>">Activate Loan</a>
+            <?php if( Auth::user()->hasRole( 'loan_officer' ) ): ?>
+              <a href="<?php echo e(route('loans.activate', $loan )); ?>">Disburse Loan</a>
+            <?php endif; ?>
           <?php endif; ?>
           <hr>
           <?php if( $loan->status === 'Active' ): ?>
@@ -84,7 +85,7 @@
           <hr>
           <h6>Balance:</strong> <?php echo e(number_format( $loan->balance() )); ?> UGX
           <hr>
-          <h6>Each Installment:</strong> <?php echo e(number_format( $loan->partial_amount )); ?> UGX (With Interest)<br></h6>
+          <h6>Each Installment:</strong> <?php echo e(number_format( $loan->latest_installment->expected_amount)); ?> UGX (With Interest)<br></h6>
           <hr>
           <h6>Payment Date:</strong> <?php echo e($loan->payment_day); ?><br></h6>
         </div>
@@ -97,8 +98,8 @@
             <th>#</th>
             <th>Amount Expected</th>
             <th>Next Due Date</th>
-            <th>Payments</th>
             <th>Installment Balance</th>
+            <th>Outstanding Balance</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -108,10 +109,12 @@
               <td><?php echo e($installment->id); ?></td>
               <td><?php echo e(number_format($installment->expected_amount)); ?> UGX</td>
               <td><?php echo e($installment->due_date); ?></td>
-              <td><a href="<?php echo e(route( 'installments.show', [ $loan, $installment ] )); ?>"><?php echo e(count( $installment->payments )); ?></a></td>
               <td><?php echo e(number_format($installment->balance)); ?> UGX</td>
+              <td><?php echo e(number_format( $loan->balance() )); ?> UGX</td>
               <td><?php echo e($installment->status); ?></td>
-              <td><a href="<?php echo e(route( 'installments.show', [$loan, $installment] )); ?>" class="btn btn-success ln_color_white">Payments</a></td>
+              <?php if( Auth::user()->hasRole( 'branch_manager' ) ): ?>
+                <td><a href="<?php echo e(route( 'installments.show', [$loan, $installment] )); ?>" class="btn btn-success ln_color_white">Payments</a></td>
+              <?php endif; ?>
             </tr>
 
           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

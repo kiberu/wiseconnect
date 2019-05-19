@@ -15,7 +15,7 @@ class LoanController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:manage-loans');
+        // $this->middleware('permission:manage-loans');
         $this->middleware('permission:create-loans', ['only' => ['create','edit','store','update','delete']]);
     }
 
@@ -160,12 +160,11 @@ class LoanController extends Controller
         return view('site/loans/index')->with([ 'loans' => $loans, 'heading' => $heading ]);
     }
 
-    public function approve( Request $request )
+    public function approve( Request $request, Loan $loan )
     {
-      $loan = Loan::find( $request->loan_id );
-      $loan->status = "Approved";
-      $loan->save();
-      return response()->json( ['success' => $request->loan_id] );
+      return view('site/loans/approve')->with([
+        'loan' => $loan,
+      ]);
 
     }
 
@@ -215,6 +214,35 @@ class LoanController extends Controller
       $installment->status = 'Pending';
       $installment->balance = $partial;
       $installment->save();
+
+      return redirect()->route('loans.show', $loan);
+
+    }
+
+    public function save_approval( Request $request, Loan $loan ){
+
+      $this->validate(
+          $request, [
+          'principle_amount' => 'required|numeric',
+          'interest_rate' => 'required|max:255',
+          'grace_period' => 'required|max:255',
+          'duration' => 'required|max:255',
+          'application_fee' => 'required|numeric',
+          'insurance_fee' => 'required|numeric',
+          ]
+      );
+
+      $loan->principle = $request->principle_amount;
+      $loan->interest_rate = $request->interest_rate;
+      $loan->grace_period = $request->grace_period;
+      $loan->duration = $request->duration;
+      $loan->status= 'Approved';
+      $loan->application_fee = $request->application_fee;
+      $loan->insurance_fee = $request->insurance_fee;
+      $loan->save();
+
+      return redirect()->route('loans.show', $loan);
+
     }
 
     /**

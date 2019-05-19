@@ -154,6 +154,15 @@
                 @endif
               </div><!-- row -->
               <div class="form-group wd-xs-300">
+                <label>Business Details: <span class="tx-danger">*</span></label>
+                <input  id="business_details" class="form-control {{ $errors->has('business_details') ? ' is-invalid' : '' }}" value="{{ old('business_details') }}" type="text" name="business_details"  placeholder="Enter Business Details">
+                @if ($errors->has('business_details'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('business_details') }}</strong>
+                    </span>
+                @endif
+              </div><!-- row -->
+              <div class="form-group wd-xs-300">
                 <label>Business Type: <span class="tx-danger">*</span></label>
                 <select id="business_type" name="business_type" class="form-control {{ $errors->has('business_type') ? ' is-invalid' : '' }}" value="{{ old('business_type') }}">
                   <option selected disabled>Choose Option</option>
@@ -170,7 +179,7 @@
               </div><!-- row -->
               <div class="form-group wd-xs-300">
                 <label class="form-control-label">Collateral: <span class="tx-danger">*</span></label>
-                <textarea id="collateral" cols="10" rows="10" class="form-control {{ $errors->has('collateral') ? ' is-invalid' : '' }}" value="{{ old('collateral') }}" type="text" name="collateral"  required placeholder="Name, phone, nin"></textarea>
+                <textarea id="collateral" cols="10" rows="10" class="form-control {{ $errors->has('collateral') ? ' is-invalid' : '' }}" value="{{ old('collateral') }}" type="text" name="collateral"  required placeholder="Items"></textarea>
                 @if ($errors->has('collateral'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('collateral') }}</strong>

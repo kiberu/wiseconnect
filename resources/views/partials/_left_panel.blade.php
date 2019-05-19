@@ -74,12 +74,20 @@
       </li><!-- br-menu-item -->
     @endif
     @if ( Auth::user()->can('manage-reports') )
-    <li class="br-menu-item">
-      <a href="layouts.html" class="br-menu-link">
-        <i class="menu-item-icon icon ion-ios-book-outline tx-22"></i>
-        <span class="menu-item-label">Report</span>
-      </a><!-- br-menu-link -->
-    </li><!-- br-menu-item -->
+      <li class="br-menu-item">
+        <a href="#" class="br-menu-link with-sub">
+          <i class="menu-item-icon icon ion-ios-briefcase-outline tx-22"></i>
+          <span class="menu-item-label">Reports</span>
+        </a><!-- br-menu-link -->
+        <ul class="br-menu-sub">
+          <li class="sub-item"><a href="{{ route('clients.index') }}" class="sub-link">All Applicants</a></li>
+
+          <li class="sub-item"><a href="{{ route('groups.index') }}" class="sub-link">All groups</a></li>
+
+          <li class="sub-item"><a href="{{ route('loans.index' ) }}" class="sub-link">All Loans</a></li>
+
+        </ul>
+      </li><!-- br-menu-item -->
   @endif
   </ul><!-- br-sideleft-menu -->
   <br>

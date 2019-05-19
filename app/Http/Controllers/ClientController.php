@@ -7,6 +7,8 @@ use App\Models\Clients\Group;
 use App\Models\BusinessType;
 use App\Models\LoanType;
 use App\Models\Loans\Loan;
+use Illuminate\Support\Facades\Auth;
+
 
 
 use Illuminate\Http\Request;
@@ -16,7 +18,7 @@ class ClientController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:manage-clients');
+        // $this->middleware('permission:manage-clients');
         $this->middleware('permission:edit-groups', ['only' => [ 'edit', 'update', 'destroy' ] ]);
     }
     /**
@@ -26,7 +28,11 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+      $clients = Client::all();
+      if ( Auth::user()->hasRole( 'loan_officer' ) ) {
+        $clients = Auth::user()->clients;
+      }
+      return view('site.clients.index')->with(['clients' => $clients]);
     }
 
     /**
@@ -75,6 +81,7 @@ class ClientController extends Controller
           'principle_amount' => $request->principle_amount,
           'business_location' => $request->business_location,
           'business_type' => $request->business_type,
+          'business_details' => $request->business_details,
           'business_type' => $request->business_type,
           'collateral' => $request->collateral,
         );
@@ -90,6 +97,7 @@ class ClientController extends Controller
           $client->NIN = $data['phone_number'];
           $client->next_of_kin = $data['next_of_kin'];
           $client->phone_number = $data['phone_number'];
+          $client->user_id = Auth::user()->id;
           $client->residential_address = $data['residential_address'];
           $client->save();
 
@@ -98,6 +106,7 @@ class ClientController extends Controller
           $loan->loan_type_id = $data['loan_type'];
           $loan->principle = $data['principle_amount'];
           $loan->business_type_id = $data['business_type'];
+          $loan->business_details = $data['business_details'];
           $loan->business_location = $data['business_location'];
           $loan->status= 'Pending';
           $loan->save();

@@ -12,8 +12,8 @@ class GroupController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:manage-groups');
-        $this->middleware('permission:manage-clients', ['only' => ['show','index']]);
+        // $this->middleware('permission:manage-groups');
+        // $this->middleware('permission:manage-clients', ['only' => ['show','index']]);
     }
 
     /**

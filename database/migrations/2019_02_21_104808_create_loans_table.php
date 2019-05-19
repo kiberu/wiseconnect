@@ -26,6 +26,7 @@ class CreateLoansTable extends Migration
                 $table->string('status');
                 $table->integer('business_type_id')->unsigned();
                 $table->string('business_location');
+                $table->string('business_details');
                 $table->string('payment_day')->nullable();
                 $table->string('loan_note')->nullable();
                 $table->integer('partial_amount')->nullable();

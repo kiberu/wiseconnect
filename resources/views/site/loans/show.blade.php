@@ -44,13 +44,14 @@
           <h6><span id="js-status" style="color: green">Status:</strong> {{ $loan->status }}<br></span></h6>
           @if ( $loan->status === 'Pending' )
             @if ( Auth::user()->hasRole( 'branch_manager' ) )
-              <button id="js-approve-loan">APPROVE</button>
-              <p id="js-loan-id" style="display:none;">{{ $loan->id }}</p>
+              <a href="{{ route('loans.approve', $loan ) }}">Approve Loan</a>
             @endif
           @endif
 
           @if ( $loan->status === 'Approved' )
-              <a href="{{ route('loans.activate', $loan ) }}">Activate Loan</a>
+            @if ( Auth::user()->hasRole( 'loan_officer' ) )
+              <a href="{{ route('loans.activate', $loan ) }}">Disburse Loan</a>
+            @endif
           @endif
           <hr>
           @if ( $loan->status === 'Active' )
@@ -86,7 +87,7 @@
           <hr>
           <h6>Balance:</strong> {{ number_format( $loan->balance() )}} UGX
           <hr>
-          <h6>Each Installment:</strong> {{ number_format( $loan->partial_amount ) }} UGX (With Interest)<br></h6>
+          <h6>Each Installment:</strong> {{ number_format( $loan->latest_installment->expected_amount) }} UGX (With Interest)<br></h6>
           <hr>
           <h6>Payment Date:</strong> {{ $loan->payment_day }}<br></h6>
         </div>
@@ -99,8 +100,8 @@
             <th>#</th>
             <th>Amount Expected</th>
             <th>Next Due Date</th>
-            <th>Payments</th>
             <th>Installment Balance</th>
+            <th>Outstanding Balance</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -110,10 +111,12 @@
               <td>{{ $installment->id }}</td>
               <td>{{ number_format($installment->expected_amount) }} UGX</td>
               <td>{{ $installment->due_date }}</td>
-              <td><a href="{{ route( 'installments.show', [ $loan, $installment ] ) }}">{{ count( $installment->payments ) }}</a></td>
               <td>{{ number_format($installment->balance) }} UGX</td>
+              <td>{{ number_format( $loan->balance() )}} UGX</td>
               <td>{{ $installment->status }}</td>
-              <td><a href="{{ route( 'installments.show', [$loan, $installment] ) }}" class="btn btn-success ln_color_white">Payments</a></td>
+              @if ( Auth::user()->hasRole( 'branch_manager' ) )
+                <td><a href="{{ route( 'installments.show', [$loan, $installment] ) }}" class="btn btn-success ln_color_white">Payments</a></td>
+              @endif
             </tr>
 
           @endforeach

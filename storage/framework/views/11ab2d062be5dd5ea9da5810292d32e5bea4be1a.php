@@ -152,6 +152,15 @@
                 <?php endif; ?>
               </div><!-- row -->
               <div class="form-group wd-xs-300">
+                <label>Business Details: <span class="tx-danger">*</span></label>
+                <input  id="business_details" class="form-control <?php echo e($errors->has('business_details') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('business_details')); ?>" type="text" name="business_details"  placeholder="Enter Business Details">
+                <?php if($errors->has('business_details')): ?>
+                    <span class="invalid-feedback" role="alert">
+                        <strong><?php echo e($errors->first('business_details')); ?></strong>
+                    </span>
+                <?php endif; ?>
+              </div><!-- row -->
+              <div class="form-group wd-xs-300">
                 <label>Business Type: <span class="tx-danger">*</span></label>
                 <select id="business_type" name="business_type" class="form-control <?php echo e($errors->has('business_type') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('business_type')); ?>">
                   <option selected disabled>Choose Option</option>
@@ -168,7 +177,7 @@
               </div><!-- row -->
               <div class="form-group wd-xs-300">
                 <label class="form-control-label">Collateral: <span class="tx-danger">*</span></label>
-                <textarea id="collateral" cols="10" rows="10" class="form-control <?php echo e($errors->has('collateral') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('collateral')); ?>" type="text" name="collateral"  required placeholder="Name, phone, nin"></textarea>
+                <textarea id="collateral" cols="10" rows="10" class="form-control <?php echo e($errors->has('collateral') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('collateral')); ?>" type="text" name="collateral"  required placeholder="Items"></textarea>
                 <?php if($errors->has('collateral')): ?>
                     <span class="invalid-feedback" role="alert">
                         <strong><?php echo e($errors->first('collateral')); ?></strong>

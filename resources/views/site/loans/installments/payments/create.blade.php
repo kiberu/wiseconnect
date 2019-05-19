@@ -24,7 +24,6 @@
       <div class="row mg-t-20">
         <div class="col-xl-3"></div>
           <div class="form-layout form-layout-5">
-            <p>Value paid must be more than {{ number_format( round( $installment->balance, -3 ) ) }} UGX</p>
 
             <form method="POST" action="{{ route('payments.store', [$loan, $installment] ) }}">
                 @csrf
