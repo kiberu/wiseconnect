@@ -51,16 +51,16 @@
               </div><!-- form-group -->
               <div class="form-group wd-xs-300">
                 <label>Group:  <span class="tx-danger"></span></label>
-                <select id="group" name="group" class="form-control {{ $errors->has('group') ? ' is-invalid' : '' }}" value="{{ old('group') }}">
-                  <option selected disabled>None</option>
+                <select id="group_id" name="group_id" class="form-control {{ $errors->has('group_id') ? ' is-invalid' : '' }}" value="{{ old('group_id') }}">
+                  <option selected>None</option>
                   @foreach ($groups as $group)
-                    <option {{ ( old('group') == $group->id ) ? 'selected' : '' }} value="{{ $group->id }}">{{ $group->name }}</option>
+                    <option {{ ( old('group_id') == $group->id ) ? 'selected' : '' }} value="{{ $group->id }}">{{ $group->name }}</option>
                   @endforeach
 
                 </select>
-                @if ($errors->has('group'))
+                @if ($errors->has('group_id'))
                     <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('group') }}</strong>
+                        <strong>{{ $errors->first('group_id') }}</strong>
                     </span>
                 @endif
               </div><!-- form-group -->

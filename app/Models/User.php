@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Receivable');
     }
 
+    public function clients()
+    {
+        return $this->hasMany('App\Models\Clients\Client');
+    }
+
     public function getFullNameAttribute()
     {
         return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];

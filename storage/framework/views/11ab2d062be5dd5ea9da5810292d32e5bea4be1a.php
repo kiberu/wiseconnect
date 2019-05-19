@@ -49,16 +49,16 @@
               </div><!-- form-group -->
               <div class="form-group wd-xs-300">
                 <label>Group:  <span class="tx-danger"></span></label>
-                <select id="group" name="group" class="form-control <?php echo e($errors->has('group') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('group')); ?>">
-                  <option selected disabled>None</option>
+                <select id="group_id" name="group_id" class="form-control <?php echo e($errors->has('group_id') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('group_id')); ?>">
+                  <option selected>None</option>
                   <?php $__currentLoopData = $groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <option <?php echo e(( old('group') == $group->id ) ? 'selected' : ''); ?> value="<?php echo e($group->id); ?>"><?php echo e($group->name); ?></option>
+                    <option <?php echo e(( old('group_id') == $group->id ) ? 'selected' : ''); ?> value="<?php echo e($group->id); ?>"><?php echo e($group->name); ?></option>
                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                 </select>
-                <?php if($errors->has('group')): ?>
+                <?php if($errors->has('group_id')): ?>
                     <span class="invalid-feedback" role="alert">
-                        <strong><?php echo e($errors->first('group')); ?></strong>
+                        <strong><?php echo e($errors->first('group_id')); ?></strong>
                     </span>
                 <?php endif; ?>
               </div><!-- form-group -->

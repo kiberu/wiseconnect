@@ -18,7 +18,7 @@
           <?php if( Auth::user()->can('create-loans') ): ?>
             <li class="sub-item"><a href="<?php echo e(route('clients.create')); ?>" class="sub-link">New Application</a></li>
           <?php endif; ?>
-          <li class="sub-item"><a href="<?php echo e(route('groups.index')); ?>" class="sub-link">All Applicants</a></li>
+          <li class="sub-item"><a href="<?php echo e(route('clients.index')); ?>" class="sub-link">All Applicants</a></li>
         </ul>
       </li><!-- br-menu-item -->
       <?php if( Auth::user()->can('manage-clients') ): ?>

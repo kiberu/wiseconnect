@@ -7,6 +7,7 @@ use App\Models\Clients\Group;
 use App\Models\BusinessType;
 use App\Models\LoanType;
 use App\Models\Loans\Loan;
+use Illuminate\Support\Facades\Auth;
 
 
 use Illuminate\Http\Request;
@@ -26,7 +27,12 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+      $clients = Client::all();
+      if ( Auth::user()->hasRole( 'loan_officer' ) ) {
+        $clients = Auth::user()->clients;
+      }
+      return view('site/clients/index')->with(['clients' => $clients]);
+
     }
 
     /**
@@ -91,10 +97,11 @@ class ClientController extends Controller
           $client->NIN = $data['phone_number'];
           $client->next_of_kin = $data['next_of_kin'];
           $client->phone_number = $data['phone_number'];
-          if (! empty( $request->group )) ? 'group' => $request->group :
+
 
           $client->residential_address = $data['residential_address'];
           $client->save();
+
 
           $loan = new Loan;
           $loan->client_id = $client->id;

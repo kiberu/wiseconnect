@@ -18,5 +18,11 @@ class Client extends Model
         return $this->hasMany('App\Models\Loans\Loan');
     }
 
+    //
+    public function user()
+    {
+        return $this-belongsTo('App\Models\User');
+    }
+
 
 }

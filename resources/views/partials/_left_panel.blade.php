@@ -18,7 +18,7 @@
           @if ( Auth::user()->can('create-loans') )
             <li class="sub-item"><a href="{{ route('clients.create') }}" class="sub-link">New Application</a></li>
           @endif
-          <li class="sub-item"><a href="{{ route('groups.index') }}" class="sub-link">All Applicants</a></li>
+          <li class="sub-item"><a href="{{ route('clients.index') }}" class="sub-link">All Applicants</a></li>
         </ul>
       </li><!-- br-menu-item -->
       @if ( Auth::user()->can('manage-clients') )
