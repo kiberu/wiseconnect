@@ -48,6 +48,21 @@
                 <?php endif; ?>
               </div><!-- form-group -->
               <div class="form-group wd-xs-300">
+                <label>Group:  <span class="tx-danger"></span></label>
+                <select id="group" name="group" class="form-control <?php echo e($errors->has('group') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('group')); ?>">
+                  <option selected disabled>None</option>
+                  <?php $__currentLoopData = $groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option <?php echo e(( old('group') == $group->id ) ? 'selected' : ''); ?> value="<?php echo e($group->id); ?>"><?php echo e($group->name); ?></option>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                </select>
+                <?php if($errors->has('group')): ?>
+                    <span class="invalid-feedback" role="alert">
+                        <strong><?php echo e($errors->first('group')); ?></strong>
+                    </span>
+                <?php endif; ?>
+              </div><!-- form-group -->
+              <div class="form-group wd-xs-300">
                 <label class="form-control-label">Gender: <span class="tx-danger">*</span></label>
                 <select id="gender" name="gender" class="form-control <?php echo e($errors->has('gender') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('gender')); ?>">
                   <option selected disabled>Choose Option</option>
@@ -134,7 +149,7 @@
                 <?php endif; ?>
               </div><!-- form-group -->
               <div class="form-group wd-xs-300">
-                <label>Principle Amount:  <span class="tx-danger">*</span></label>
+                <label>Application Amount:  <span class="tx-danger">*</span></label>
                 <input  id="principle_amount" class="form-control <?php echo e($errors->has('principle_amount') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('principle_amount')); ?>" type="integer" name="principle_amount" >
                 <?php if($errors->has('principle_amount')): ?>
                     <span class="invalid-feedback" role="alert">
