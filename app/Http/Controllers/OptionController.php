@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Option;
 use Illuminate\Http\Request;
+use App\Models\BusinessType;
+use App\Models\LoanType;
+
 
 class OptionController extends Controller
 {
@@ -14,7 +16,9 @@ class OptionController extends Controller
      */
     public function index()
     {
-        //
+      $businessType = BusinessType::all();
+      $loanTypes = LoanType::all();
+      return view('site.options.index')->with(['businessTypes' => $businessType, 'loanTypes' => $loanTypes]);
     }
 
     /**

@@ -53,7 +53,6 @@
         </a><!-- br-menu-link -->
         <ul class="br-menu-sub">
           <li class="sub-item"><a href="<?php echo e(route('users.create')); ?>" class="sub-link">Add System User</a></li>
-          <li class="sub-item"><a href="<?php echo e(route('user.index', 'loan_officer')); ?>" class="sub-link">Loan Officers</a></li>
           <?php if( Auth::user()->hasRole( 'general_manager' ) ): ?>
             <li class="sub-item"><a href="<?php echo e(route('user.index')); ?>" class="sub-link">All Users</a></li>
           <?php endif; ?>

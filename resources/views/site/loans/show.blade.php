@@ -106,13 +106,19 @@
           </tr>
         </thead>
         <tbody>
+          @php
+            $current_balance = $loan->total_due();
+          @endphp
           @foreach ($loan->installments as $installment)
+            @php
+              $current_balance -= $installment->payments->sum('amount');
+            @endphp
             <tr>
               <td>{{ $installment->id }}</td>
               <td>{{ number_format($installment->expected_amount) }} UGX</td>
               <td>{{ $installment->due_date }}</td>
               <td>{{ number_format($installment->balance) }} UGX</td>
-              <td>{{ number_format( $loan->balance() )}} UGX</td>
+              <td>{{ number_format( $current_balance )}} UGX</td>
               <td>{{ $installment->status }}</td>
               @if ( Auth::user()->hasRole( 'branch_manager' ) )
                 <td><a href="{{ route( 'installments.show', [$loan, $installment] ) }}" class="btn btn-success ln_color_white">Payments</a></td>

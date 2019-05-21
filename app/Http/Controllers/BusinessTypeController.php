@@ -35,7 +35,18 @@ class BusinessTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate(
+          $request, [
+          'businessTypeName' => 'required|string|max:255',
+          ]
+      );
+
+
+      $type = new BusinessType;
+      $type->name = $request->businessTypeName;
+      $type->save();
+
+      return redirect()->route('options.index');
     }
 
     /**

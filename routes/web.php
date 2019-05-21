@@ -19,10 +19,12 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::group(['middleware' => [ 'web', 'auth'] ], function () {
-  Route::Resource( '/users', 'UserController' )->except(['index']);
+  Route::Resource( '/users', 'UserController' );
+  Route::Resource( '/options', 'OptionController' );
   Route::get('user/{type?}', 'UserController@index' )->name('user.index');
   Route::Resource( '/banks', 'BankController' );
   Route::Resource( '/expenditures', 'ExpenditureController' );
+  Route::Resource( '/businesstypes', 'BusinessTypeController' );
   Route::Resource( '/payables', 'PayableController' );
   Route::Resource( '/receivables', 'ReceivableController' );
   Route::Resource( '/groups', 'GroupController' );

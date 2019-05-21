@@ -4,43 +4,66 @@
   <div class="br-pageheader">
     <nav class="breadcrumb pd-0 mg-0 tx-12">
       <a class="breadcrumb-item" href="<?php echo e(route('home')); ?>">Home</a>
-      <span class="breadcrumb-item active">Loans</span>
+      <span class="breadcrumb-item active">Options</span>
     </nav>
   </div><!-- br-pageheader -->
   <div class="br-pagetitle">
     <i class="icon icon ion-ios-color-filter-outline tx-22"></i>
     <div>
-      <h4><?php echo e($heading); ?></h4>
-      <p class="mg-b-0">All loans per client</p>
+      <h4>All Options</h4>
+      <p class="mg-b-0">Manage Options</p>
     </div>
   </div><!-- d-flex -->
 
   <div class="br-pagebody">
+
     <div class="br-section-wrapper">
-      <table class="table display responsive nowrap">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Client</th>
-            <th>Loan Type</th>
-            <th>Status</th>
-            <th>Created at</th>
-            <th>Open</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php $__currentLoopData = $loans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $loan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <tr class="">
-              <td><?php echo e($loan->id); ?></td>
-              <td><a href="<?php echo e(route('clients.show', [ $loan->client->groups->last(), $loan->client ])); ?>"><?php echo e($loan->client->first_name); ?> <?php echo e($loan->client->last_name); ?></a></td>
-              <td><?php echo e($loan->loan_type->name); ?></td>
-              <td><?php echo e($loan->status); ?></td>
-              <td><?php echo e($loan->created_at); ?></td>
-              <td><a href="<?php echo e(route('loans.show', $loan)); ?>" class="btn btn-success">Open</a></td>
-            </tr>
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </tbody>
-      </table>
+      <div class="row">
+        <div class="col">
+          <h2>Business Types</h2>
+          <form method="POST" action="<?php echo e(route('businesstypes.store')); ?>">
+            <input type="text" name="businessTypeName">
+            <input type="submit" value="Add">
+          </form>
+          <table class="table responsive">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $__currentLoopData = $businessTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $businessType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <tr>
+                  <td><?php echo e($businessType->id); ?></td>
+                  <td><?php echo e($businessType->name); ?></td>
+                  <td>Delete</td>
+                </tr>
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </tbody>
+          </table>
+        </div>
+        <div class="col">
+          <h2>Loan Types</h2>
+          <table class="table responsive">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $__currentLoopData = $loanTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $loanType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <tr>
+                  <td><?php echo e($loanType->id); ?></td>
+                  <td><?php echo e($loanType->name); ?></td>
+                  <td>Delete</td>
+                </tr>
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div><!-- br-pagebody -->
   <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

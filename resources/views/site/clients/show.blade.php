@@ -24,7 +24,7 @@
         <div class="col-xl-3"></div>
         <div class="col-xl-9">
           <strong>Client:</strong> {{ $client->first_name }} {{ $client->last_name }}  <br>
-          <strong>Group Name:</strong> {{ $client->group ? $client->group->name : 'None' }} <br>
+          <strong>Group Name:</strong> {{ (! empty($client->groups)) ? $client->groups->last()->name : 'None' }} <br>
           <hr>
           <h2>Bio</h2>
           <strong>Sex:</strong> {{ $client->sex }} <br>

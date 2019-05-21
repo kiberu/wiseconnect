@@ -70,7 +70,9 @@
         </div>
     </div>
     <hr>
-    <a href="{{ route('clients.create', $group) }}" class="btn btn-success btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Add Client</a>
+    @if (Auth::user()->can('create-clients'))
+      <a href="{{ route('clients.create', $group) }}" class="btn btn-success btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Add Client</a>
+    @endif
     <div class="br-section-wrapper">
       <table id="datatable1" class="table display responsive nowrap">
         <thead>

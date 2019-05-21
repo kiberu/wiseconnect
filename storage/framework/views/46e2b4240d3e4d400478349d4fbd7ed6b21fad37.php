@@ -22,7 +22,7 @@
         <div class="col-xl-3"></div>
         <div class="col-xl-9">
           <strong>Client:</strong> <?php echo e($client->first_name); ?> <?php echo e($client->last_name); ?>  <br>
-          <strong>Group Name:</strong> <?php echo e($client->group ? $client->group->name : 'None'); ?> <br>
+          <strong>Group Name:</strong> <?php echo e((! empty($client->groups)) ? $client->groups->last()->name : 'None'); ?> <br>
           <hr>
           <h2>Bio</h2>
           <strong>Sex:</strong> <?php echo e($client->sex); ?> <br>

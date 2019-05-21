@@ -69,7 +69,9 @@
         </div>
     </div>
     <hr>
-    <a href="<?php echo e(route('clients.create', $group)); ?>" class="btn btn-success btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Add Client</a>
+    <?php if(Auth::user()->can('create-clients')): ?>
+      <a href="<?php echo e(route('clients.create', $group)); ?>" class="btn btn-success btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Add Client</a>
+    <?php endif; ?>
     <div class="br-section-wrapper">
       <table id="datatable1" class="table display responsive nowrap">
         <thead>

@@ -6,43 +6,66 @@
   <div class="br-pageheader">
     <nav class="breadcrumb pd-0 mg-0 tx-12">
       <a class="breadcrumb-item" href="{{route('home')}}">Home</a>
-      <span class="breadcrumb-item active">Loans</span>
+      <span class="breadcrumb-item active">Options</span>
     </nav>
   </div><!-- br-pageheader -->
   <div class="br-pagetitle">
     <i class="icon icon ion-ios-color-filter-outline tx-22"></i>
     <div>
-      <h4>{{ $heading }}</h4>
-      <p class="mg-b-0">All loans per client</p>
+      <h4>All Options</h4>
+      <p class="mg-b-0">Manage Options</p>
     </div>
   </div><!-- d-flex -->
 
   <div class="br-pagebody">
+
     <div class="br-section-wrapper">
-      <table class="table display responsive nowrap">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Client</th>
-            <th>Loan Type</th>
-            <th>Status</th>
-            <th>Created at</th>
-            <th>Open</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach ( $loans as $loan )
-            <tr class="">
-              <td>{{ $loan->id }}</td>
-              <td><a href="{{ route('clients.show', [ $loan->client->groups->last(), $loan->client ]) }}">{{ $loan->client->first_name }} {{ $loan->client->last_name }}</a></td>
-              <td>{{ $loan->loan_type->name }}</td>
-              <td>{{ $loan->status }}</td>
-              <td>{{ $loan->created_at }}</td>
-              <td><a href="{{ route('loans.show', $loan) }}" class="btn btn-success">Open</a></td>
-            </tr>
-          @endforeach
-        </tbody>
-      </table>
+      <div class="row">
+        <div class="col">
+          <h2>Business Types</h2>
+          <form method="POST" action="{{ route('businesstypes.store') }}">
+            <input type="text" name="businessTypeName">
+            <input type="submit" value="Add">
+          </form>
+          <table class="table responsive">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($businessTypes as $key => $businessType)
+                <tr>
+                  <td>{{ $businessType->id }}</td>
+                  <td>{{ $businessType->name }}</td>
+                  <td>Delete</td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+        <div class="col">
+          <h2>Loan Types</h2>
+          <table class="table responsive">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($loanTypes as $key => $loanType)
+                <tr>
+                  <td>{{ $loanType->id }}</td>
+                  <td>{{ $loanType->name }}</td>
+                  <td>Delete</td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div><!-- br-pagebody -->
   @include('partials._footer')

@@ -32,6 +32,7 @@
               <th class="wd-15p">Full Name</th>
               <th class="wd-15p">Email</th>
               <th class="wd-20p">Role</th>
+              <th class="wd-20p">Online</th>
               <th class="wd-10p">Delete User</th>
             </tr>
           </thead>
@@ -42,6 +43,14 @@
                 <td><a href="{{ route('users.edit', $user) }}">{{ $user->first_name }} {{ $user->last_name }}</a></td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->getRoleNames() }}</td>
+                <td>@if($user->isOnline())
+                        <p class="text-success">Online</p>
+                    @endif
+
+                    @if(! $user->isOnline())
+                        <p class="text-secondary">Offline</p>
+                    @endif
+                </td>
                 <td>
                   <form method="POST" action="{{ route('users.destroy', $user) }}">
                     @csrf
@@ -49,6 +58,7 @@
                     <input type="submit" value="Delete" class="btn btn-danger">
                   </form>
                 </td>
+
               </tr>
             @endforeach
 

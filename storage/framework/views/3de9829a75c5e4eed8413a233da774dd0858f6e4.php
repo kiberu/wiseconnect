@@ -104,13 +104,19 @@
           </tr>
         </thead>
         <tbody>
+          <?php
+            $current_balance = $loan->total_due();
+          ?>
           <?php $__currentLoopData = $loan->installments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $installment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php
+              $current_balance -= $installment->payments->sum('amount');
+            ?>
             <tr>
               <td><?php echo e($installment->id); ?></td>
               <td><?php echo e(number_format($installment->expected_amount)); ?> UGX</td>
               <td><?php echo e($installment->due_date); ?></td>
               <td><?php echo e(number_format($installment->balance)); ?> UGX</td>
-              <td><?php echo e(number_format( $loan->balance() )); ?> UGX</td>
+              <td><?php echo e(number_format( $current_balance )); ?> UGX</td>
               <td><?php echo e($installment->status); ?></td>
               <?php if( Auth::user()->hasRole( 'branch_manager' ) ): ?>
                 <td><a href="<?php echo e(route( 'installments.show', [$loan, $installment] )); ?>" class="btn btn-success ln_color_white">Payments</a></td>

@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Cache;
+
 
 class User extends Authenticatable
 {
@@ -76,5 +78,10 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
+    }
+
+    public function isOnline()
+    {
+        return Cache::has('user-is-online-' . $this->id);
     }
 }
