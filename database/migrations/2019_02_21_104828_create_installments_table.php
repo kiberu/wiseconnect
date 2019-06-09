@@ -21,6 +21,7 @@ class CreateInstallmentsTable extends Migration
                 $table->date('due_date');
                 $table->string('status')->default('pending');
                 $table->integer('balance');
+                $table->softDeletes();
                 $table->timestamps();
             }
         );

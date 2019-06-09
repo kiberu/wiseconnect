@@ -16,6 +16,9 @@ class TypesTableSeeder extends Seeder
             DB::table('loan_types')->insert(
                 [
                 'name' => $loan_types[$i],
+                'interest_rate' => rand(10,20),
+                'insurance_fee' => rand(1000,9999),
+                'other_fee' => rand(1000,9999),
                 ]
             );
         }

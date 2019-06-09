@@ -3,9 +3,12 @@
 namespace App\Models\Loans;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Loan extends Model
 {
+  use SoftDeletes;
+  
     //
     public function client()
     {
@@ -53,7 +56,7 @@ class Loan extends Model
     public function unpaid_installments()
     {
       return $this->installments->where( 'status', '==', 'Cleared' );
-      
+
     }
 
     public function installments_balance()

@@ -19,9 +19,15 @@
 
   <div class="br-pagebody">
     <div class="br-section-wrapper">
-      @if (Session::has('success'))
+      @if ( Session::has('success'))
         <div class="alert alert-success" role="alert">
-          {{ Session::get('success') }}
+          {{ Session::get('success')}}
+        </div>
+      @endif
+
+      @if ( Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+          {{ Session::get('error')}}
         </div>
       @endif
       <div class="table-wrapper">
@@ -55,7 +61,7 @@
                   <form method="POST" action="{{ route('users.destroy', $user) }}">
                     @csrf
                     {{ method_field('delete')}}
-                    <input type="submit" value="Delete" class="btn btn-danger">
+                    <input type="submit" value="Delete" class="btn btn-danger js-delete-user">
                   </form>
                 </td>
 
@@ -69,6 +75,9 @@
     </div><!-- br-section-wrapper -->
   </div><!-- br-pagebody -->
   @include('partials._footer')
+  <div id="dialog-confirm" title="Delete this item?">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are you sure you want to delete? This can not be reversed</p>
+  </div>
 </div><!-- br-mainpanel -->
 
 @endsection
@@ -88,6 +97,30 @@
 
   <script src="{{asset('js/bracket.js' ) }}"></script>
   <script>
+
+  $(".js-delete-user").on('click', function(e) {
+    var thisForm = $( this ).closest("form");
+      $( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      buttons: {
+        "Continue": function() {
+          $( this ).dialog( "close" );
+          thisForm.submit();
+          console.log(thisForm);
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+          return false;
+        }
+      }
+    });
+
+    return false;
+  });
+
     $(function(){
       'use strict';
 

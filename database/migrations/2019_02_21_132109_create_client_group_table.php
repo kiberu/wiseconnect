@@ -18,7 +18,7 @@ class CreateClientGroupTable extends Migration
                 $table->increments('id');
                 $table->integer('client_id')->unsigned();
                 $table->integer('group_id')->unsigned();
-
+                $table->softDeletes();
                 $table->timestamps();
             }
         );

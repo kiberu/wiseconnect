@@ -20,6 +20,7 @@ class CreatePaymentsTable extends Migration
                 $table->integer('user_id')->unsigned();
                 $table->integer('amount')->unsigned();
                 $table->integer('current_balance');
+                $table->softDeletes();
                 $table->timestamps();
 
             }

@@ -17,9 +17,16 @@
 
   <div class="br-pagebody">
     <div class="br-section-wrapper">
-      <?php if(Session::has('success')): ?>
+      <?php if( Session::has('success')): ?>
         <div class="alert alert-success" role="alert">
           <?php echo e(Session::get('success')); ?>
+
+        </div>
+      <?php endif; ?>
+
+      <?php if( Session::has('error')): ?>
+        <div class="alert alert-danger" role="alert">
+          <?php echo e(Session::get('error')); ?>
 
         </div>
       <?php endif; ?>
@@ -55,7 +62,7 @@
                     <?php echo csrf_field(); ?>
                     <?php echo e(method_field('delete')); ?>
 
-                    <input type="submit" value="Delete" class="btn btn-danger">
+                    <input type="submit" value="Delete" class="btn btn-danger js-delete-user">
                   </form>
                 </td>
 
@@ -69,6 +76,9 @@
     </div><!-- br-section-wrapper -->
   </div><!-- br-pagebody -->
   <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+  <div id="dialog-confirm" title="Delete this item?">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Are you sure you want to delete? This can not be reversed</p>
+  </div>
 </div><!-- br-mainpanel -->
 
 <?php $__env->stopSection(); ?>
@@ -88,6 +98,30 @@
 
   <script src="<?php echo e(asset('js/bracket.js' )); ?>"></script>
   <script>
+
+  $(".js-delete-user").on('click', function(e) {
+    var thisForm = $( this ).closest("form");
+      $( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      buttons: {
+        "Continue": function() {
+          $( this ).dialog( "close" );
+          thisForm.submit();
+          console.log(thisForm);
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+          return false;
+        }
+      }
+    });
+
+    return false;
+  });
+
     $(function(){
       'use strict';
 

@@ -19,7 +19,14 @@ class CreateGroupsTable extends Migration
                 $table->string('name');
                 $table->string('landmark');
                 $table->integer('user_id')->unsigned();
+                $table->softDeletes();
                 $table->timestamps();
+            }
+        );
+
+        Schema::table(
+            'groups', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users');
             }
         );
     }

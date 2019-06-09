@@ -21,7 +21,7 @@ class CreateBanksTable extends Migration
                 $table->string('banked_by');
                 $table->string('transaction_id');
                 $table->integer('user_id')->unsigned();
-
+                $table->softDeletes();
                 $table->timestamps();
             }
         );

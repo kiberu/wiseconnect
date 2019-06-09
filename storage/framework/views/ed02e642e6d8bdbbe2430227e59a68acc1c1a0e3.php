@@ -37,7 +37,7 @@
                 <i class="ion ion-bag tx-60 lh-0 tx-white op-7"></i>
                 <a href="<?php echo e(route('loans.index')); ?>">
                 <div class="mg-l-20">
-                  <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Pending Orders</p>
+                  <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Pending</p>
                   <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?php echo e($loans->where('status', 'Pending')->count()); ?></p>
                   <span class="tx-11 tx-roboto tx-white-8">worthy <?php echo e(number_format( $balance )); ?> UGX</span>
                 </div>

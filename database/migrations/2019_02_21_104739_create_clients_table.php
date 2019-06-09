@@ -25,7 +25,14 @@ class CreateClientsTable extends Migration
                 $table->integer('user_id')->unsigned();
                 $table->string('NIN')->unique();
                 $table->string('residential_address');
+                $table->softDeletes();
                 $table->timestamps();
+            }
+        );
+
+        Schema::table(
+            'clients', function (Blueprint $table) {
+                $table->foreign('user_id')->references('id')->on('users');
             }
         );
 

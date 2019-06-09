@@ -17,6 +17,10 @@ class CreateLoanTypesTable extends Migration
             'loan_types', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
+                $table->integer('interest_rate');
+                $table->integer('insurance_fee');
+                $table->integer('other_fee');
+                $table->softDeletes();
                 $table->timestamps();
             }
         );

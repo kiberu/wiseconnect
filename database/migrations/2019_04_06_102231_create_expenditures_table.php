@@ -21,6 +21,7 @@ class CreateExpendituresTable extends Migration
                 $table->integer('unit_cost');
                 $table->integer('amount');
                 $table->text('notes')->nullable();
+                $table->softDeletes();
                 $table->timestamps();
             }
         );

@@ -16,9 +16,9 @@ class OptionController extends Controller
      */
     public function index()
     {
-      $businessType = BusinessType::all();
+      $businessTypes = BusinessType::all();
       $loanTypes = LoanType::all();
-      return view('site.options.index')->with(['businessTypes' => $businessType, 'loanTypes' => $loanTypes]);
+      return view('site.options.index')->with(['businessTypes' => $businessTypes, 'loanTypes' => $loanTypes]);
     }
 
     /**

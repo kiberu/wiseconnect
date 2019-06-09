@@ -24,7 +24,11 @@ Route::group(['middleware' => [ 'web', 'auth'] ], function () {
   Route::get('user/{type?}', 'UserController@index' )->name('user.index');
   Route::Resource( '/banks', 'BankController' );
   Route::Resource( '/expenditures', 'ExpenditureController' );
-  Route::Resource( '/businesstypes', 'BusinessTypeController' );
+  Route::Resource( '/businesstypes', 'BusinessTypeController' )->except(['destroy']);
+  Route::Resource( '/loantypes', 'loanTypeController' )->except(['destroy']);
+  Route::post('businesstypes/{id?}', 'BusinessTypeController@destroy' )->name('businesstypes.destroy');
+  Route::post('loantypes/{id?}', 'LoanTypeController@destroy' )->name('loantypes.destroy');
+
   Route::Resource( '/payables', 'PayableController' );
   Route::Resource( '/receivables', 'ReceivableController' );
   Route::Resource( '/groups', 'GroupController' );

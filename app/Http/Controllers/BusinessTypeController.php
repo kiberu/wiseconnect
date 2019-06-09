@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BusinessType;
 use Illuminate\Http\Request;
+use Session;
 
 class BusinessTypeController extends Controller
 {
@@ -89,8 +90,19 @@ class BusinessTypeController extends Controller
      * @param  \App\Models\BusinessType $businessType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BusinessType $businessType)
+    public function destroy(Request $request, $bType)
     {
-        //
+      $type = BusinessType::find($bType);
+      if ( $type->delete() ) {
+        Session::flash('success', 'Business Type deleted');
+        return redirect()->route('options.index');
+
+      }
+
+      if ( ! $type->delete() ) {
+        Session::flash('error', 'Business Type Not deleted');
+        return redirect()->route('options.index');
+      }
+
     }
 }

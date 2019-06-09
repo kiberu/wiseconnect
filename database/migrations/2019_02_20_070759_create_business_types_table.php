@@ -17,6 +17,7 @@ class CreateBusinessTypesTable extends Migration
             'business_types', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
+                $table->softDeletes();
                 $table->timestamps();
             }
         );

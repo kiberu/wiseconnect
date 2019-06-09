@@ -35,7 +35,9 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'read-options']);
         Permission::create(['name' => 'create-options']);
         Permission::create(['name' => 'manage-finance']);
+        Permission::create(['name' => 'create-finance']);
         Permission::create(['name' => 'manage-reports']);
+        Permission::create(['name' => 'make-payment']);
 
         // create roles and assign created permissions
         // create roles and assign created permissions
@@ -43,10 +45,13 @@ class RolesAndPermissionsSeeder extends Seeder
               ->givePermissionTo(Permission::all());
 
         $role = Role::create(['name' => 'general_manager'])
-            ->givePermissionTo('manage-reports', 'manage-groups', 'manage-users', 'edit-groups', 'delete-users', 'read-users', 'read-loans');
+            ->givePermissionTo('manage-reports', 'manage-finance', 'manage-groups', 'manage-users', 'edit-groups', 'delete-users', 'read-users', 'read-loans');
 
         $role = Role::create(['name' => 'branch_manager'])
-            ->givePermissionTo(['manage-finance','edit-groups', 'manage-groups', 'manage-loans', 'read-users']);
+            ->givePermissionTo(['create-finance', 'edit-groups', 'manage-groups', 'manage-loans', 'read-users']);
+
+        $role = Role::create(['name' => 'cashier'])
+            ->givePermissionTo(['make-payment']);
 
         $role = Role::create(['name' => 'loan_officer'])
             ->givePermissionTo(['manage-loans', 'manage-clients', 'manage-groups','create-loans']);

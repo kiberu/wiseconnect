@@ -21,7 +21,7 @@ class CreatePayablesTable extends Migration
                 $table->string('status');
                 $table->string('notes')->nullable();
                 $table->integer('user_id')->unsigned();
-
+                $table->softDeletes();
                 $table->timestamps();
             }
         );

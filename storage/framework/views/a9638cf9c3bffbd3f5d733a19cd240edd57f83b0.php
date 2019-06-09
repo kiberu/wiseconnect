@@ -85,6 +85,17 @@
         </ul>
       </li><!-- br-menu-item -->
   <?php endif; ?>
+  <?php if( Auth::user()->hasRole('general_manager') ): ?>
+    <li class="br-menu-item">
+      <a href="#" class="br-menu-link with-sub">
+        <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+        <span class="menu-item-label">Options</span>
+      </a><!-- br-menu-link -->
+      <ul class="br-menu-sub">
+        <li class="sub-item"><a href="<?php echo e(route('options.index' )); ?>" class="sub-link">Manage Options</a></li>
+      </ul>
+    </li><!-- br-menu-item -->
+  <?php endif; ?>
   </ul><!-- br-sideleft-menu -->
   <br>
 </div><!-- br-sideleft -->

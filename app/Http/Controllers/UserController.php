@@ -81,7 +81,7 @@ class UserController extends Controller
         $user->save();
 
         $users = User::all()->sortByDesc('created_at');
-        Session::flash('Success', 'New User stored');
+        Session::flash('success', 'User successfully added');
         return view('site/users/index')->withUsers($users);
     }
 
@@ -152,8 +152,18 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+      if ( $user->delete() ) {
+        Session::flash('success', 'User successfully deleted');
         return redirect()->route('users.index');
+
+      }
+
+      if ( ! $user->delete() ) {
+        Session::flash('error', 'User Not deleted');
+        return redirect()->route('users.index');
+      }
+
+
 
     }
 }

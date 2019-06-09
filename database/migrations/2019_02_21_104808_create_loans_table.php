@@ -34,6 +34,7 @@ class CreateLoansTable extends Migration
                 $table->integer('insurance_fee')->nullable();
                 $table->string('collateral')->nullable();
                 $table->date('initial_start')->nullable();
+                $table->softDeletes();
                 $table->timestamps();
             }
         );

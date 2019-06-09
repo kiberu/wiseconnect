@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Models\Clients;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
+  use SoftDeletes;
+  
     //
     public function groups()
     {
