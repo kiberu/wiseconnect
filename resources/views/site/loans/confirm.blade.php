@@ -7,14 +7,14 @@
     <nav class="breadcrumb pd-0 mg-0 tx-12">
       <a class="breadcrumb-item" href="{{route('home')}}">Home</a>
       <a class="breadcrumb-item" href="{{route('loans.index')}}">Loans</a>
-      <span class="breadcrumb-item active">Activate Loan</span>
+      <span class="breadcrumb-item active">Confirm Loan</span>
     </nav>
   </div><!-- br-pageheader -->
   <div class="br-pagetitle">
     <i class="icon icon ion-ios-color-filter-outline tx-22"></i>
     <div>
-      <h4>Activate Loan</h4>
-      <p class="mg-b-0">Add activation details</p>
+      <h4>Confirm Loan</h4>
+      <p class="mg-b-0">Confirm Details details</p>
     </div>
   </div><!-- d-flex -->
 
@@ -32,7 +32,7 @@
                 @endforeach
               </div>
             @endif
-            <form method="POST" action="{{ route('loans.save_activation', $loan) }}">
+            <form method="POST" action="{{ route('loans.save_confirmation', $loan) }}">
                 @csrf
 
                   <div class="row no-gutters">
@@ -68,7 +68,7 @@
                       Interest Rate(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control {{ $errors->has('interest_rate') ? ' is-invalid' : '' }}" readonly value="{{ $loan->interest_rate }}" type="integer" name="interest_rate" > % per Week
+                      <input  class="form-control {{ $errors->has('interest_rate') ? ' is-invalid' : '' }}" readonly value="{{ $loan->loan_type->interest_rate }}" type="integer" name="interest_rate" > % per Week
                       @if ($errors->has('interest_rate'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('interest_rate') }}</strong>
@@ -86,6 +86,21 @@
                       @if ($errors->has('duration'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('duration') }}</strong>
+                          </span>
+                      @endif
+                    </div><!-- col-8 -->
+                  </div><!-- row -->
+                  <div class="row no-gutters">
+                    <div class="col-5 col-sm-4">
+                      Duration(*):
+                    </div><!-- col-4 -->
+                    <div class="col-7 col-sm-8">
+                      <textarea id="other_details" cols="10" rows="10" class="form-control {{ $errors->has('other_details') ? ' is-invalid' : '' }}" type="text" name="other_details"  required readonly placeholder="Other details">
+                        {{ $loan->other_details }}
+                      </textarea>
+                      @if ($errors->has('other_details'))
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $errors->first('other_details') }}</strong>
                           </span>
                       @endif
                     </div><!-- col-8 -->
@@ -112,7 +127,7 @@
                       <select name="payment_day" class="form-control {{ $errors->has('payment_day') ? ' is-invalid' : '' }}" value="{{ old('payment_day') }}">
                         <option selected disabled>Choose Option</option>
                         @foreach ($payment_days as $key => $payment_day)
-                          <option {{ ( old('payment_day') == $key ) ? 'selected' : '' }} value="{{ $key }}">{{ $payment_day }}</option>
+                          <option {{ (!is_null($loan->client->groups->last())) && ( $loan->client->groups->last()->payment_day == $key ) ? 'selected' : '' }} value="{{ $key }}">{{ $payment_day }}</option>
                         @endforeach
 
                       </select>
@@ -130,7 +145,7 @@
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
                       <div class="col-7 col-sm-8">
-                        <input  class="form-control {{ $errors->has('insurance_fee') ? ' is-invalid' : '' }}" readonly value="{{ $loan->insurance_fee }}" type="text" name="insurance_fee"  placeholder="Insurance fee">
+                        <input  class="form-control {{ $errors->has('insurance_fee') ? ' is-invalid' : '' }}" readonly value="{{ $loan->loan_type->insurance_fee }}" type="text" name="insurance_fee"  placeholder="Insurance fee">
                         @if ($errors->has('insurance_fee'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('insurance_fee') }}</strong>
@@ -146,7 +161,7 @@
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
                       <div class="col-7 col-sm-8">
-                        <input  class="form-control {{ $errors->has('application_fee') ? ' is-invalid' : '' }}" readonly value="{{ $loan->application_fee }}" type="text" name="application_fee"  placeholder="Application fee">
+                        <input  class="form-control {{ $errors->has('application_fee') ? ' is-invalid' : '' }}" readonly value="{{ $loan->loan_type->other_fee }}" type="text" name="application_fee"  placeholder="Application fee">
                         @if ($errors->has('application_fee'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('application_fee') }}</strong>
@@ -162,7 +177,9 @@
                     </div>
                     <div class="col-7 col-sm-8">
                       <div class="col-7 col-sm-8">
-                        <textarea id="collateral" cols="10" rows="10" class="form-control {{ $errors->has('collateral') ? ' is-invalid' : '' }}" value="{{ old('collateral') }}" type="text" name="collateral"  required placeholder="Items"></textarea>
+                        <textarea id="collateral" cols="10" rows="10" class="form-control {{ $errors->has('collateral') ? ' is-invalid' : '' }}" value="{{ old('collateral') }}" type="text" name="collateral"  required placeholder="Items">
+                          {{ $loan->collateral }}
+                        </textarea>
                         @if ($errors->has('collateral'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('collateral') }}</strong>
@@ -175,7 +192,7 @@
                   <div class="row no-gutters">
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-info">
-                            {{ __('Activate loan') }}
+                            {{ __('Confirm loan details') }}
                         </button>
                     </div>
                   </div><!-- row -->

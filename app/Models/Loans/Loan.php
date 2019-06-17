@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Loan extends Model
 {
   use SoftDeletes;
-  
+
     //
     public function client()
     {
@@ -81,6 +81,6 @@ class Loan extends Model
 
     public function interest_amount()
     {
-        return $this->attributes[ 'principle' ] * ( ( $this->attributes[ 'interest_rate' ] / 100) * $this->attributes[ 'duration' ] );
+        // return $this->attributes[ 'principle' ] * ( ( $this->attributes[ 'interest_rate' ] / 100) * $this->attributes[ 'duration' ] );
     }
 }

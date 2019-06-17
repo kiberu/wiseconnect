@@ -40,8 +40,21 @@ class GroupController extends Controller
      */
     public function create()
     {
-        return view('site.groups.create');
+      $payment_days = $this->get_payment_days();
+      return view('site.groups.create')->with(['payment_days' => $payment_days]);
     }
+
+    public function get_payment_days()
+    {
+      return array(
+        'Monday' => 'Monday',
+        'Tuesday' => 'Tuesday',
+        'Wednesday' => 'Wednesday',
+        'Thursday' => 'Thursday',
+        'Friday' => 'Friday',
+        'Saturday' => 'Saturday',
+    );
+}
 
     /**
      * Store a newly created resource in storage.
@@ -55,6 +68,7 @@ class GroupController extends Controller
             $request, [
             'name' => 'required|string|unique:groups|max:255',
             'landmark' => 'required|string|max:255',
+            'payment_day' => 'required|string|max:255',
             ]
         );
 
@@ -62,6 +76,7 @@ class GroupController extends Controller
         $group = new Group;
         $group->name = $request->name;
         $group->landmark = $request->landmark;
+        $group->payment_day = $request->payment_day;
         $group->user_id = Auth::user()->id;
         $group->save();
 

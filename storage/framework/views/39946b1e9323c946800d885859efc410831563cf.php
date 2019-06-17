@@ -50,6 +50,22 @@
                     </div><!-- col-12 -->
                     <div class="col-md-12 mg-t--1 mg-md-t-0">
                       <div class="form-group mg-md-l--1">
+                        <select name="payment_day" class="form-control <?php echo e($errors->has('payment_day') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('payment_day')); ?>">
+                          <option selected disabled>Choose Payment Day</option>
+                          <?php $__currentLoopData = $payment_days; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $payment_day): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option <?php echo e(( old('payment_day') == $key ) ? 'selected' : ''); ?> value="<?php echo e($key); ?>"><?php echo e($payment_day); ?></option>
+                          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                        </select>
+                        <?php if($errors->has('payment_day')): ?>
+                            <span class="invalid-feedback" role="alert">
+                                <strong><?php echo e($errors->first('payment_day')); ?></strong>
+                            </span>
+                        <?php endif; ?>
+                      </div>
+                    </div><!-- col-12 -->
+                    <div class="col-md-12 mg-t--1 mg-md-t-0">
+                      <div class="form-group mg-md-l--1">
                         <button type="submit" class="btn btn-info">
                             <?php echo e(__('Save')); ?>
 

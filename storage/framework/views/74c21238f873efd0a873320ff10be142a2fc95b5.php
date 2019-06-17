@@ -5,13 +5,14 @@
     <nav class="breadcrumb pd-0 mg-0 tx-12">
       <a class="breadcrumb-item" href="<?php echo e(route('home')); ?>">Home</a>
       <a class="breadcrumb-item" href="<?php echo e(route('loans.index')); ?>">Loans</a>
-      <span class="breadcrumb-item active">Approve Loan</span>
+      <span class="breadcrumb-item active">Disburse Loan</span>
     </nav>
   </div><!-- br-pageheader -->
   <div class="br-pagetitle">
     <i class="icon icon ion-ios-color-filter-outline tx-22"></i>
     <div>
-      <h4>Approve Loan</h4>
+      <h4>Disburse Loan</h4>
+      <p class="mg-b-0">Confirm Details details</p>
     </div>
   </div><!-- d-flex -->
 
@@ -29,7 +30,7 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
               </div>
             <?php endif; ?>
-            <form method="POST" action="<?php echo e(route('loans.save_approval', $loan)); ?>">
+            <form method="POST" action="<?php echo e(route('loans.save_activation', $loan)); ?>">
                 <?php echo csrf_field(); ?>
 
                   <div class="row no-gutters">
@@ -51,7 +52,7 @@
                       Principle Amount(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control <?php echo e($errors->has('principle_amount') ? ' is-invalid' : ''); ?>" value="<?php echo e($loan->principle); ?>" type="integer" name="principle_amount" >
+                      <input  class="form-control <?php echo e($errors->has('principle_amount') ? ' is-invalid' : ''); ?>" readonly value="<?php echo e($loan->principle); ?>" type="integer" name="principle_amount" >
                       <?php if($errors->has('principle_amount')): ?>
                           <span class="invalid-feedback" role="alert">
                               <strong><?php echo e($errors->first('principle_amount')); ?></strong>
@@ -79,7 +80,7 @@
                       Duration(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control <?php echo e($errors->has('duration') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('duration')); ?>" type="integer" name="duration" > Weeks
+                      <input  class="form-control <?php echo e($errors->has('duration') ? ' is-invalid' : ''); ?>" readonly value="<?php echo e($loan->duration); ?>" type="integer" name="duration" > Weeks
                       <?php if($errors->has('duration')): ?>
                           <span class="invalid-feedback" role="alert">
                               <strong><?php echo e($errors->first('duration')); ?></strong>
@@ -93,10 +94,29 @@
                       Grace Period(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control <?php echo e($errors->has('grace_period') ? ' is-invalid' : ''); ?>" readonly value="<?php echo e($loan->loan_type->grace_period); ?>" type="integer" name="grace_period" > Days
+                      <input  class="form-control <?php echo e($errors->has('grace_period') ? ' is-invalid' : ''); ?>" readonly value="<?php echo e($loan->grace_period); ?>" type="integer" name="grace_period" > Days
                       <?php if($errors->has('grace_period')): ?>
                           <span class="invalid-feedback" role="alert">
                               <strong><?php echo e($errors->first('grace_period')); ?></strong>
+                          </span>
+                      <?php endif; ?>
+                    </div><!-- col-8 -->
+                  </div><!-- row -->
+                  <div class="row no-gutters">
+                    <div class="col-5 col-sm-4">
+                      Day of Payment:
+                    </div><!-- col-4 -->
+                    <div class="col-7 col-sm-8">
+                      <select name="payment_day" class="form-control <?php echo e($errors->has('payment_day') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('payment_day')); ?>">
+                        <option selected disabled>Choose Option</option>
+                        <?php $__currentLoopData = $payment_days; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $payment_day): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                          <option <?php echo e((isset($loan->client->groups)) && ( $loan->client->groups->last()->payment_day == $key ) ? 'selected' : ''); ?> value="<?php echo e($key); ?>"><?php echo e($payment_day); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                      </select>
+                      <?php if($errors->has('payment_day')): ?>
+                          <span class="invalid-feedback" role="alert">
+                              <strong><?php echo e($errors->first('payment_day')); ?></strong>
                           </span>
                       <?php endif; ?>
                     </div><!-- col-8 -->
@@ -135,9 +155,25 @@
                   </div><!-- row -->
 
                   <div class="row no-gutters">
+                    <div class="col-5 col-sm-4">
+                      <label class="form-control-label">Collateral: <span class="tx-danger">*</span></label>
+                    </div>
+                    <div class="col-7 col-sm-8">
+                      <div class="col-7 col-sm-8">
+                        <textarea id="collateral" cols="10" rows="10" class="form-control <?php echo e($errors->has('collateral') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('collateral')); ?>" type="text" name="collateral"  required placeholder="Items"></textarea>
+                        <?php if($errors->has('collateral')): ?>
+                            <span class="invalid-feedback" role="alert">
+                                <strong><?php echo e($errors->first('collateral')); ?></strong>
+                            </span>
+                        <?php endif; ?>
+                      </div><!-- col-8 -->
+                    </div><!-- col-8 -->
+                  </div><!-- row -->
+
+                  <div class="row no-gutters">
                     <div class="col-md-12">
                         <button type="submit" class="btn btn-info">
-                            <?php echo e(__('Approve loan')); ?>
+                            <?php echo e(__('Confirm loan details')); ?>
 
                         </button>
                     </div>

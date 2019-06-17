@@ -67,7 +67,7 @@
                       Interest Rate(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control {{ $errors->has('interest_rate') ? ' is-invalid' : '' }}" value="{{ old('interest_rate') }}" type="integer" name="interest_rate" > % per Week
+                      <input  class="form-control {{ $errors->has('interest_rate') ? ' is-invalid' : '' }}" readonly value="{{ $loan->loan_type->interest_rate }}" type="integer" name="interest_rate" > % per Week
                       @if ($errors->has('interest_rate'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('interest_rate') }}</strong>
@@ -95,7 +95,7 @@
                       Grace Period(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control {{ $errors->has('grace_period') ? ' is-invalid' : '' }}" value="{{ old('grace_period') }}" type="integer" name="grace_period" > Days
+                      <input  class="form-control {{ $errors->has('grace_period') ? ' is-invalid' : '' }}" readonly value="{{ $loan->loan_type->grace_period }}" type="integer" name="grace_period" > Days
                       @if ($errors->has('grace_period'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('grace_period') }}</strong>
@@ -110,7 +110,7 @@
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
                       <div class="col-7 col-sm-8">
-                        <input  class="form-control {{ $errors->has('insurance_fee') ? ' is-invalid' : '' }}" value="{{ old('insurance_fee') }}" type="text" name="insurance_fee"  placeholder="Insurance fee">
+                        <input  class="form-control {{ $errors->has('insurance_fee') ? ' is-invalid' : '' }}" readonly value="{{ $loan->loan_type->insurance_fee }}" type="text" name="insurance_fee"  placeholder="Insurance fee">
                         @if ($errors->has('insurance_fee'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('insurance_fee') }}</strong>
@@ -126,7 +126,7 @@
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
                       <div class="col-7 col-sm-8">
-                        <input  class="form-control {{ $errors->has('application_fee') ? ' is-invalid' : '' }}" value="{{ old('application_fee') }}" type="text" name="application_fee"  placeholder="Application fee">
+                        <input  class="form-control {{ $errors->has('application_fee') ? ' is-invalid' : '' }}" readonly value="{{ $loan->loan_type->other_fee }}" type="text" name="application_fee"  placeholder="Application fee">
                         @if ($errors->has('application_fee'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('application_fee') }}</strong>

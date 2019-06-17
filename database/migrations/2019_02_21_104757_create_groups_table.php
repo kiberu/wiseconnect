@@ -18,6 +18,7 @@ class CreateGroupsTable extends Migration
                 $table->increments('id');
                 $table->string('name');
                 $table->string('landmark');
+                $table->string('payment_day');
                 $table->integer('user_id')->unsigned();
                 $table->softDeletes();
                 $table->timestamps();

@@ -40,13 +40,13 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create( $group = 0 )
     {
+        $groups = Group::all();
         $business_types = BusinessType::all();
         $loan_types = LoanType::all();
         $payment_days = $this->get_payment_days();
-        $groups = Group::all();
-        return view('site.clients.create')->with(['groups' => $groups, 'business_types' => $business_types, 'loan_types' => $loan_types, 'payment_days' => $payment_days]);;
+        return view('site.clients.create')->with(['group' => $group, 'groups' => $groups, 'business_types' => $business_types, 'loan_types' => $loan_types, 'payment_days' => $payment_days]);;
     }
 
     public function get_payment_days()
@@ -77,7 +77,6 @@ class ClientController extends Controller
           'next_of_kin' => $request->next_of_kin,
           'nin_number' => $request->nin_number,
           'phone_number' => $request->phone_number,
-          'group' => $request->group,
           'residential_address' => $request->residential_address,
           'loan_type' => $request->loan_type,
           'principle_amount' => $request->principle_amount,
@@ -115,6 +114,8 @@ class ClientController extends Controller
           $loan->business_details = $data['business_details'];
           $loan->business_location = $data['business_location'];
           $loan->status= 'Pending';
+          $loan->collateral= $data['collateral'];
+          $loan->other_details= $request->other_details;
           $loan->save();
 
           return response()->json( ['success' => 'Loan Account has been set for client '] );

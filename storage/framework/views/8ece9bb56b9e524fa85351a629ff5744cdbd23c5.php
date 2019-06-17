@@ -69,7 +69,7 @@
         </div>
     </div>
     <hr>
-    <?php if(Auth::user()->can('create-clients')): ?>
+    <?php if(Auth::user()->can('manage-loans')): ?>
       <a href="<?php echo e(route('clients.create', $group)); ?>" class="btn btn-success btn-block mg-b-10 wd-15p ln_align_right ln_color_white">Add Client</a>
     <?php endif; ?>
     <div class="br-section-wrapper">

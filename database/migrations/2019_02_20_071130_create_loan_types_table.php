@@ -20,6 +20,7 @@ class CreateLoanTypesTable extends Migration
                 $table->integer('interest_rate');
                 $table->integer('insurance_fee');
                 $table->integer('other_fee');
+                $table->integer('grace_period');
                 $table->softDeletes();
                 $table->timestamps();
             }

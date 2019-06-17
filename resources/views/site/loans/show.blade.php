@@ -26,6 +26,12 @@
         </div>
         <div class="alert alert-success js-ajax-response-success" role="alert" style="display: none;">
         </div>
+
+        @if ( Session::has('success'))
+          <div class="alert alert-success" role="alert">
+            {{ Session::get('success')}}
+          </div>
+        @endif
         <div class="col-xl-9">
           <h2>Client Information</h2>
           <hr>
@@ -50,7 +56,13 @@
 
           @if ( $loan->status === 'Approved' )
             @if ( Auth::user()->hasRole( 'loan_officer' ) )
-              <a href="{{ route('loans.activate', $loan ) }}">Disburse Loan</a>
+              <a href="{{ route('loans.confirm', $loan ) }}">Disburse Loan</a>
+            @endif
+          @endif
+
+          @if ( $loan->status === 'Confirmed' )
+            @if ( Auth::user()->hasRole( 'branch_manager' ) )
+              <a href="{{ route('loans.activate', $loan ) }}">Activate Loan</a>
             @endif
           @endif
           <hr>
@@ -87,7 +99,6 @@
           <hr>
           <h6>Balance:</strong> {{ number_format( $loan->balance() )}} UGX
           <hr>
-          <h6>Each Installment:</strong> {{ number_format( $loan->latest_installment->expected_amount) }} UGX (With Interest)<br></h6>
           <hr>
           <h6>Payment Date:</strong> {{ $loan->payment_day }}<br></h6>
         </div>

@@ -52,11 +52,14 @@
               <div class="form-group wd-xs-300">
                 <label>Group:</label>
                 <select id="group" name="group" class="form-control {{ $errors->has('group') ? ' is-invalid' : '' }}" value="{{ old('group') }}">
-                  <option selected value="">None</option>
-                  @foreach ($groups as $group)
-                    <option {{ ( old('group') == $group->id ) ? 'selected' : '' }} value="{{ $group->id }}">{{ $group->name }}</option>
+                  <option selected disabled value="">None</option>
+                  @foreach ($groups as $gp)
+                    @if ( $group != 0 && $group == $gp->id )
+                      <option {{ (( old('group') == $gp->id ) || ( $group == $gp->id ) )  ? 'selected' : '' }}
+                        value="{{ $gp->id }}">{{ $gp->name }}
+                      </option>
+                    @endif
                   @endforeach
-
                 </select>
                 @if ($errors->has('group'))
                     <span class="invalid-feedback" role="alert">
@@ -81,6 +84,7 @@
                 <label class="form-control-label">Date of birth: <span class="tx-danger">*</span></label>
                 <input id="date_of_birth" type="text" name="date_of_birth" class="form-control fc-datepicker {{ $errors->has('date_of_birth') ? ' is-invalid' : '' }}" value="{{ old('date_of_birth') }}"  required placeholder="MM/DD/YYYY"
                 >
+                Only 18 years old and above
                 @if ($errors->has('date_of_birth'))
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $errors->first('date_of_birth') }}</strong>
@@ -151,6 +155,15 @@
                 @endif
               </div><!-- form-group -->
               <div class="form-group wd-xs-300">
+                <label class="form-control-label">Loan Type details:</label>
+                <textarea id="other_details" cols="10" rows="10" class="form-control {{ $errors->has('other_details') ? ' is-invalid' : '' }}" value="{{ old('other_details') }}" type="text" name="other_details"  required placeholder="Other details"></textarea>
+                @if ($errors->has('other_details'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('other_details') }}</strong>
+                    </span>
+                @endif
+              </div><!-- form-group -->
+              <div class="form-group wd-xs-300">
                 <label>Application Amount:  <span class="tx-danger">*</span></label>
                 <input  id="principle_amount" class="form-control {{ $errors->has('principle_amount') ? ' is-invalid' : '' }}" value="{{ old('principle_amount') }}" type="integer" name="principle_amount" >
                 @if ($errors->has('principle_amount'))
@@ -159,6 +172,21 @@
                     </span>
                 @endif
               </div><!-- form-group -->
+              <div class="form-group wd-xs-300">
+                <label>Business Type: <span class="tx-danger">*</span></label>
+                <select id="business_type" name="business_type" class="form-control {{ $errors->has('business_type') ? ' is-invalid' : '' }}" value="{{ old('business_type') }}">
+                  <option selected disabled>Choose Option</option>
+                  @foreach ($business_types as $business_type)
+                    <option {{ ( old('business_type') == $business_type->id ) ? 'selected' : '' }} value="{{ $business_type->id }}">{{ $business_type->name }}</option>
+                  @endforeach
+
+                </select>
+                @if ($errors->has('business_type'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('business_type') }}</strong>
+                    </span>
+                @endif
+              </div><!-- row -->
               <div class="form-group wd-xs-300">
                 <label>Business Location: <span class="tx-danger">*</span></label>
                 <input  id="business_location" class="form-control {{ $errors->has('business_location') ? ' is-invalid' : '' }}" value="{{ old('business_location') }}" type="text" name="business_location"  placeholder="Enter Business Location">
@@ -177,21 +205,7 @@
                     </span>
                 @endif
               </div><!-- row -->
-              <div class="form-group wd-xs-300">
-                <label>Business Type: <span class="tx-danger">*</span></label>
-                <select id="business_type" name="business_type" class="form-control {{ $errors->has('business_type') ? ' is-invalid' : '' }}" value="{{ old('business_type') }}">
-                  <option selected disabled>Choose Option</option>
-                  @foreach ($business_types as $business_type)
-                    <option {{ ( old('business_type') == $business_type->id ) ? 'selected' : '' }} value="{{ $business_type->id }}">{{ $business_type->name }}</option>
-                  @endforeach
 
-                </select>
-                @if ($errors->has('business_type'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('business_type') }}</strong>
-                    </span>
-                @endif
-              </div><!-- row -->
               <div class="form-group wd-xs-300">
                 <label class="form-control-label">Collateral: <span class="tx-danger">*</span></label>
                 <textarea id="collateral" cols="10" rows="10" class="form-control {{ $errors->has('collateral') ? ' is-invalid' : '' }}" value="{{ old('collateral') }}" type="text" name="collateral"  required placeholder="Items"></textarea>
@@ -226,12 +240,19 @@
   <script src="{{ asset('lib/parsleyjs/parsley.min.js') }}"></script>
 
   <script src="{{ asset('js/bracket.js' ) }}"></script>
+  @php
+    $maxDate = new Carbon('18 years ago');
+    $maxDate = $maxDate->format('m/d/Y');
+  @endphp
   <script>
+    var theMaxDate = '<?php echo $maxDate; ?>';
+    console.log(theMaxDate)
     $(function(){
       // Datepicker
       $('.fc-datepicker').datepicker({
         showOtherMonths: true,
-        selectOtherMonths: true
+        selectOtherMonths: true,
+        maxDate: theMaxDate
       });
 
       $('#datepickerNoOfMonths').datepicker({

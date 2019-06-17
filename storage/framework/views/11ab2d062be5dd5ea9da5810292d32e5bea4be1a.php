@@ -50,11 +50,16 @@
               <div class="form-group wd-xs-300">
                 <label>Group:</label>
                 <select id="group" name="group" class="form-control <?php echo e($errors->has('group') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('group')); ?>">
-                  <option selected value="">None</option>
-                  <?php $__currentLoopData = $groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <option <?php echo e(( old('group') == $group->id ) ? 'selected' : ''); ?> value="<?php echo e($group->id); ?>"><?php echo e($group->name); ?></option>
-                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                  <option selected disabled value="">None</option>
+                  <?php $__currentLoopData = $groups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gp): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php if( $group != 0 && $group == $gp->id ): ?>
+                      <option <?php echo e((( old('group') == $gp->id ) || ( $group == $gp->id ) )  ? 'selected' : ''); ?>
 
+                        value="<?php echo e($gp->id); ?>"><?php echo e($gp->name); ?>
+
+                      </option>
+                    <?php endif; ?>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
                 <?php if($errors->has('group')): ?>
                     <span class="invalid-feedback" role="alert">
@@ -79,6 +84,7 @@
                 <label class="form-control-label">Date of birth: <span class="tx-danger">*</span></label>
                 <input id="date_of_birth" type="text" name="date_of_birth" class="form-control fc-datepicker <?php echo e($errors->has('date_of_birth') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('date_of_birth')); ?>"  required placeholder="MM/DD/YYYY"
                 >
+                Only 18 years old and above
                 <?php if($errors->has('date_of_birth')): ?>
                     <span class="invalid-feedback" role="alert">
                         <strong><?php echo e($errors->first('date_of_birth')); ?></strong>
@@ -149,6 +155,15 @@
                 <?php endif; ?>
               </div><!-- form-group -->
               <div class="form-group wd-xs-300">
+                <label class="form-control-label">Loan Type details:</label>
+                <textarea id="other_details" cols="10" rows="10" class="form-control <?php echo e($errors->has('other_details') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('other_details')); ?>" type="text" name="other_details"  required placeholder="Items"></textarea>
+                <?php if($errors->has('other_details')): ?>
+                    <span class="invalid-feedback" role="alert">
+                        <strong><?php echo e($errors->first('other_details')); ?></strong>
+                    </span>
+                <?php endif; ?>
+              </div><!-- form-group -->
+              <div class="form-group wd-xs-300">
                 <label>Application Amount:  <span class="tx-danger">*</span></label>
                 <input  id="principle_amount" class="form-control <?php echo e($errors->has('principle_amount') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('principle_amount')); ?>" type="integer" name="principle_amount" >
                 <?php if($errors->has('principle_amount')): ?>
@@ -157,6 +172,21 @@
                     </span>
                 <?php endif; ?>
               </div><!-- form-group -->
+              <div class="form-group wd-xs-300">
+                <label>Business Type: <span class="tx-danger">*</span></label>
+                <select id="business_type" name="business_type" class="form-control <?php echo e($errors->has('business_type') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('business_type')); ?>">
+                  <option selected disabled>Choose Option</option>
+                  <?php $__currentLoopData = $business_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $business_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option <?php echo e(( old('business_type') == $business_type->id ) ? 'selected' : ''); ?> value="<?php echo e($business_type->id); ?>"><?php echo e($business_type->name); ?></option>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                </select>
+                <?php if($errors->has('business_type')): ?>
+                    <span class="invalid-feedback" role="alert">
+                        <strong><?php echo e($errors->first('business_type')); ?></strong>
+                    </span>
+                <?php endif; ?>
+              </div><!-- row -->
               <div class="form-group wd-xs-300">
                 <label>Business Location: <span class="tx-danger">*</span></label>
                 <input  id="business_location" class="form-control <?php echo e($errors->has('business_location') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('business_location')); ?>" type="text" name="business_location"  placeholder="Enter Business Location">
@@ -175,21 +205,7 @@
                     </span>
                 <?php endif; ?>
               </div><!-- row -->
-              <div class="form-group wd-xs-300">
-                <label>Business Type: <span class="tx-danger">*</span></label>
-                <select id="business_type" name="business_type" class="form-control <?php echo e($errors->has('business_type') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('business_type')); ?>">
-                  <option selected disabled>Choose Option</option>
-                  <?php $__currentLoopData = $business_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $business_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <option <?php echo e(( old('business_type') == $business_type->id ) ? 'selected' : ''); ?> value="<?php echo e($business_type->id); ?>"><?php echo e($business_type->name); ?></option>
-                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                </select>
-                <?php if($errors->has('business_type')): ?>
-                    <span class="invalid-feedback" role="alert">
-                        <strong><?php echo e($errors->first('business_type')); ?></strong>
-                    </span>
-                <?php endif; ?>
-              </div><!-- row -->
               <div class="form-group wd-xs-300">
                 <label class="form-control-label">Collateral: <span class="tx-danger">*</span></label>
                 <textarea id="collateral" cols="10" rows="10" class="form-control <?php echo e($errors->has('collateral') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('collateral')); ?>" type="text" name="collateral"  required placeholder="Items"></textarea>
@@ -224,12 +240,19 @@
   <script src="<?php echo e(asset('lib/parsleyjs/parsley.min.js')); ?>"></script>
 
   <script src="<?php echo e(asset('js/bracket.js' )); ?>"></script>
+  <?php
+    $maxDate = new Carbon('18 years ago');
+    $maxDate = $maxDate->format('m/d/Y');
+  ?>
   <script>
+    var theMaxDate = '<?php echo $maxDate; ?>';
+    console.log(theMaxDate)
     $(function(){
       // Datepicker
       $('.fc-datepicker').datepicker({
         showOtherMonths: true,
-        selectOtherMonths: true
+        selectOtherMonths: true,
+        maxDate: theMaxDate
       });
 
       $('#datepickerNoOfMonths').datepicker({

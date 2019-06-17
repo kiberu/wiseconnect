@@ -132,6 +132,12 @@
                       <strong>{{ $errors->first('loanTypeOther') }}</strong>
                   </span>
               @endif
+              <input class="form-control {{ $errors->has('loanTypeGrace') ? ' is-invalid' : '' }}" value="{{ $lType->other_fee }}" type="number" name="loanTypeGrace" placeholder="Grace Period">
+              @if ($errors->has('loanTypeGrace'))
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $errors->first('loanTypeGrace') }}</strong>
+                  </span>
+              @endif
               <input type="submit" value="Edit">
             </form>
           @endif

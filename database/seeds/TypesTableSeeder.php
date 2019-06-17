@@ -19,6 +19,7 @@ class TypesTableSeeder extends Seeder
                 'interest_rate' => rand(10,20),
                 'insurance_fee' => rand(1000,9999),
                 'other_fee' => rand(1000,9999),
+                'grace_period' => rand(1, 10)
                 ]
             );
         }

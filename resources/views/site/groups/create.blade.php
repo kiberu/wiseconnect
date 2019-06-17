@@ -52,6 +52,22 @@
                     </div><!-- col-12 -->
                     <div class="col-md-12 mg-t--1 mg-md-t-0">
                       <div class="form-group mg-md-l--1">
+                        <select name="payment_day" class="form-control {{ $errors->has('payment_day') ? ' is-invalid' : '' }}" value="{{ old('payment_day') }}">
+                          <option selected disabled>Choose Payment Day</option>
+                          @foreach ($payment_days as $key => $payment_day)
+                            <option {{ ( old('payment_day') == $key ) ? 'selected' : '' }} value="{{ $key }}">{{ $payment_day }}</option>
+                          @endforeach
+
+                        </select>
+                        @if ($errors->has('payment_day'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('payment_day') }}</strong>
+                            </span>
+                        @endif
+                      </div>
+                    </div><!-- col-12 -->
+                    <div class="col-md-12 mg-t--1 mg-md-t-0">
+                      <div class="form-group mg-md-l--1">
                         <button type="submit" class="btn btn-info">
                             {{ __('Save') }}
                         </button>

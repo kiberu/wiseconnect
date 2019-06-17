@@ -43,6 +43,7 @@ class LoanTypeController extends Controller
             'loanTypeInterest' => 'required|numeric',
             'loanTypeInsurance' => 'required|numeric',
             'loanTypeOther' => 'required|numeric',
+            'loanTypeGrace' => 'required|numeric',
           ]
       );
 
@@ -52,6 +53,7 @@ class LoanTypeController extends Controller
       $type->interest_rate = $request->loanTypeInterest;
       $type->insurance_fee = $request->loanTypeInsurance;
       $type->other_fee = $request->loanTypeOther;
+      $type->grace_period = $request->loanTypeGrace;
       $type->save();
 
       Session::flash('success', $type->name . ' successfully added');
