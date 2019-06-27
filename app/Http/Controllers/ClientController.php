@@ -85,6 +85,7 @@ class ClientController extends Controller
           'business_details' => $request->business_details,
           'business_type' => $request->business_type,
           'collateral' => $request->collateral,
+          'guaranters'  => $request->guaranters,
         );
 
         $message = $this->validate_application_form( $data );
@@ -115,6 +116,7 @@ class ClientController extends Controller
           $loan->business_location = $data['business_location'];
           $loan->status= 'Pending';
           $loan->collateral= $data['collateral'];
+          $loan->guaranters= $data['guaranters'];
           $loan->other_details= $request->other_details;
           $loan->save();
 

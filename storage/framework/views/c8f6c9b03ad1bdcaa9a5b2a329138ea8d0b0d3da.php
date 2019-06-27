@@ -132,6 +132,12 @@
                       <strong><?php echo e($errors->first('loanTypeOther')); ?></strong>
                   </span>
               <?php endif; ?>
+              <input class="form-control <?php echo e($errors->has('loanTypeGrace') ? ' is-invalid' : ''); ?>" value="<?php echo e($lType->other_fee); ?>" type="number" name="loanTypeGrace" placeholder="Grace Period">
+              <?php if($errors->has('loanTypeGrace')): ?>
+                  <span class="invalid-feedback" role="alert">
+                      <strong><?php echo e($errors->first('loanTypeGrace')); ?></strong>
+                  </span>
+              <?php endif; ?>
               <input type="submit" value="Edit">
             </form>
           <?php endif; ?>

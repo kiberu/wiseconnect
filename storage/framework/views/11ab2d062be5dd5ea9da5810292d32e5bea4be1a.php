@@ -156,7 +156,7 @@
               </div><!-- form-group -->
               <div class="form-group wd-xs-300">
                 <label class="form-control-label">Loan Type details:</label>
-                <textarea id="other_details" cols="10" rows="10" class="form-control <?php echo e($errors->has('other_details') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('other_details')); ?>" type="text" name="other_details"  required placeholder="Items"></textarea>
+                <textarea id="other_details" cols="10" rows="10" class="form-control <?php echo e($errors->has('other_details') ? ' is-invalid' : ''); ?>" value="<?php echo e(old('other_details')); ?>" type="text" name="other_details"  required placeholder="Other details"></textarea>
                 <?php if($errors->has('other_details')): ?>
                     <span class="invalid-feedback" role="alert">
                         <strong><?php echo e($errors->first('other_details')); ?></strong>

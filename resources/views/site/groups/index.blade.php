@@ -15,6 +15,9 @@
       <h4>All Groups</h4>
       <p class="mg-b-0">All client community groups</p>
     </div>
+    <div class="btn-right">
+      <a class="btn btn-primary" href="{{ route('groups.create') }}" >Add New Group</a>
+    </div>
   </div><!-- d-flex -->
 
   <div class="br-pagebody">

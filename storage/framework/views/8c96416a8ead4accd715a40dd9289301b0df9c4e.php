@@ -93,7 +93,7 @@
                       Grace Period(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control <?php echo e($errors->has('grace_period') ? ' is-invalid' : ''); ?>" readonly value="<?php echo e($loan->loan_type->grace_period); ?>" type="integer" name="grace_period" > Days
+                      <input  class="form-control <?php echo e($errors->has('grace_period') ? ' is-invalid' : ''); ?>" readonly value="<?php echo e($loan->loan_type->grace_period); ?>" type="integer" name="grace_period" >Weeks
                       <?php if($errors->has('grace_period')): ?>
                           <span class="invalid-feedback" role="alert">
                               <strong><?php echo e($errors->first('grace_period')); ?></strong>
@@ -128,6 +128,25 @@
                         <?php if($errors->has('application_fee')): ?>
                             <span class="invalid-feedback" role="alert">
                                 <strong><?php echo e($errors->first('application_fee')); ?></strong>
+                            </span>
+                        <?php endif; ?>
+                      </div><!-- col-8 -->
+                    </div><!-- col-8 -->
+                  </div><!-- row -->
+
+                  <div class="row no-gutters">
+                    <div class="col-5 col-sm-4">
+                      Guaranters:
+                    </div><!-- col-4 -->
+                    <div class="col-7 col-sm-8">
+                      <div class="col-7 col-sm-8">
+                        <textarea id="guaranters" cols="10" rows="10" class="form-control <?php echo e($errors->has('guaranters') ? ' is-invalid' : ''); ?>" type="text" name="guaranters" >
+                          <?php echo e($loan->guaranters); ?>
+
+                        </textarea>
+                        <?php if($errors->has('guaranters')): ?>
+                            <span class="invalid-feedback" role="alert">
+                                <strong><?php echo e($errors->first('guaranters')); ?></strong>
                             </span>
                         <?php endif; ?>
                       </div><!-- col-8 -->

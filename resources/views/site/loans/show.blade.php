@@ -34,10 +34,76 @@
         @endif
         <div class="col-xl-9">
           <h2>Client Information</h2>
-          <hr>
-          <h6>Client:</strong> {{ $loan->client->first_name }} {{ $loan->client->last_name }} <br></h6>
-          <hr>
-          <h6>Client's group:</strong> {{ isset( $loan->client->groups->last()->name ) ? $loan->client->groups->last()->name : 'None' }} <br></h6>
+          <table class="table">
+              <tr>
+                <th>Client Name</th>
+                <td>{{ $loan->client->first_name }} {{ $loan->client->last_name }}</td>
+              </tr>
+              <tr>
+                <th>Group</th>
+                <td>{{ isset( $loan->client->groups->last()->name ) ? $loan->client->groups->last()->name : 'None' }}</td>
+              </tr>
+              <tr>
+                <th>Date Of Birth</th>
+                <td>{{ $loan->client->date_of_birth }}</td>
+              </tr>
+              <tr>
+                <th>Sex</th>
+                <td>{{ $loan->client->sex }}</td>
+              </tr>
+              <tr>
+                <th>Next of kin</th>
+                <td>{{ $loan->client->next_of_kin }}</td>
+              </tr>
+              <tr>
+                <th>NIN Number</th>
+                <td>{{ $loan->client->NIN }}</td>
+              </tr>
+              <tr>
+                <th>Residential Address</th>
+                <td>{{ $loan->client->residential_address }}</td>
+              </tr>
+              <tr>
+                <th>Loan Type</th>
+                <td>{{ $loan->loan_type->name }}</td>
+              </tr>
+
+              <tr>
+                <th>Loan Type details</th>
+                <td>{{  $loan->other_details }}</td>
+              </tr>
+
+              <tr>
+                <th>Business Type</th>
+                <td>{{ $loan->business_type->name }}</td>
+              </tr>
+
+              <tr>
+                <th>Business Location</th>
+                <td>{{ $loan->business_location }}</td>
+              </tr>
+
+              <tr>
+                <th>Business Details</th>
+                <td>{{ $loan->business_details }}</td>
+              </tr>
+
+              <tr>
+                <th>Collateral</th>
+                <td>{{ $loan->collateral }}</td>
+              </tr>
+
+              <tr>
+                <th>Guaranters</th>
+                <td>{{ $loan->guaranters }}</td>
+              </tr>
+
+              <tr>
+                <th>Loan Officer</th>
+                <td>{{ $loan->loan_officer() }}</td>
+              </tr>
+          </table>
+
         </div>
       </div>
     </div>
@@ -47,7 +113,6 @@
         <div class="col-xl-9">
           <h2>Loan Information</h2>
           <hr>
-          <h6><span id="js-status" style="color: green">Status:</strong> {{ $loan->status }}<br></span></h6>
           @if ( $loan->status === 'Pending' )
             @if ( Auth::user()->hasRole( 'branch_manager' ) )
               <a href="{{ route('loans.approve', $loan ) }}">Approve Loan</a>
@@ -65,45 +130,123 @@
               <a href="{{ route('loans.activate', $loan ) }}">Activate Loan</a>
             @endif
           @endif
-          <hr>
-          @if ( $loan->status === 'Active' )
-          <h6>Interest Rate:</strong> {{ $loan->interest_rate }}% per Week<br></h6>
-          <hr>
-          <h6>Loan Duration:</strong> {{ $loan->duration + $loan->grace_period }} Weeks<br></h6>
-          <hr>
-          <h6>Interest:</strong> {{ number_format(($loan->principle * $loan->interest_rate / 100) * $loan->duration ) }} UGX<br></h6>
-          <hr>
-          <h6>Insurance Fee:</strong> {{ number_format($loan->insurance_fee) }} UGX<br></h6>
-          <hr>
-          <h6>Loan Application Fee:</strong> {{ number_format($loan->application_fee) }} UGX<br></h6>
-          <hr>
-          @endif
-          <h6>Principle:</strong> {{ number_format($loan->principle) }} UGX<br></h6>
-          <h6>Business</strong> {{ $loan->business_location}}<br></h6>
-          <h6>Business Type:</strong> {{ $loan->business_type->name }}<br></h6>
-          <hr>
 
+          <table class="table">
+            @if ( $loan->status === 'Pending' )
+              <tr>
+                <th>Status</th>
+                <td><span id="js-status" style="color: green"> {{ $loan->status }}<br></span></td>
+              </tr>
+              <tr>
+                <th>Loan amount</th>
+                <td>{{ number_format($loan->principle) }} UGX</td>
+              </tr>
+
+            @elseif ( $loan->status === 'Approved' )
+
+              <tr>
+                <th>Status</th>
+                <td><span id="js-status" style="color: green"> {{ $loan->status }}<br></span></td>
+              </tr>
+              <tr>
+                <th>Loan amount</th>
+                <td>{{ number_format($loan->principle) }} UGX</td>
+              </tr>
+              <tr>
+                <th>Loan period</th>
+                <td>{{ $loan->duration + $loan->loan_type->grace_period }} Weeks</td>
+              </tr>
+              <tr>
+                <th>Grace Period</th>
+                <td>{{ $loan->loan_type->grace_period }} Weeks</td>
+              </tr>
+            @elseif ( $loan->status === 'Confirmed' )
+              <tr>
+                <th>Status</th>
+                <td><span id="js-status" style="color: green"> {{ $loan->status }}<br></span></td>
+              </tr>
+              <tr>
+                <th>Loan amount</th>
+                <td>{{ number_format($loan->principle) }} UGX</td>
+              </tr>
+              <tr>
+                <th>Loan period</th>
+                <td>{{ $loan->duration + $loan->loan_type->grace_period }} Weeks</td>
+              </tr>
+              <tr>
+                <th>Payment Day</th>
+                <td>{{ isset( $loan->client->groups->last()->name ) ? $loan->client->groups->last()->payment_day : $loan->payment_day }}</td>
+              </tr>
+
+              <tr>
+                <th>Grace Period</th>
+                <td>{{ $loan->loan_type->grace_period }} Weeks</td>
+              </tr>
+            @elseif ($loan->status === 'Active')
+              <tr>
+                <th>Status</th>
+                <td><span id="js-status" style="color: green"> {{ $loan->status }}<br></span></td>
+              </tr>
+              <tr>
+                <th>Loan amount</th>
+                <td>{{ number_format($loan->principle) }} UGX</td>
+              </tr>
+
+              <tr>
+                <th>Loan period</th>
+                <td>{{ $loan->duration + $loan->loan_type->grace_period }} Weeks</td>
+              </tr>
+              <tr>
+                <th>Installment amount</th>
+                <td>{{ number_format($loan->latest_installment->expected_amount) }} UGX</td>
+              </tr>
+              <tr>
+                <th>First installment date</th>
+                <td>{{ $loan->installments->first()->due_date }}</td>
+              </tr>
+              <tr>
+                <th>Last installment date</th>
+                <td>{{  $loan->last_installment_date() }}</td>
+              </tr>
+
+              @if (Auth::user()->hasRole('general_manager'))
+                <tr>
+                  <th>Paid amount so far</th>
+                  <td>{{ $loan->total_paid() }}</td>
+                </tr>
+
+                <tr>
+                  <th>Interest Rates</th>
+                  <td>{{  $loan->loan_type->interest_rate }}</td>
+                </tr>
+
+                <tr>
+                  <th>Interest Earnings per installment(total)</th>
+                  <td>{{ number_format($loan->interest_amount()) }} ( {{ number_format($loan->total_interest_amount()) }}) UGX</td>
+                </tr>
+
+                <tr>
+                  <th>Insurance Fee</th>
+                  <td>{{  number_format($loan->loan_type->insurance_fee) }}</td>
+                </tr>
+
+                <tr>
+                  <th>Other fees</th>
+                  <td>{{  number_format($loan->loan_type->other_fee) }}</td>
+                </tr>
+
+                <tr>
+                  <th>Grace Period</th>
+                  <td>{{ $loan->loan_type->grace_period }} Weeks</td>
+                </tr>
+              @endif
+            @endif
+
+          </table>
         </div>
       </div>
     </div>
     @if ( $loan->status === 'Active' )
-    <div class="br-section-wrapper info-section">
-      <div class="row mg-t-20">
-        <div class="col-xl-3"></div>
-        <div class="col-xl-9">
-          <h2>Payments Information</h2>
-          <hr>
-          <h6>Grace Period:</strong> {{ $loan->grace_period }} Weeks<br></h6>
-          <hr>
-          <h6>Total Due:</strong> {{ number_format( $loan->total_due() ) }} UGX<br></h6>
-          <hr>
-          <h6>Balance:</strong> {{ number_format( $loan->balance() )}} UGX
-          <hr>
-          <hr>
-          <h6>Payment Date:</strong> {{ $loan->payment_day }}<br></h6>
-        </div>
-      </div>
-    </div>
     <div class="br-section-wrapper info-section">
       <table id="datatable1" class="table display responsive nowrap">
         <thead>

@@ -20,7 +20,9 @@
   </div><!-- d-flex -->
 
   <div class="br-pagebody">
-    <a href="{{ route('payments.create', [$loan, $installment]) }}" class="btn btn-success ln_color_white ln_align_right ln_color_white {{ ( $installment->balance <= 0 ) ? 'hide-link' : '' }}">Add Payment</a>
+    @if (Auth::user()->hasRole('cashier'))
+      <a href="{{ route('payments.create', [$loan, $installment]) }}" class="btn btn-success ln_color_white ln_align_right ln_color_white {{ ( $installment->balance <= 0 ) ? 'hide-link' : '' }}">Add Payment</a>
+    @endif
     @php $last_installment = $loan->installments->last(); @endphp
     @php $due_date = Carbon::parse( $last_installment->due_date ); @endphp
     @php $current_date = Carbon::parse( $installment->due_date ); @endphp

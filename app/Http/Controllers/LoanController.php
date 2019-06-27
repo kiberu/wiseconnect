@@ -11,6 +11,9 @@ use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Session;
 
+use Illuminate\Support\Facades\Auth;
+
+
 class LoanController extends Controller
 {
 
@@ -25,11 +28,39 @@ class LoanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index( $status = '' )
+    public function index( Request $request )
     {
-        $loans = Loan::all()->sortBy('latest_installment.due_date');
-        $heading = "Active Loans";
-        return view('site/loans/index')->with([ 'loans' => $loans, 'heading' => $heading ]);
+
+      $loans = Loan::select('*');
+      if ( Auth::user()->hasRole( 'loan_officer' ) ) {
+        $loans->whereHas( 'client', function( $c_query ){
+          $c_query->where( 'user_id', '=',  Auth::user()->id );
+        }  );
+      }
+
+      $fields = ['client', 'loan_type', 'group', 'gender', 'business_type', 'status' ];
+      if ( $request->has( 'status' ) ) {
+        $loans->where( 'status', $request->input( 'status' ) );
+      }
+
+      // Search for a user based on their company.
+      if ( $request->has( 'loan_type' ) ) {
+        $loans->whereHas( 'loan_type', function( $c_query ) use( $request ) {
+          $c_query->where( 'name', '=',  $request->loan_type );
+        }  );
+      }
+
+      // // Search for a user based on their city.
+      // if ( $request->has( 'city' ) ) {
+      //     $user->where( 'city', $request->input('city') );
+      // }
+
+      $heading = "Active Loans";
+
+      // if ( isset( $request->client ) ) {
+      //   $client = Client::where( 'fullName', 'like', '%'. $request->client . '%'  )->get();
+      // }
+      return view('site/loans/index')->with([ 'loans' => $loans->get(), 'heading' => $heading ]);
     }
 
     /**
@@ -65,42 +96,7 @@ class LoanController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(
-            $request, [
-            'client_id' => 'required|max:255',
-            'loan_type' => 'required|max:255',
-            'principle_amount' => 'required|numeric',
-            'interest_rate' => 'required|max:255',
-            'grace_period' => 'required|max:255',
-            'duration' => 'required|max:255',
-            'business_location' => 'required',
-            'business_location' => 'required',
-            'business_type' => 'required',
-            'payment_day' => 'required',
-            'application_fee' => 'required|numeric',
-            'insurance_fee' => 'required|numeric'
-            ]
-        );
 
-
-        $loan = new Loan;
-        $loan->client_id = $request->client_id;
-        $loan->loan_type_id = $request->loan_type;
-        $loan->principle = $request->principle_amount;
-        $loan->interest_rate = $request->interest_rate;
-        $loan->grace_period = $request->grace_period;
-        $loan->duration = $request->duration;
-        $loan->business_type_id = $request->business_type;
-        $loan->payment_day = $request->payment_day;
-        $loan->business_location= $request->business_location;
-        $loan->status= 'Pending';
-        $loan->application_fee = $request->application_fee;
-        $loan->insurance_fee = $request->insurance_fee;
-        $loan->partial_amount = ( $request->principle_amount / $request->duration ) + ( $request->principle_amount * $request->interest_rate / 100);
-        $loan->initial_start = Carbon::parse('next ' . $request->payment_day)->addWeek($request->grace_period);
-        $loan->save();
-
-        return redirect()->route('loans.show', $loan);
     }
 
     /**
@@ -169,6 +165,7 @@ class LoanController extends Controller
 
     }
 
+
     public function confirm( Request $request, Loan $loan )
     {
       $payment_days = $this->get_payment_days();
@@ -183,14 +180,15 @@ class LoanController extends Controller
 
       $this->validate(
           $request, [
-
+          'payment_day' => 'required',
           'collateral' => 'required',
           ]
       );
 
-      $loan->status= 'Confirmed';
+      $loan->status = 'Confirmed';
       $loan->collateral = $request->collateral;
-      $loan->update();
+      $loan->payment_day = $request->payment_day;
+      $loan->save();
 
       return redirect()->route('loans.show', $loan);
 
@@ -206,8 +204,18 @@ class LoanController extends Controller
       $loan->collateral = $request->collateral;
       $loan->update();
 
-      Session::flash('success', 'this loan has been activated');
+      $partial = ( $loan->principle / $loan->duration ) + ( $loan->principle * $loan->loan_type->interest_rate / 100);
 
+      //create installment
+      $installment = new Installment;
+      $installment->loan_id = $loan->id;
+      $installment->expected_amount = $partial;
+      $installment->due_date = (($loan->payment_day) !== '') ? Carbon::parse('next ' . $loan->payment_day)->addWeek($loan->loan_type->grace_period) : Carbon::parse('next ' . $loan->client->groups->last()->payment_day)->addWeek($loan->loan_type->grace_period) ;
+      $installment->status = 'Pending';
+      $installment->balance = $partial;
+      $installment->save();
+
+      Session::flash('success', 'This loan has been activated');
 
       return redirect()->route('loans.show', $loan);
 
@@ -223,12 +231,13 @@ class LoanController extends Controller
           'duration' => 'required|max:255',
           'application_fee' => 'required|numeric',
           'insurance_fee' => 'required|numeric',
+          'guaranters' => 'required',
           ]
       );
 
       $loan->principle = $request->principle_amount;
-      $loan->grace_period = $request->grace_period;
       $loan->duration = $request->duration;
+      $loan->guaranters = $request->guaranters;
       $loan->status= 'Approved';
       $loan->save();
 
@@ -243,6 +252,11 @@ class LoanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Loan $loan)
+    {
+        //
+    }
+
+    public function search( Request $request )
     {
         //
     }

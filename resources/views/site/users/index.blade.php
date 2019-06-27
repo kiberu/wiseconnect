@@ -15,6 +15,9 @@
       <h4>System Users</h4>
       <p class="mg-b-0">Users that can login into this system; with indicidual roles</p>
     </div>
+    <div class="btn-right">
+      <a class="btn btn-primary" href="{{ route('users.create') }}" >Add New User</a>
+    </div>
   </div><!-- d-flex -->
 
   <div class="br-pagebody">

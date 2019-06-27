@@ -10,37 +10,91 @@
   <div class="br-pagetitle">
     <i class="icon icon ion-ios-color-filter-outline tx-22"></i>
     <div>
-      <h4><?php echo e($heading); ?></h4>
+      <h4>Loans</h4>
       <p class="mg-b-0">All loans per client</p>
+    </div>
+    <div class="btn-right">
+      <a class="btn btn-primary" <?php echo e(( ! Auth::user()->hasRole('loan_officer') ) ? 'style=display:none' : ''); ?> href="<?php echo e(route('clients.create')); ?>" >Add New Apllication</a>
     </div>
   </div><!-- d-flex -->
 
   <div class="br-pagebody">
     <div class="br-section-wrapper">
-      <table class="table display responsive nowrap">
-        <thead>
+      <form method="GET" action="<?php echo e(route('loans.index')); ?>">
+        <?php echo csrf_field(); ?>
+        <table>
           <tr>
-            <th>#</th>
-            <th>Client</th>
-            <th>Loan Type</th>
-            <th>Status</th>
-            <th>Created at</th>
-            <th>Open</th>
+            <td>Client: </td>
+            <td>
+              <input name="client" type="text" value="<?php echo e(old('client')); ?>" />
+            </td>
+
+            <td>Loan Type</td>
+            <td>
+              <input name="loan_type" type="text" value="<?php echo e(old('loan_type')); ?>" />
+            </td>
+            <td>Group</td>
+            <td>
+              <input name="group" type="text" value="<?php echo e(old('group')); ?>" />
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <?php $__currentLoopData = $loans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $loan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <tr class="">
-              <td><?php echo e($loan->id); ?></td>
-              <td><a href="<?php echo e(route('clients.show', [ $loan->client->groups->last(), $loan->client ])); ?>"><?php echo e($loan->client->first_name); ?> <?php echo e($loan->client->last_name); ?></a></td>
-              <td><?php echo e($loan->loan_type->name); ?></td>
-              <td><?php echo e($loan->status); ?></td>
-              <td><?php echo e($loan->created_at); ?></td>
-              <td><a href="<?php echo e(route('loans.show', $loan)); ?>" class="btn btn-success">Open</a></td>
+          <tr>
+            <td>Gender</td>
+            <td>
+              <input name="gender" type="text" value="<?php echo e(old('gender')); ?>" />
+            </td>
+            <td>Business Type</td>
+            <td>
+              <input name="business_type" type="text" value="<?php echo e(old('business_type')); ?>" />
+            </td>
+            <td>Status</td>
+            <td>
+              <input name="status" type="text" value="<?php echo e(old('status')); ?>" />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="submit" value="Filter" />
+            </td>
+          </tr>
+        </table>
+      </form>
+      <hr>
+      <div class="row table-responsive">
+        <table class="table-striped table-hover report-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Client</th>
+              <th>Loan Type</th>
+              <th>Group</th>
+              <th>Gender</th>
+              <th>Business Type</th>
+              <th>Guaranters</th>
+              <th>Principle</th>
+              <th>Status</th>
+              <th>Created At</th>
             </tr>
-          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <?php $__currentLoopData = $loans; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $loan): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              <tr class="">
+                <td><?php echo e($loan->id); ?></td>
+                <td><?php echo e($loan->client->first_name); ?> <?php echo e($loan->client->last_name); ?></td>
+                <td><?php echo e($loan->loan_type->name); ?></td>
+                <td><?php echo e(isset( $loan->client->groups->last()->name ) ? $loan->client->groups->last()->name : 'None'); ?></td>
+                <td><?php echo e($loan->client->sex); ?></td>
+                <td><?php echo e($loan->business_type->name); ?></td>
+                <td><?php echo e($loan->guaranters); ?></td>
+                <td><?php echo e($loan->principle); ?></td>
+                <td><?php echo e($loan->status); ?></td>
+                <td><?php echo e($loan->created_at); ?></td>
+                <td><a href="<?php echo e(route('loans.show', $loan)); ?>" class="btn btn-success">Open</a></td>
+              </tr>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div><!-- br-pagebody -->
   <?php echo $__env->make('partials._footer', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

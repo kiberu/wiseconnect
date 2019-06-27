@@ -20,7 +20,6 @@ class CreateLoansTable extends Migration
                 $table->integer('client_id')->unsigned();
                 $table->integer('principle');
                 $table->integer('duration')->nullable();
-                $table->integer('grace_period')->nullable();
                 $table->integer('penalty')->nullable();
                 $table->string('status');
                 $table->string('payment_day')->nullable();
@@ -28,7 +27,7 @@ class CreateLoansTable extends Migration
                 $table->string('business_location');
                 $table->string('business_details');
                 $table->string('other_details');
-                $table->string('loan_note')->nullable();
+                $table->string('guaranters')->nullable();
                 $table->string('collateral')->nullable();
                 $table->softDeletes();
                 $table->timestamps();

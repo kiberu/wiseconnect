@@ -23,7 +23,7 @@ class CreateClientsTable extends Migration
                 $table->string('next_of_kin');
                 $table->string('phone_number');
                 $table->integer('user_id')->unsigned();
-                $table->string('NIN')->unique();
+                $table->string('NIN');
                 $table->string('residential_address');
                 $table->softDeletes();
                 $table->timestamps();

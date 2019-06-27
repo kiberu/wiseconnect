@@ -33,10 +33,76 @@
         <?php endif; ?>
         <div class="col-xl-9">
           <h2>Client Information</h2>
-          <hr>
-          <h6>Client:</strong> <?php echo e($loan->client->first_name); ?> <?php echo e($loan->client->last_name); ?> <br></h6>
-          <hr>
-          <h6>Client's group:</strong> <?php echo e(isset( $loan->client->groups->last()->name ) ? $loan->client->groups->last()->name : 'None'); ?> <br></h6>
+          <table class="table">
+              <tr>
+                <th>Client Name</th>
+                <td><?php echo e($loan->client->first_name); ?> <?php echo e($loan->client->last_name); ?></td>
+              </tr>
+              <tr>
+                <th>Group</th>
+                <td><?php echo e(isset( $loan->client->groups->last()->name ) ? $loan->client->groups->last()->name : 'None'); ?></td>
+              </tr>
+              <tr>
+                <th>Date Of Birth</th>
+                <td><?php echo e($loan->client->date_of_birth); ?></td>
+              </tr>
+              <tr>
+                <th>Sex</th>
+                <td><?php echo e($loan->client->sex); ?></td>
+              </tr>
+              <tr>
+                <th>Next of kin</th>
+                <td><?php echo e($loan->client->next_of_kin); ?></td>
+              </tr>
+              <tr>
+                <th>NIN Number</th>
+                <td><?php echo e($loan->client->NIN); ?></td>
+              </tr>
+              <tr>
+                <th>Residential Address</th>
+                <td><?php echo e($loan->client->residential_address); ?></td>
+              </tr>
+              <tr>
+                <th>Loan Type</th>
+                <td><?php echo e($loan->loan_type->name); ?></td>
+              </tr>
+
+              <tr>
+                <th>Loan Type details</th>
+                <td><?php echo e($loan->other_details); ?></td>
+              </tr>
+
+              <tr>
+                <th>Business Type</th>
+                <td><?php echo e($loan->business_type->name); ?></td>
+              </tr>
+
+              <tr>
+                <th>Business Location</th>
+                <td><?php echo e($loan->business_location); ?></td>
+              </tr>
+
+              <tr>
+                <th>Business Details</th>
+                <td><?php echo e($loan->business_details); ?></td>
+              </tr>
+
+              <tr>
+                <th>Collateral</th>
+                <td><?php echo e($loan->collateral); ?></td>
+              </tr>
+
+              <tr>
+                <th>Guaranters</th>
+                <td><?php echo e($loan->guaranters); ?></td>
+              </tr>
+
+              <tr>
+                <th>Loan Officer</th>
+                <td><?php echo e($loan->loan_officer()); ?></td>
+              </tr>
+          </table>
+
         </div>
       </div>
     </div>
@@ -46,7 +112,6 @@
         <div class="col-xl-9">
           <h2>Loan Information</h2>
           <hr>
-          <h6><span id="js-status" style="color: green">Status:</strong> <?php echo e($loan->status); ?><br></span></h6>
           <?php if( $loan->status === 'Pending' ): ?>
             <?php if( Auth::user()->hasRole( 'branch_manager' ) ): ?>
               <a href="<?php echo e(route('loans.approve', $loan )); ?>">Approve Loan</a>
@@ -64,45 +129,123 @@
               <a href="<?php echo e(route('loans.activate', $loan )); ?>">Activate Loan</a>
             <?php endif; ?>
           <?php endif; ?>
-          <hr>
-          <?php if( $loan->status === 'Active' ): ?>
-          <h6>Interest Rate:</strong> <?php echo e($loan->interest_rate); ?>% per Week<br></h6>
-          <hr>
-          <h6>Loan Duration:</strong> <?php echo e($loan->duration + $loan->grace_period); ?> Weeks<br></h6>
-          <hr>
-          <h6>Interest:</strong> <?php echo e(number_format(($loan->principle * $loan->interest_rate / 100) * $loan->duration )); ?> UGX<br></h6>
-          <hr>
-          <h6>Insurance Fee:</strong> <?php echo e(number_format($loan->insurance_fee)); ?> UGX<br></h6>
-          <hr>
-          <h6>Loan Application Fee:</strong> <?php echo e(number_format($loan->application_fee)); ?> UGX<br></h6>
-          <hr>
-          <?php endif; ?>
-          <h6>Principle:</strong> <?php echo e(number_format($loan->principle)); ?> UGX<br></h6>
-          <h6>Business</strong> <?php echo e($loan->business_location); ?><br></h6>
-          <h6>Business Type:</strong> <?php echo e($loan->business_type->name); ?><br></h6>
-          <hr>
 
+          <table class="table">
+            <?php if( $loan->status === 'Pending' ): ?>
+              <tr>
+                <th>Status</th>
+                <td><span id="js-status" style="color: green"> <?php echo e($loan->status); ?><br></span></td>
+              </tr>
+              <tr>
+                <th>Loan amount</th>
+                <td><?php echo e(number_format($loan->principle)); ?> UGX</td>
+              </tr>
+
+            <?php elseif( $loan->status === 'Approved' ): ?>
+
+              <tr>
+                <th>Status</th>
+                <td><span id="js-status" style="color: green"> <?php echo e($loan->status); ?><br></span></td>
+              </tr>
+              <tr>
+                <th>Loan amount</th>
+                <td><?php echo e(number_format($loan->principle)); ?> UGX</td>
+              </tr>
+              <tr>
+                <th>Loan period</th>
+                <td><?php echo e($loan->duration + $loan->loan_type->grace_period); ?> Weeks</td>
+              </tr>
+              <tr>
+                <th>Grace Period</th>
+                <td><?php echo e($loan->loan_type->grace_period); ?> Weeks</td>
+              </tr>
+            <?php elseif( $loan->status === 'Confirmed' ): ?>
+              <tr>
+                <th>Status</th>
+                <td><span id="js-status" style="color: green"> <?php echo e($loan->status); ?><br></span></td>
+              </tr>
+              <tr>
+                <th>Loan amount</th>
+                <td><?php echo e(number_format($loan->principle)); ?> UGX</td>
+              </tr>
+              <tr>
+                <th>Loan period</th>
+                <td><?php echo e($loan->duration + $loan->loan_type->grace_period); ?> Weeks</td>
+              </tr>
+              <tr>
+                <th>Payment Day</th>
+                <td><?php echo e(isset( $loan->client->groups->last()->name ) ? $loan->client->groups->last()->payment_day : $loan->payment_day); ?></td>
+              </tr>
+
+              <tr>
+                <th>Grace Period</th>
+                <td><?php echo e($loan->loan_type->grace_period); ?> Weeks</td>
+              </tr>
+            <?php elseif($loan->status === 'Active'): ?>
+              <tr>
+                <th>Status</th>
+                <td><span id="js-status" style="color: green"> <?php echo e($loan->status); ?><br></span></td>
+              </tr>
+              <tr>
+                <th>Loan amount</th>
+                <td><?php echo e(number_format($loan->principle)); ?> UGX</td>
+              </tr>
+
+              <tr>
+                <th>Loan period</th>
+                <td><?php echo e($loan->duration + $loan->loan_type->grace_period); ?> Weeks</td>
+              </tr>
+              <tr>
+                <th>Installment amount</th>
+                <td><?php echo e(number_format($loan->latest_installment->expected_amount)); ?> UGX</td>
+              </tr>
+              <tr>
+                <th>First installment date</th>
+                <td><?php echo e($loan->installments->first()->due_date); ?></td>
+              </tr>
+              <tr>
+                <th>Last installment date</th>
+                <td><?php echo e($loan->last_installment_date()); ?></td>
+              </tr>
+
+              <?php if(Auth::user()->hasRole('general_manager')): ?>
+                <tr>
+                  <th>Paid amount so far</th>
+                  <td><?php echo e($loan->total_paid()); ?></td>
+                </tr>
+
+                <tr>
+                  <th>Interest Rates</th>
+                  <td><?php echo e($loan->loan_type->interest_rate); ?></td>
+                </tr>
+
+                <tr>
+                  <th>Interest Earnings per installment(total)</th>
+                  <td><?php echo e(number_format($loan->interest_amount())); ?> ( <?php echo e(number_format($loan->total_interest_amount())); ?>) UGX</td>
+                </tr>
+
+                <tr>
+                  <th>Insurance Fee</th>
+                  <td><?php echo e(number_format($loan->loan_type->insurance_fee)); ?></td>
+                </tr>
+
+                <tr>
+                  <th>Other fees</th>
+                  <td><?php echo e(number_format($loan->loan_type->other_fee)); ?></td>
+                </tr>
+
+                <tr>
+                  <th>Grace Period</th>
+                  <td><?php echo e($loan->loan_type->grace_period); ?> Weeks</td>
+                </tr>
+              <?php endif; ?>
+            <?php endif; ?>
+
+          </table>
         </div>
       </div>
     </div>
     <?php if( $loan->status === 'Active' ): ?>
-    <div class="br-section-wrapper info-section">
-      <div class="row mg-t-20">
-        <div class="col-xl-3"></div>
-        <div class="col-xl-9">
-          <h2>Payments Information</h2>
-          <hr>
-          <h6>Grace Period:</strong> <?php echo e($loan->grace_period); ?> Weeks<br></h6>
-          <hr>
-          <h6>Total Due:</strong> <?php echo e(number_format( $loan->total_due() )); ?> UGX<br></h6>
-          <hr>
-          <h6>Balance:</strong> <?php echo e(number_format( $loan->balance() )); ?> UGX
-          <hr>
-          <hr>
-          <h6>Payment Date:</strong> <?php echo e($loan->payment_day); ?><br></h6>
-        </div>
-      </div>
-    </div>
     <div class="br-section-wrapper info-section">
       <table id="datatable1" class="table display responsive nowrap">
         <thead>

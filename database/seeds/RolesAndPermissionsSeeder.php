@@ -48,7 +48,7 @@ class RolesAndPermissionsSeeder extends Seeder
             ->givePermissionTo('manage-reports', 'manage-finance', 'manage-groups', 'manage-users', 'edit-groups', 'delete-users', 'read-users', 'read-loans');
 
         $role = Role::create(['name' => 'branch_manager'])
-            ->givePermissionTo(['create-finance', 'edit-groups', 'manage-groups', 'manage-loans', 'read-users']);
+            ->givePermissionTo(['create-finance', 'edit-groups', 'manage-finance', 'manage-groups', 'manage-loans', 'read-users']);
 
         $role = Role::create(['name' => 'cashier'])
             ->givePermissionTo(['make-payment']);

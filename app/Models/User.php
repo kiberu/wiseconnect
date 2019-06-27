@@ -88,4 +88,9 @@ class User extends Authenticatable
     {
         return Cache::has('user-is-online-' . $this->id);
     }
+
+    public function loans()
+    {
+        return $this->hasManyThrough('App\Models\Loans\Loan', 'App\Models\Clients\Client');
+    }
 }

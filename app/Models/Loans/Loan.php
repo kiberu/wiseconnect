@@ -4,6 +4,8 @@ namespace App\Models\Loans;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+
 
 class Loan extends Model
 {
@@ -15,9 +17,21 @@ class Loan extends Model
         return $this->belongsTo('App\Models\Clients\Client');
     }
 
-    public function group()
+    public function client_object()
     {
-        return $this->hasOneThrough('App\Models\Clients\Group', 'App\Models\Clients\Client');
+        return $this->client;
+    }
+
+    public function group_name()
+    {
+        return $this->client->groups->last()->name;
+    }
+
+
+    public function loan_officer()
+    {
+      $user = \App\Models\User::find( $this->client->user_id );
+        return $user->fullName;
     }
 
     //
@@ -46,6 +60,11 @@ class Loan extends Model
     public function latest_installment()
     {
         return $this->hasOne(Installment::class)->latest();
+    }
+
+    public function first_installment()
+    {
+        return $this->hasOne(Installment::class)->first();
     }
 
     public function number_of_installments()
@@ -79,8 +98,24 @@ class Loan extends Model
         return ( $this->interest_amount() + $this->attributes[ 'principle' ] );
     }
 
+    public function total_interest_amount()
+    {
+        return $this->attributes[ 'principle' ] * ( ( $this->loan_type->interest_rate / 100) * $this->attributes[ 'duration' ] );
+    }
+
     public function interest_amount()
     {
-        // return $this->attributes[ 'principle' ] * ( ( $this->attributes[ 'interest_rate' ] / 100) * $this->attributes[ 'duration' ] );
+        return $this->attributes[ 'principle' ] * ( ( $this->loan_type->interest_rate / 100) );
+    }
+
+    public function last_installment_date( )
+    {
+      $first = new Carbon($this->first_installment()->due_date);
+      $loan_duration = $this->attribute['duration'];
+      $loan_grace = $this->loan_type->grace_period;
+
+      $total_weeks = $loan_duration + $loan_grace;
+
+      return $first->addWeeks($total_weeks);
     }
 }

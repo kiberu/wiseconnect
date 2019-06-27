@@ -95,7 +95,7 @@
                       Grace Period(*):
                     </div><!-- col-4 -->
                     <div class="col-7 col-sm-8">
-                      <input  class="form-control {{ $errors->has('grace_period') ? ' is-invalid' : '' }}" readonly value="{{ $loan->loan_type->grace_period }}" type="integer" name="grace_period" > Days
+                      <input  class="form-control {{ $errors->has('grace_period') ? ' is-invalid' : '' }}" readonly value="{{ $loan->loan_type->grace_period }}" type="integer" name="grace_period" >Weeks
                       @if ($errors->has('grace_period'))
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $errors->first('grace_period') }}</strong>
@@ -130,6 +130,24 @@
                         @if ($errors->has('application_fee'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('application_fee') }}</strong>
+                            </span>
+                        @endif
+                      </div><!-- col-8 -->
+                    </div><!-- col-8 -->
+                  </div><!-- row -->
+
+                  <div class="row no-gutters">
+                    <div class="col-5 col-sm-4">
+                      Guaranters:
+                    </div><!-- col-4 -->
+                    <div class="col-7 col-sm-8">
+                      <div class="col-7 col-sm-8">
+                        <textarea id="guaranters" cols="10" rows="10" class="form-control {{ $errors->has('guaranters') ? ' is-invalid' : '' }}" type="text" name="guaranters" >
+                          {{ $loan->guaranters }}
+                        </textarea>
+                        @if ($errors->has('guaranters'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('guaranters') }}</strong>
                             </span>
                         @endif
                       </div><!-- col-8 -->

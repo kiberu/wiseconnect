@@ -29,8 +29,6 @@ $factory->define(
 
 $factory->afterCreating(
     App\Models\User::class, function ($user, $faker) {
-        $roles = array('general_manager');
-        $key = array_rand($roles);
-        $user->assignRole($roles[$key]);
+        $user->assignRole('loan_officer');
     }
 );

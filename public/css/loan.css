@@ -35,3 +35,21 @@ h5 strong {
   float: left;
   display: block;width: 250px
 }
+
+.report-table {
+  width: 100%;
+}
+
+.report-table tr {
+  text-align: center;
+  color: black;
+}
+
+.report-table tr th, .report-table tr td {
+  border: 1px solid grey;
+}
+
+.btn-right {
+  margin-left: auto;
+  display: block;
+}

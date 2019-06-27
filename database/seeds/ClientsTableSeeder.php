@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class LoansTableSeeder extends Seeder
+class ClientsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,7 @@ class LoansTableSeeder extends Seeder
      */
     public function run()
     {
-        // factory(App\Models\Loans\Loan::class, 70)->create();
+      factory(App\Models\Clients\Client::class, 30)->create();
+
     }
 }

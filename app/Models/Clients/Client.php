@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
   use SoftDeletes;
-  
+
     //
     public function groups()
     {
@@ -25,6 +25,11 @@ class Client extends Model
     public function user()
     {
         return $this-belongsTo('App\Models\User');
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
     }
 
 
